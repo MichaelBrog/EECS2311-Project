@@ -12,6 +12,7 @@ public class SimulatorFrame extends JFrame {
 	/**
 	 * A visual representation of simulation app
 	 */
+	
 
 	// ------------ Fields ---------------------
 	JButton[] pics; // An array of buttons. Size initialized by the desired amount of buttons
@@ -42,9 +43,11 @@ public class SimulatorFrame extends JFrame {
 	private void initializePanel(ActionListener l, int n) {
 		pics = new JButton[n];
 		panel = new JPanel(new GridLayout(1, n, 1, 1));
+		String [] actionDescription = {"Hi","Bye","Happy","Sad"};
 		
 		for (int i = 0; i < pics.length; i ++) {
-			pics[i] = new JButton("Something");
+			
+			pics[i] = new JButton(actionDescription[i]);
 		//	pics[i].setBackground(Color.BLUE);
 			pics[i].setVisible(true);
 			pics[i].addActionListener(l);
@@ -65,6 +68,7 @@ public class SimulatorFrame extends JFrame {
 	 * A main method to test the view of the simulator app
 	 */
 	public static void main(String[] args) {
+	
 
 		new SimulatorFrame(null, 4);
 
