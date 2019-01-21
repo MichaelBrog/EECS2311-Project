@@ -131,6 +131,7 @@ public class ConfigurationAppFrame extends JFrame{
 		));
 	
 		this.add(panel);
+		
 	}
 	
 	/**
