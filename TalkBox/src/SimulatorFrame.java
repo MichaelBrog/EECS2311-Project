@@ -109,6 +109,17 @@ public class SimulatorFrame extends JFrame {
 		this.add(panel);
 
 	}
+	
+	public void SetButton(String buttonName,ImageIcon image, int indexOfButton) throws IndexOutOfBoundsException {
+		try {
+			pics[indexOfButton].setText(buttonName);
+			pics[indexOfButton].setIcon(image);
+	
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("The index you have entered is invalid");
+		}
+	}
+	
 
 	/**
 	 * 
@@ -154,6 +165,7 @@ public class SimulatorFrame extends JFrame {
 	 * 
 	 */
 
+<<<<<<< HEAD
 	public static void main(String[] args) {
 
 		SimulatorFrame s = new SimulatorFrame(null, 4);
@@ -164,6 +176,13 @@ public class SimulatorFrame extends JFrame {
 		s.SetButton("Angry",
 				new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
 		s.SetButton("Perplexed", new ImageIcon("Perplexed.png"), 3);
+=======
+		SimulatorFrame s = new SimulatorFrame(null, 4);
+		s.SetButton("Happy", new ImageIcon("Happy.png"), 0);
+		s.SetButton("Sad",new ImageIcon("https://thumbs.dreamstime.com/z/perplexed-expression-real-man-50490656.jpg"),  1);
+		s.SetButton("Angry",new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
+		s.SetButton("Perplexed",new ImageIcon("Perplexed.png"), 3);
+>>>>>>> branch 'master' of https://github.com/ryang-123/EECS2311-Project
 
 	}
 
