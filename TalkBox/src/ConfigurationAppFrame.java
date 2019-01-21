@@ -23,7 +23,8 @@ public class ConfigurationAppFrame extends JFrame{
 	 * */
 	
 	// ------------- Fields ------------------------
-	public static int page = 0; 			// The 'page' the user is currently in. 
+	public static int page = 0; 			// The 'page' the user is currently in.
+	
 	JPanel panel; 							// The first panel we will work with
 	
 	JLabel labelForTextField;					// The label for the check box
@@ -43,7 +44,7 @@ public class ConfigurationAppFrame extends JFrame{
 	JButton exit;							// A button to exit
 	
 	String[] numbers = {"1", "2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"}; // numbers used in combo box
-	JComboBox comboBox = new JComboBox<String>(numbers);  // The user puts the number of buttons he wants. Must be a natural number
+	JComboBox<String> comboBox = new JComboBox<String>(numbers);  // The user puts the number of buttons he wants. Must be a natural number
 	
 	GroupLayout layout;
 	Container container;					// Container
@@ -133,11 +134,19 @@ public class ConfigurationAppFrame extends JFrame{
 	}
 	
 	/**
+	 * @param size
+	 * 			The number of buttons the user works with 
+	 * 
 	 * Use's the field 'page', then increment 'page' for the next future page update 
+	 * The method updated the view to go to the next page 
 	 * */
-	public void panelUpdate () {
+	public void PressedNext (int size) {
+		if (page == size)
+			lastPage();
 		
 	}
+	
+	public void lastPage () {}
 	
 	/**
 	 * A main method to test the view of the configuration app
