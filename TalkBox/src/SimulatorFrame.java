@@ -42,9 +42,11 @@ public class SimulatorFrame extends JFrame {
 	private void initializePanel(ActionListener l, int n) {
 		pics = new JButton[n];
 		panel = new JPanel(new GridLayout(1, n, 1, 1));
+		String [] actionDescription = {"Hi","Bye","Happy","Sad"};
 		
 		for (int i = 0; i < pics.length; i ++) {
-			pics[i] = new JButton("Something");
+			
+			pics[i] = new JButton(actionDescription[i]);
 		//	pics[i].setBackground(Color.BLUE);
 			pics[i].setVisible(true);
 			pics[i].addActionListener(l);
