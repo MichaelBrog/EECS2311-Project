@@ -6,13 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import static javax.swing.GroupLayout.Alignment.*;
 
 public class ConfigurationAppFrame extends JFrame{
 	/**
@@ -25,13 +24,13 @@ public class ConfigurationAppFrame extends JFrame{
 	
 	// ------------- Fields ------------------------
 	public static int page = 0; 			// The 'page' the user is currently in. 
-	JPanel panel1; 							// The first panel we will work with
-	JPanel panel2; 							// The second panel we will work with
-	JPanel finalPanel;						// The final panel seen
+	JPanel panel; 							// The first panel we will work with
+	
+	JLabel labelForTextField;					// The label for the check box
 	
 	JLabel title;		 				    // The title of the page
 	JLabel labelForImage, labelForSound; 	// The labels for the sound and image buttons
-	JLabel labelForTextField;					// The label for the check box
+	JLabel blankSpace = new JLabel(""); 	// Space holder
 	
 	JButton uploadImage;					// A button for the user to upload an image
 	JButton uploadSound;	 				// A button for the user to upload a sound
@@ -43,7 +42,8 @@ public class ConfigurationAppFrame extends JFrame{
 	JButton previous;						// A button to go to the previous page
 	JButton exit;							// A button to exit
 	
-	JTextField text;				        // The user puts the number of buttons he wants. Must be a natural number
+	String[] numbers = {"1", "2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"}; // numbers used in combo box
+	JComboBox comboBox = new JComboBox<String>(numbers);  // The user puts the number of buttons he wants. Must be a natural number
 	
 	GroupLayout layout;
 	Container container;					// Container
@@ -64,6 +64,8 @@ public class ConfigurationAppFrame extends JFrame{
 		
 		JFrame.setDefaultLookAndFeelDecorated(true);								// Check later
 		this.setSize(ConfigurationAppFrame.WIDTH, ConfigurationAppFrame.HEIGHT);
+		this.setSize(600, 150);
+		this.setResizable(false);
         initializePanel(l);	
         
        
@@ -79,9 +81,9 @@ public class ConfigurationAppFrame extends JFrame{
 	 * */
 	private void initializePanel(ActionListener l) {
 		// Associate layout with panel
-		container = this.getContentPane();
-		layout = new GroupLayout(container);
-		container.setLayout(layout);
+		JPanel panel = new JPanel();
+		GroupLayout layout = new GroupLayout(panel);
+		panel.setLayout(layout);
 		
 		// Automatic gap insertion
 		layout.setAutoCreateContainerGaps(true);
@@ -90,21 +92,22 @@ public class ConfigurationAppFrame extends JFrame{
 		
 	    // Initialize components
 		title = new JLabel("Welcome to the Configuration Wizard for your Talk Box");
-		labelForTextField = new JLabel("Please put the of buttons you want to have: ");
-		text = new JTextField();
+		labelForTextField = new JLabel("Please select the number of buttons you want to have: ");
 		previous = new JButton("Previous");
 		next = new JButton("next");
 		exit = new JButton("Exit");
 		
-		
+		layout.setAutoCreateContainerGaps(true);
+		layout.setAutoCreateGaps(true);
+	    
 		layout.setHorizontalGroup(layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup()
 						.addComponent(title)
 						.addComponent(labelForTextField)
 						.addComponent(exit))
 				.addGroup(layout.createParallelGroup()
-						.addComponent(new JLabel(""))
-						.addComponent(text)
+						.addComponent(blankSpace)
+						.addComponent(comboBox)
 						.addGroup(layout.createSequentialGroup()
 								.addComponent(previous)
 								.addComponent(next))
@@ -113,15 +116,20 @@ public class ConfigurationAppFrame extends JFrame{
 		layout.linkSize(SwingConstants.HORIZONTAL, previous, next);
 		 
 		layout.setVerticalGroup(layout.createSequentialGroup()
-				.addComponent(title)
+				.addGroup(layout.createParallelGroup()
+						.addComponent(title)
+						.addComponent(blankSpace))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(labelForTextField)
+						.addComponent(comboBox))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(exit)
 						.addGroup(layout.createParallelGroup()
 								.addComponent(previous)
 								.addComponent(next))
 		));
-		
-		setLocationRelativeTo(null);
+	
+		this.add(panel);
 	}
 	
 	/**
