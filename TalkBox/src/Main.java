@@ -10,6 +10,8 @@ public class Main {
 		System.out.println("NOPE");
 		System.out.println("NOPE");
 		System.out.println("NOPE");
-	}
+		System.out.println("mostafa");
+	
 
+}
 }
