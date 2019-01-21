@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
@@ -14,28 +15,43 @@ public class SimulatorFrame extends JFrame {
 
 	// ------------ Fields ---------------------
 	JButton[] pics; // An array of buttons. Size initialized by the desired amount of buttons
-
+	JPanel panel;   // The used panel
 	// -----------------------------------------
 
 	public SimulatorFrame(ActionListener l, int n) {
-		JFrame frame = new JFrame("FrameDemo");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		frame.setPreferredSize(new Dimension(1100, 600));
+		super("FrameDemo");
 		
-		frame.getContentPane().setBackground(Color.cyan);
-
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		initializePanel(l, n);
+		//frame.getContentPane().setBackground(Color.cyan);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setPreferredSize(new Dimension(1100, 600));
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 
 	/**
+	 * @param n
+	 * 			The number of buttons to be declared
+	 * @param l	
+	 * 			The action listener
+	 * 
 	 * A method that initialized the panel and provide the first view for the client
-	 * Associate the action listener l to the buttons --- BorderLayout ? -----
+	 * Associate the action listener l to the buttons --- GridLayout ? -----
 	 */
-	private void initializePanel(ActionListener l) {
-
+	private void initializePanel(ActionListener l, int n) {
+		pics = new JButton[n];
+		panel = new JPanel(new GridLayout(1, n, 1, 1));
+		
+		for (int i = 0; i < pics.length; i ++) {
+			pics[i] = new JButton("Something");
+		//	pics[i].setBackground(Color.BLUE);
+			pics[i].setVisible(true);
+			pics[i].addActionListener(l);
+			panel.add(pics[i]);
+		}
+		
+		this.add(panel);
 	}
 
 	/**
@@ -50,7 +66,7 @@ public class SimulatorFrame extends JFrame {
 	 */
 	public static void main(String[] args) {
 
-		new SimulatorFrame(null, 1);
+		new SimulatorFrame(null, 4);
 
 	}
 
