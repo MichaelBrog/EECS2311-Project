@@ -10,6 +10,11 @@ public class Main {
 		System.out.println("NOPE");
 		System.out.println("NOPE");
 		System.out.println("NOPE");
+		System.out.println("Push it good");
+		System.out.println("Push it great");
+		System.out.println("Push it great");
+
+
 	}
 
 }
