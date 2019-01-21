@@ -12,6 +12,7 @@ public class SimulatorFrame extends JFrame {
 	/**
 	 * A visual representation of simulation app
 	 */
+	
 
 	// ------------ Fields ---------------------
 	JButton[] pics; // An array of buttons. Size initialized by the desired amount of buttons
@@ -67,6 +68,7 @@ public class SimulatorFrame extends JFrame {
 	 * A main method to test the view of the simulator app
 	 */
 	public static void main(String[] args) {
+	
 
 		new SimulatorFrame(null, 4);
 
