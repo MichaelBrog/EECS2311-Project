@@ -8,6 +8,8 @@ import java.awt.Dimension;
 
 import java.awt.GridLayout;
 
+
+
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
@@ -25,12 +27,14 @@ public class SimulatorFrame extends JFrame {
 	// ------------ Fields ---------------------
 
 	JButton[] pics; // An array of buttons. Size initialized by the desired amount of buttons
-
+	
 	JPanel panel; // The used panel
 
+	
 	// -----------------------------------------
 
 	public SimulatorFrame(ActionListener l, int n) {
+
 
 		super("FrameDemo");
 
@@ -51,6 +55,7 @@ public class SimulatorFrame extends JFrame {
 	}
 
 	/**
+	 * <<<<<<< HEAD
 	 * 
 	 * @param n
 	 * 
@@ -68,6 +73,14 @@ public class SimulatorFrame extends JFrame {
 	 *          Associate the action listener l to the buttons --- GridLayout ?
 	 *          -----
 	 * 
+	 *          =======
+	 * @param n The number of buttons to be declared
+	 * @param l The action listener
+	 * 
+	 *          A method that initialized the panel and provide the first view for
+	 *          the client Associate the action listener l to the buttons ---
+	 *          GridLayout ? ----- >>>>>>> branch 'master' of
+	 *          https://github.com/ryang-123/EECS2311-Project
 	 */
 
 	private void initializePanel(ActionListener l, int n) {
@@ -81,7 +94,7 @@ public class SimulatorFrame extends JFrame {
 			pics[i] = new JButton("Something");
 
 //			pics[i].setBackground(Color.BLUE);
-			
+
 			pics[i].setVerticalTextPosition(SwingConstants.TOP);
 			pics[i].setHorizontalTextPosition(SwingConstants.CENTER);
 
@@ -109,22 +122,21 @@ public class SimulatorFrame extends JFrame {
 	 * 
 	 * @throws IndexOutOfBoundsException if {@code i < 0 || i >= n }.
 	 * 
-	 *                                   A method that helps the user create desired button with complete freedom
-	 *                                   while also updating and changing the text associated with 
-	 *                                   specific buttons.
+	 *                                   A method that helps the user create desired
+	 *                                   button with complete freedom while also
+	 *                                   updating and changing the text associated
+	 *                                   with specific buttons.
 	 */
 
-	public void SetButton(String buttonName,ImageIcon image, int indexOfButton) throws IndexOutOfBoundsException {
+	public void SetButton(String buttonName, ImageIcon image, int indexOfButton) throws IndexOutOfBoundsException {
 		try {
 			pics[indexOfButton].setText(buttonName);
 			pics[indexOfButton].setIcon(image);
-	
+
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("The index you have entered is invalid");
 		}
 	}
-	
-	
 
 	/**
 	 * 
@@ -146,15 +158,12 @@ public class SimulatorFrame extends JFrame {
 
 		SimulatorFrame s = new SimulatorFrame(null, 4);
 
-		s.SetName("Happy", 0);
-		s.SetName("Sad", 1);
-		s.SetName("Angry", 2);
-		s.SetName("Perplexed", 3);
-		
-		s.SetImage(new ImageIcon("Happy.png"), 0);
-		s.SetImage(new ImageIcon("https://thumbs.dreamstime.com/z/perplexed-expression-real-man-50490656.jpg"), 1);
-		s.SetImage(new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
-		s.SetImage(new ImageIcon("Perplexed.png"), 3);
+		s.SetButton("Happy", new ImageIcon("Happy.png"), 0);
+		s.SetButton("Sad", new ImageIcon("https://thumbs.dreamstime.com/z/perplexed-expression-real-man-50490656.jpg"),
+				1);
+		s.SetButton("Angry",
+				new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
+		s.SetButton("Perplexed", new ImageIcon("Perplexed.png"), 3);
 
 	}
 
