@@ -9,13 +9,13 @@ public class Main {
 		System.out.println("Hello Darkness my old friend");
 		System.out.println("NOPE");
 		System.out.println("NOPE");
-
 		System.out.println("NOPE");
 		System.out.println("mostafa");
 	
 
 		System.out.println("hiII");
-	}
+		System.out.println("hi");
 
 
+}
 }
