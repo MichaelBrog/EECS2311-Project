@@ -1,8 +1,4 @@
-import java.awt.BorderLayout;
 
-import java.awt.Color;
-
-import java.awt.Component;
 
 import java.awt.Dimension;
 
@@ -14,9 +10,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import javax.swing.border.*;
 
 public class SimulatorFrame extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
@@ -55,7 +55,6 @@ public class SimulatorFrame extends JFrame {
 	}
 
 	/**
-	 * <<<<<<< HEAD
 	 * 
 	 * @param n
 	 * 
@@ -73,7 +72,6 @@ public class SimulatorFrame extends JFrame {
 	 *          Associate the action listener l to the buttons --- GridLayout ?
 	 *          -----
 	 * 
-	 *          =======
 	 * @param n The number of buttons to be declared
 	 * @param l The action listener
 	 * 
@@ -109,16 +107,7 @@ public class SimulatorFrame extends JFrame {
 		this.add(panel);
 
 	}
-	
-	public void SetButton(String buttonName,ImageIcon image, int indexOfButton) throws IndexOutOfBoundsException {
-		try {
-			pics[indexOfButton].setText(buttonName);
-			pics[indexOfButton].setIcon(image);
-	
-		} catch (IndexOutOfBoundsException e) {
-			System.out.println("The index you have entered is invalid");
-		}
-	}
+
 	
 
 	/**
@@ -164,8 +153,6 @@ public class SimulatorFrame extends JFrame {
 	 * A main method to test the view of the simulator app
 	 * 
 	 */
-
-<<<<<<< HEAD
 	public static void main(String[] args) {
 
 		SimulatorFrame s = new SimulatorFrame(null, 4);
@@ -176,13 +163,11 @@ public class SimulatorFrame extends JFrame {
 		s.SetButton("Angry",
 				new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
 		s.SetButton("Perplexed", new ImageIcon("Perplexed.png"), 3);
-=======
-		SimulatorFrame s = new SimulatorFrame(null, 4);
+	//	SimulatorFrame s = new SimulatorFrame(null, 4);
 		s.SetButton("Happy", new ImageIcon("Happy.png"), 0);
 		s.SetButton("Sad",new ImageIcon("https://thumbs.dreamstime.com/z/perplexed-expression-real-man-50490656.jpg"),  1);
 		s.SetButton("Angry",new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
 		s.SetButton("Perplexed",new ImageIcon("Perplexed.png"), 3);
->>>>>>> branch 'master' of https://github.com/ryang-123/EECS2311-Project
 
 	}
 
