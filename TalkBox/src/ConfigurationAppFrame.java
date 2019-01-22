@@ -51,8 +51,6 @@ public class ConfigurationAppFrame extends JFrame{
 	GroupLayout layout;
 	Container container;					// Container
 	
-	private static final int WIDTH  = 400;
-	private static final int HEIGHT = 400;	
 	// ---------------------------------------------
 	
 	
@@ -69,8 +67,7 @@ public class ConfigurationAppFrame extends JFrame{
 		super("Configuration App Wizard");
 		
 		JFrame.setDefaultLookAndFeelDecorated(true);							
-		this.setSize(ConfigurationAppFrame.WIDTH, ConfigurationAppFrame.HEIGHT);
-		this.setSize(600, 150);
+		
 		this.setResizable(false);
 		initializeComponents(l, i);
         initializePanel();	
@@ -124,9 +121,8 @@ public class ConfigurationAppFrame extends JFrame{
 	 * 
 	 * */
 	private void initializePanel() {
-		System.out.println("HERE");
-		// Associate layout with panel
-		
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		this.setSize(439, 118);
 		
 		// Automatic gap insertion
 		layout.setAutoCreateContainerGaps(true);
@@ -258,7 +254,12 @@ public class ConfigurationAppFrame extends JFrame{
 		panel.repaint();
 		layout = new GroupLayout(panel);
 		panel.setLayout(layout);
-
+		
+		this.setSize(450, 150);
+		
+		layout.setAutoCreateContainerGaps(true);
+		layout.setAutoCreateGaps(true);
+	    
 		layout.setHorizontalGroup(layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup()
 						.addComponent(title)
@@ -300,6 +301,8 @@ public class ConfigurationAppFrame extends JFrame{
 	 * */
 	private void lastPage () {
 		title.setText("Your configuration is complete.");
+		
+		this.setSize(410, 90);
 		
 		panel.removeAll();
 		panel.revalidate();
