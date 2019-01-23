@@ -9,7 +9,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * */
 	//------------------ Fields --------------------------
 	ConfigurationAppFrame confFrame;					  // An instance of ConfigurationAppFrame.
-	public static final int size;
+	public static final int size = 0;
 	//----------------------------------------------------
 	//	####################
 	//	Please use method insideComboBox from ConfigurationAppFrame to get the number of buttons the user wants, 

@@ -66,6 +66,7 @@ public class ConfigurationAppFrame extends JFrame{
 	public ConfigurationAppFrame (ActionListener l, ItemListener i){
 		super("Configuration App Wizard");
 		
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		JFrame.setDefaultLookAndFeelDecorated(true);							
 		
 		this.setResizable(false);
@@ -374,7 +375,6 @@ public class ConfigurationAppFrame extends JFrame{
 		
 		Scanner scan = new Scanner(System.in);
 		ConfigurationAppFrame conf = new ConfigurationAppFrame(null, null);
-		conf.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		conf.setVisible(true);
 		conf.pack();
 		int i = scan.nextInt();
