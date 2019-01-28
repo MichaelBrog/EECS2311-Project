@@ -180,7 +180,7 @@ public class ConfigurationAppFrame extends JFrame{
 	 * */
 	public void pressedNext (int size) {
 		// If next goes to the last page - special setting
-		if (page == size)
+		if (page == size + 1)
 			lastPage();
 		// If next goes to the first initial setting - special settign
 		else if (page == 0)
@@ -371,7 +371,7 @@ public class ConfigurationAppFrame extends JFrame{
 	/**
 	 * A main method to test the view of the configuration app
 	 * */
-	public static void main (String[] args) {
+/*	public static void main (String[] args) {
 		
 		Scanner scan = new Scanner(System.in);
 		ConfigurationAppFrame conf = new ConfigurationAppFrame(null, null);
@@ -406,7 +406,7 @@ public class ConfigurationAppFrame extends JFrame{
 		//conf.pressedPrevious(2);
 		
 		scan.close();
-	}
+	}*/
 	
 }
 

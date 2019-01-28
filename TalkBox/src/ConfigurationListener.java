@@ -3,6 +3,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.JCheckBox;
+
 public class ConfigurationListener implements ActionListener, ItemListener{
 	/**
 	 * Implement the Action listener of the pressed buttons/ check box in the configuration app
@@ -30,19 +32,34 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * Please create action events for pressing next, previous and exit
 	 * Please note that the methods pressedNext and pressedPrevious can be used to adjust the GUI
 	 * */
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getActionCommand() == "next") {
-			confFrame.pressedNext(confFrame.comboBox.getSelectedIndex());
-		}
-		else if (e.getActionCommand() == "previous") {
-			confFrame.pressedPrevious(confFrame.comboBox.getSelectedIndex());
-		}
-		else if (e.getActionCommand() == "Exit") {
+		if (e.getActionCommand() == "Exit") {
 			confFrame.setVisible(false);
 			confFrame.dispose();
 			System.exit(0);
+		}
+		if(confFrame.page == 0) {
+			if (e.getActionCommand() == "next") {
+				size = confFrame.comboBox.getSelectedIndex();
+				confFrame.pressedNext(size);
+				
+			}
+		}
+		else if (confFrame.page == 1) {
+			if (e.getActionCommand() == "next") {
+				confFrame.pressedNext(size);
+			}
+			if (e.getActionCommand() == "previous") {
+				size = 0;
+				confFrame.pressedPrevious(size);
+			}
+		else if (confFrame.page == 2) {
+			
+		}
+
+			
 		}
 		
 		// TODO Auto-generated method stub
@@ -57,27 +74,42 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * */
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		Object source = e.getItemSelectable();
-		if (e.getStateChange() == ItemEvent.SELECTED) {
-		if(source == "pickImage") {
+		JCheckBox source = (JCheckBox) e.getItemSelectable();
+
+		if(source.getText() == confFrame.checkToSelfUploadImage.getText()) {
 			System.out.println("image picked");
 			confFrame.uploadImageCheckBox();
 		}
-		else if(source == "pickSound") {
+		if(source.getText() == confFrame.checkToSelfUploadSound.getText()) {
 			confFrame.uploadSoundCheckBox();
 			System.out.println("sound picked");
+			System.out.println("why can't I commit");
+
 
 		}
-		}
-		if (e.getStateChange() == ItemEvent.DESELECTED) {
-			if(source == "pickImage") {
-				System.out.println("image picked");
-				confFrame.uploadImageCheckBox();
-			}
-			else if(source == "pickSound") {
-				confFrame.uploadSoundCheckBox();
-				System.out.println("sound picked");
-			}	
-		}	
 	}
-}
+		
+//hello
+//		if (e.getStateChange() == ItemEvent.SELECTED) {
+//		if(source == "pickImage") {
+//			System.out.println("image picked");
+//			confFrame.uploadImageCheckBox();
+//		}
+//		else if(source == "pickSound") {
+//			confFrame.uploadSoundCheckBox();
+//			System.out.println("sound picked");
+//
+//		}
+//		}
+//		if (e.getStateChange() == ItemEvent.DESELECTED) {
+//			if(source == "pickImage") {
+//				System.out.println("image picked");
+//				confFrame.uploadImageCheckBox();
+//			}
+//			else if(source == "pickSound") {
+//				confFrame.uploadSoundCheckBox();
+//				System.out.println("sound picked");
+//			}	
+//		}	
+	}
+
