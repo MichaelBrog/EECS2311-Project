@@ -3,6 +3,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.JCheckBox;
+
 public class ConfigurationListener implements ActionListener, ItemListener{
 	/**
 	 * Implement the Action listener of the pressed buttons/ check box in the configuration app
@@ -72,21 +74,20 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * */
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		Object source = e.getItemSelectable();
-		
-		//if(source == "pickImage") {
-		if(source == confFrame.pickImage) {
+		JCheckBox source = (JCheckBox) e.getItemSelectable();
+
+		if(source.getText() == confFrame.checkToSelfUploadImage.getText()) {
 			System.out.println("image picked");
 			confFrame.uploadImageCheckBox();
 		}
-//		else if(source == "pickSound") {
-		if(source == confFrame.pickSound) {
+		if(source.getText() == confFrame.checkToSelfUploadSound.getText()) {
 			confFrame.uploadSoundCheckBox();
 			System.out.println("sound picked");
 			System.out.println("why can't I commit");
 
 
 		}
+	}
 		
 //hello
 //		if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -111,4 +112,4 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 //			}	
 //		}	
 	}
-}
+
