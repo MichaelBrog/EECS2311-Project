@@ -12,6 +12,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	//------------------ Fields --------------------------
 	ConfigurationAppFrame confFrame;					  // An instance of ConfigurationAppFrame.
 	public static int size = 0;
+	private boolean first = true;
 	//----------------------------------------------------
 	//	####################
 	//	Please use method insideComboBox from ConfigurationAppFrame to get the number of buttons the user wants, 
@@ -40,27 +41,26 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			confFrame.dispose();
 			System.exit(0);
 		}
-		if(confFrame.page == 0) {
-			if (e.getActionCommand() == "next") {
-				size = confFrame.comboBox.getSelectedIndex();
-				confFrame.pressedNext(size);
+
+		else if (e.getActionCommand() == "Next") {
+			if (first) {
+				size =  Integer.valueOf((String) confFrame.comboBox.getSelectedItem());
+				System.out.println("size " + size);
+				first = false;
+			}
+			
+			confFrame.pressedNext(size);
+		}
+		
+		else if (e.getActionCommand() == "Previous") {
+			if (ConfigurationAppFrame.page == 1) {
+				first = true;
 				
 			}
-		}
-		else if (confFrame.page == 1) {
-			if (e.getActionCommand() == "next") {
-				confFrame.pressedNext(size);
-			}
-			if (e.getActionCommand() == "previous") {
-				size = 0;
-				confFrame.pressedPrevious(size);
-			}
-		else if (confFrame.page == 2) {
 			
+			confFrame.pressedPrevious(size);
 		}
-
-			
-		}
+		
 		
 		// TODO Auto-generated method stub
 		
@@ -77,39 +77,11 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		JCheckBox source = (JCheckBox) e.getItemSelectable();
 
 		if(source.getText() == confFrame.checkToSelfUploadImage.getText()) {
-			System.out.println("image picked");
 			confFrame.uploadImageCheckBox();
 		}
 		if(source.getText() == confFrame.checkToSelfUploadSound.getText()) {
 			confFrame.uploadSoundCheckBox();
-			System.out.println("sound picked");
-			System.out.println("why can't I commit");
-
-
 		}
 	}
 		
-//hello
-//		if (e.getStateChange() == ItemEvent.SELECTED) {
-//		if(source == "pickImage") {
-//			System.out.println("image picked");
-//			confFrame.uploadImageCheckBox();
-//		}
-//		else if(source == "pickSound") {
-//			confFrame.uploadSoundCheckBox();
-//			System.out.println("sound picked");
-//
-//		}
-//		}
-//		if (e.getStateChange() == ItemEvent.DESELECTED) {
-//			if(source == "pickImage") {
-//				System.out.println("image picked");
-//				confFrame.uploadImageCheckBox();
-//			}
-//			else if(source == "pickSound") {
-//				confFrame.uploadSoundCheckBox();
-//				System.out.println("sound picked");
-//			}	
-//		}	
-	}
-
+}
