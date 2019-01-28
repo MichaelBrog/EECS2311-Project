@@ -30,6 +30,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * Please create action events for pressing next, previous and exit
 	 * Please note that the methods pressedNext and pressedPrevious can be used to adjust the GUI
 	 * */
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "Exit") {
@@ -75,7 +76,6 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		
 		//if(source == "pickImage") {
 		if(source == confFrame.pickImage) {
-
 			System.out.println("image picked");
 			confFrame.uploadImageCheckBox();
 		}
@@ -83,10 +83,12 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		if(source == confFrame.pickSound) {
 			confFrame.uploadSoundCheckBox();
 			System.out.println("sound picked");
+			System.out.println("why can't I commit");
+
 
 		}
 		
-		
+//hello
 //		if (e.getStateChange() == ItemEvent.SELECTED) {
 //		if(source == "pickImage") {
 //			System.out.println("image picked");
