@@ -3,6 +3,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.JCheckBox;
+
 public class ConfigurationListener implements ActionListener, ItemListener{
 	/**
 	 * Implement the Action listener of the pressed buttons/ check box in the configuration app
@@ -72,43 +74,24 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * */
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		Object source = e.getItemSelectable();
-		
-		//if(source == "pickImage") {
-		if(source == confFrame.pickImage) {
+		//Object source = e.getItemSelectable();
+
+		JCheckBox check = (JCheckBox)e.getSource();
+        String name = check.getName();
+        System.out.println("test 3:" + name);
+		if(name == "pickImage") {
+		//if(source == confFrame.pickImage) {
 			System.out.println("image picked");
 			confFrame.uploadImageCheckBox();
 		}
-//		else if(source == "pickSound") {
-		if(source == confFrame.pickSound) {
+		else if(name == "pickSound") {
+		//if(source == confFrame.pickSound) {
 			confFrame.uploadSoundCheckBox();
 			System.out.println("sound picked");
 			System.out.println("why can't I commit");
 
 
 		}
-		
-//hello
-//		if (e.getStateChange() == ItemEvent.SELECTED) {
-//		if(source == "pickImage") {
-//			System.out.println("image picked");
-//			confFrame.uploadImageCheckBox();
-//		}
-//		else if(source == "pickSound") {
-//			confFrame.uploadSoundCheckBox();
-//			System.out.println("sound picked");
-//
-//		}
-//		}
-//		if (e.getStateChange() == ItemEvent.DESELECTED) {
-//			if(source == "pickImage") {
-//				System.out.println("image picked");
-//				confFrame.uploadImageCheckBox();
-//			}
-//			else if(source == "pickSound") {
-//				confFrame.uploadSoundCheckBox();
-//				System.out.println("sound picked");
-//			}	
-//		}	
+
 	}
 }
