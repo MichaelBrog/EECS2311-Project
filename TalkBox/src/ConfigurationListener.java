@@ -3,7 +3,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.swing.JCheckBox;
+import javax.swing.JCheckBox; 
 
 public class ConfigurationListener implements ActionListener, ItemListener{
 	/**
