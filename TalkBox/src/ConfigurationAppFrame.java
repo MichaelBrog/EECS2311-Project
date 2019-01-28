@@ -72,8 +72,6 @@ public class ConfigurationAppFrame extends JFrame{
 		this.setResizable(false);
 		initializeComponents(l, i);
         initializePanel();	
-        
-       
 	}
 	
 	/**
@@ -92,7 +90,7 @@ public class ConfigurationAppFrame extends JFrame{
 		labelForTextField = new JLabel("");
 		previous = new JButton("Previous");
 		previous.addActionListener(l);
-		next = new JButton("next");
+		next = new JButton("Next");
 		next.addActionListener(l);
 		exit = new JButton("Exit");
 		exit.addActionListener(l);
@@ -180,23 +178,42 @@ public class ConfigurationAppFrame extends JFrame{
 	 * */
 	public void pressedNext (int size) {
 		// If next goes to the last page - special setting
-		if (page == size + 1)
+		if (page == size) {
 			lastPage();
+		}
 		// If next goes to the first initial setting - special settign
-		else if (page == 0)
+		else if (page == 0) {
 			firstPage();
-		// Middle setting
-		else {
+			
 			if (checkToSelfUploadSound.isSelected()) {
+				System.out.println("IF NEXT SOUND");
 				checkToSelfUploadSound.setSelected(false);
 				layout.replace(uploadSound, pickSound);
 			}
 			if (checkToSelfUploadImage.isSelected()) {
+				System.out.println("IF NEXT IMAGE");
+				checkToSelfUploadImage.setSelected(false);
+				layout.replace(uploadImage, pickImage);
+			}
+		}
+		// Middle setting
+		else {
+			firstPage();
+			if (checkToSelfUploadSound.isSelected()) {
+				System.out.println("IF NEXT SOUND");
+				System.out.println("PAGE: " + page);
+				checkToSelfUploadSound.setSelected(false);
+				layout.replace(uploadSound, pickSound);
+			}
+			if (checkToSelfUploadImage.isSelected()) {
+				System.out.println("IF NEXT IMAGE");
+				System.out.println("PAGE: " + page);
 				checkToSelfUploadImage.setSelected(false);
 				layout.replace(uploadImage, pickImage);
 			}
 		}
 		
+	//	System.out.println("PAGE: " + page);
 		page ++;
 	}
 	
@@ -211,18 +228,12 @@ public class ConfigurationAppFrame extends JFrame{
 	public void pressedPrevious (int size) {
 		// If the current page is the last page, needs special setting
 		if (page == size + 1) {
-			System.out.println("1st if");
 			firstPage();
 		}
 		// If the current page is the first initialized page
 		else if (page == 1) {
-			System.out.println("2nd if");
 			refresh();
 			initializePanel();
-		}
-		// Middle setting
-		else {
-			System.out.println("3rd if");
 			if (checkToSelfUploadSound.isSelected()) {
 				checkToSelfUploadSound.setSelected(false);
 				layout.replace(uploadSound, pickSound);
@@ -232,8 +243,20 @@ public class ConfigurationAppFrame extends JFrame{
 				layout.replace(uploadImage, pickImage);
 			}
 		}
-
+		// Middle setting
+		else {
+			if (checkToSelfUploadSound.isSelected()) {
+				checkToSelfUploadSound.setSelected(false);
+				layout.replace(uploadSound, pickSound);
+			}
+			if (checkToSelfUploadImage.isSelected()) {
+				checkToSelfUploadImage.setSelected(false);
+				layout.replace(uploadImage, pickImage);
+			}
+		}
+		System.out.println("Pre previous: page=" + page);
 		page --;
+		System.out.println("previous: page=" + page);
 	}
 	
 	private void refresh () {
