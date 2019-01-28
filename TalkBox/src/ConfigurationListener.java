@@ -40,32 +40,17 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			confFrame.dispose();
 			System.exit(0);
 		}
-		if(confFrame.page == 0) {
-			if (e.getActionCommand() == "next") {
-				size = confFrame.comboBox.getSelectedIndex();
-				confFrame.pressedNext(size);
-				
-			}
-		}
-		else if (confFrame.page == 1) {
-			if (e.getActionCommand() == "next") {
-				confFrame.pressedNext(size);
+		if (e.getActionCommand() == "next") {
+			size = confFrame.comboBox.getSelectedIndex();
+			confFrame.pressedNext(size);	
 			}
 			if (e.getActionCommand() == "previous") {
 				size = 0;
 				confFrame.pressedPrevious(size);
 			}
-		else if (confFrame.page == 2) {
 			
 		}
-
-			
-		}
-		
 		// TODO Auto-generated method stub
-		
-		
-	}
 
 	/**
 	 * Please note: designed for the sound and image check box
