@@ -32,17 +32,31 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getActionCommand() == "next") {
-			confFrame.pressedNext(confFrame.comboBox.getSelectedIndex());
-		}
-		else if (e.getActionCommand() == "previous") {
-			confFrame.pressedPrevious(confFrame.comboBox.getSelectedIndex());
-		}
-		else if (e.getActionCommand() == "Exit") {
+		if (e.getActionCommand() == "Exit") {
 			confFrame.setVisible(false);
 			confFrame.dispose();
 			System.exit(0);
+		}
+		if(confFrame.page == 0) {
+			if (e.getActionCommand() == "next") {
+				size = confFrame.comboBox.getSelectedIndex();
+				confFrame.pressedNext(size);
+				
+			}
+		}
+		else if (confFrame.page == 1) {
+			if (e.getActionCommand() == "next") {
+				confFrame.pressedNext(size);
+			}
+			if (e.getActionCommand() == "previous") {
+				size = 0;
+				confFrame.pressedPrevious(size);
+			}
+		else if (confFrame.page == 2) {
+			
+		}
+
+			
 		}
 		
 		// TODO Auto-generated method stub
@@ -58,26 +72,41 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		Object source = e.getItemSelectable();
-		if (e.getStateChange() == ItemEvent.SELECTED) {
-		if(source == "pickImage") {
+		
+		//if(source == "pickImage") {
+		if(source == confFrame.pickImage) {
+
 			System.out.println("image picked");
 			confFrame.uploadImageCheckBox();
 		}
-		else if(source == "pickSound") {
+//		else if(source == "pickSound") {
+		if(source == confFrame.pickSound) {
 			confFrame.uploadSoundCheckBox();
 			System.out.println("sound picked");
 
 		}
-		}
-		if (e.getStateChange() == ItemEvent.DESELECTED) {
-			if(source == "pickImage") {
-				System.out.println("image picked");
-				confFrame.uploadImageCheckBox();
-			}
-			else if(source == "pickSound") {
-				confFrame.uploadSoundCheckBox();
-				System.out.println("sound picked");
-			}	
-		}	
+		
+		
+//		if (e.getStateChange() == ItemEvent.SELECTED) {
+//		if(source == "pickImage") {
+//			System.out.println("image picked");
+//			confFrame.uploadImageCheckBox();
+//		}
+//		else if(source == "pickSound") {
+//			confFrame.uploadSoundCheckBox();
+//			System.out.println("sound picked");
+//
+//		}
+//		}
+//		if (e.getStateChange() == ItemEvent.DESELECTED) {
+//			if(source == "pickImage") {
+//				System.out.println("image picked");
+//				confFrame.uploadImageCheckBox();
+//			}
+//			else if(source == "pickSound") {
+//				confFrame.uploadSoundCheckBox();
+//				System.out.println("sound picked");
+//			}	
+//		}	
 	}
 }
