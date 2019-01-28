@@ -32,15 +32,17 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if (e.getActionCommand() == "next") {
 			//confFrame.pressedNext(confFrame.comboBox.getSelectedIndex());
 			confFrame.pressedNext(2);
 
 		}
-		if (e.getActionCommand() == "previous") {
+		else if (e.getActionCommand() == "previous") {
 			confFrame.pressedNext(confFrame.comboBox.getSelectedIndex());
 		}
-		if (e.getActionCommand().equals("exit")) {
+		else if (e.getActionCommand() == "Exit") {
+			System.out.println("Test");
 			confFrame.setVisible(false);
 			confFrame.dispose();
 			System.exit(0);
