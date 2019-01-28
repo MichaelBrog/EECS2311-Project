@@ -55,16 +55,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		else if (e.getActionCommand() == "Previous") {
 			if (ConfigurationAppFrame.page == 1) {
 				first = true;
-				
 			}
 			
 			confFrame.pressedPrevious(size);
 		}
-		
-		
-		// TODO Auto-generated method stub
-		
-		
 	}
 
 	/**
@@ -74,14 +68,15 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * */
 	@Override
 	public void itemStateChanged(ItemEvent e) {
+
 		JCheckBox source = (JCheckBox) e.getItemSelectable();
 
 		if(source.getText() == confFrame.checkToSelfUploadImage.getText()) {
 			confFrame.uploadImageCheckBox();
 		}
 		if(source.getText() == confFrame.checkToSelfUploadSound.getText()) {
-			confFrame.uploadSoundCheckBox();
+			System.out.println("sound picked");
+			System.out.println("why can't I commit");
 		}
 	}
-		
 }
