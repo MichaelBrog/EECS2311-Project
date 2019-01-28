@@ -34,15 +34,12 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getActionCommand() == "next") {
-			//confFrame.pressedNext(confFrame.comboBox.getSelectedIndex());
-			confFrame.pressedNext(2);
-
-		}
-		else if (e.getActionCommand() == "previous") {
 			confFrame.pressedNext(confFrame.comboBox.getSelectedIndex());
 		}
+		else if (e.getActionCommand() == "previous") {
+			confFrame.pressedPrevious(confFrame.comboBox.getSelectedIndex());
+		}
 		else if (e.getActionCommand() == "Exit") {
-			System.out.println("Test");
 			confFrame.setVisible(false);
 			confFrame.dispose();
 			System.exit(0);
@@ -60,9 +57,27 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * */
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-		//if(e.)
-		
+		Object source = e.getItemSelectable();
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+		if(source == "pickImage") {
+			System.out.println("image picked");
+			confFrame.uploadImageCheckBox();
+		}
+		else if(source == "pickSound") {
+			confFrame.uploadSoundCheckBox();
+			System.out.println("sound picked");
+
+		}
+		}
+		if (e.getStateChange() == ItemEvent.DESELECTED) {
+			if(source == "pickImage") {
+				System.out.println("image picked");
+				confFrame.uploadImageCheckBox();
+			}
+			else if(source == "pickSound") {
+				confFrame.uploadSoundCheckBox();
+				System.out.println("sound picked");
+			}	
+		}	
 	}
-	
 }
