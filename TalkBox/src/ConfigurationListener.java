@@ -60,7 +60,8 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			confFrame.pressedPrevious(size);
 		}
 	}
-
+	
+	
 	/**
 	 * Please note: designed for the sound and image check box
 	 * Create Item events when pressing a check box
@@ -80,3 +81,6 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		}
 	}
 }
+
+
+//TO DO: Work on upload image/sound
