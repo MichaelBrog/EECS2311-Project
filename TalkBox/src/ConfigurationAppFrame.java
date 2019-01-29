@@ -34,10 +34,8 @@ public class ConfigurationAppFrame extends JFrame{
 	JLabel labelForImage, labelForSound; 	// The labels for the sound and image buttons
 	JLabel blankSpace = new JLabel(""); 	// Space holder
 	
-	JButton uploadImage;					// A button for the user to upload an image
-	JButton uploadSound;	 				// A button for the user to upload a sound
-	JButton pickImage;						// A button for the user to pick from out image store
-	JButton pickSound;						// A button for the user to pick from our sound store
+	JButton pickImage;						// A button for the user to pick from out image store / upload at check
+	JButton pickSound;						// A button for the user to pick from our sound store / upload at check
 	JCheckBox checkToSelfUploadSound;		// A check box for the user to check if wants to upload his own sound
 	JCheckBox checkToSelfUploadImage;		// A check box for the user to check if wants to upload his own image
 	
@@ -49,7 +47,7 @@ public class ConfigurationAppFrame extends JFrame{
 	JComboBox<String> comboBox = new JComboBox<String>(numbers);  // The user puts the number of buttons he wants. Must be a natural number
 	
 	GroupLayout layout;
-	Container container;					// Container
+
 	
 	// ---------------------------------------------
 	
@@ -96,10 +94,6 @@ public class ConfigurationAppFrame extends JFrame{
 		exit.addActionListener(l);
 		
 		// Initialized for later use:
-		uploadImage = new JButton("Upload Image");
-		uploadImage.addActionListener(l);
-		uploadSound = new JButton("Upload Sound");
-		uploadSound.addActionListener(l);
 		pickImage = new JButton("Pick Image");
 		pickImage.addActionListener(l);
 		pickSound = new JButton("Pick Sound");
@@ -165,8 +159,23 @@ public class ConfigurationAppFrame extends JFrame{
 	/**
 	 * Returns the integer value which represents the number of buttons selected
 	 * */
-	public int insideComboBox() {
-		return this.comboBox.getSelectedIndex();
+	public int getSizeButtons() {
+		return Integer.parseInt((String) this.comboBox.getSelectedItem());
+	}
+	
+	/**
+	 * The method unchecks the check boxes 
+	 * */
+	private void uncheck () 
+	{
+		if (checkToSelfUploadSound.isSelected())
+			checkToSelfUploadSound.setSelected(false);
+		
+		if (checkToSelfUploadImage.isSelected())
+			checkToSelfUploadImage.setSelected(false);
+		
+		uploadImageCheckBox();
+		uploadSoundCheckBox();
 	}
 	
 	/**
@@ -177,43 +186,21 @@ public class ConfigurationAppFrame extends JFrame{
 	 * The method updated the view to go to the next page 
 	 * */
 	public void pressedNext (int size) {
+
 		// If next goes to the last page - special setting
 		if (page == size) {
 			lastPage();
 		}
-		// If next goes to the first initial setting - special settign
+		// If next goes to the first initial setting - special setting
 		else if (page == 0) {
 			firstPage();
 			
-			if (checkToSelfUploadSound.isSelected()) {
-				System.out.println("IF NEXT SOUND");
-				checkToSelfUploadSound.setSelected(false);
-				layout.replace(uploadSound, pickSound);
-			}
-			if (checkToSelfUploadImage.isSelected()) {
-				System.out.println("IF NEXT IMAGE");
-				checkToSelfUploadImage.setSelected(false);
-				layout.replace(uploadImage, pickImage);
-			}
 		}
 		// Middle setting
 		else {
-			firstPage();
-			if (checkToSelfUploadSound.isSelected()) {
-				System.out.println("IF NEXT SOUND");
-				System.out.println("PAGE: " + page);
-				checkToSelfUploadSound.setSelected(false);
-				layout.replace(uploadSound, pickSound);
-			}
-			if (checkToSelfUploadImage.isSelected()) {
-				System.out.println("IF NEXT IMAGE");
-				System.out.println("PAGE: " + page);
-				checkToSelfUploadImage.setSelected(false);
-				layout.replace(uploadImage, pickImage);
-			}
+			uncheck();
 		}
 		
-	//	System.out.println("PAGE: " + page);
 		page ++;
 	}
 	
@@ -234,33 +221,16 @@ public class ConfigurationAppFrame extends JFrame{
 		else if (page == 1) {
 			refresh();
 			initializePanel();
-			if (checkToSelfUploadSound.isSelected()) {
-				checkToSelfUploadSound.setSelected(false);
-				layout.replace(uploadSound, pickSound);
-			}
-			if (checkToSelfUploadImage.isSelected()) {
-				checkToSelfUploadImage.setSelected(false);
-				layout.replace(uploadImage, pickImage);
-			}
+			uncheck();
 		}
 		// Middle setting
-		else {
-			if (checkToSelfUploadSound.isSelected()) {
-				checkToSelfUploadSound.setSelected(false);
-				layout.replace(uploadSound, pickSound);
-			}
-			if (checkToSelfUploadImage.isSelected()) {
-				checkToSelfUploadImage.setSelected(false);
-				layout.replace(uploadImage, pickImage);
-			}
-		}
-		System.out.println("Pre previous: page=" + page);
+		else 
+			uncheck();
+		
 		page --;
-		System.out.println("previous: page=" + page);
 	}
 	
 	private void refresh () {
-		System.out.println("represh");
 		panel.removeAll();
 		panel.revalidate();
 		panel.repaint();
@@ -373,22 +343,25 @@ public class ConfigurationAppFrame extends JFrame{
 	
 	/**
 	 * Pressed on check box of upload image - it updates the look of the panel
+	 * Changes the text on the button
 	 * */
 	public void uploadImageCheckBox () {
 		if (checkToSelfUploadImage.isSelected()) 
-			layout.replace(pickImage, uploadImage);
+			pickImage.setText("Upload Image");
 		else
-			layout.replace(uploadImage, pickImage);
+			pickImage.setText("Pick Image");
 	}
 	
 	/**
 	 * Pressed on check box of upload image - it updates the look of the panel
+	 * Changes the text on the button
 	 * */
 	public void uploadSoundCheckBox () {
 		if (checkToSelfUploadSound.isSelected()) 
-			layout.replace(pickSound, uploadSound);
+			pickSound.setText("Upload Sound");
 		else
-			layout.replace(uploadSound, pickSound);
+			pickSound.setText("Pick Sound");
+			
 	}
 	
 	/**
