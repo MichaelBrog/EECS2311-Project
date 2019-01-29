@@ -14,12 +14,6 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	public static int size = 0;
 	private boolean first = true;
 	//----------------------------------------------------
-	//	####################
-	//	Please use method insideComboBox from ConfigurationAppFrame to get the number of buttons the user wants, 
-	// 		then update field 'size' accordingly
-	//	Should be done when the button 'next' is pressed for the first time (can be verified if page == 0 is true)
-	//	####################
-	
 	
 	/**
 	 * A constructor that calls and initialized the configuration app frame with the current
@@ -44,11 +38,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 
 		else if (e.getActionCommand() == "Next") {
 			if (first) {
-				size =  Integer.valueOf((String) confFrame.comboBox.getSelectedItem());
-				System.out.println("size " + size);
+				size = confFrame.getSizeButtons();
 				first = false;
 			}
-			
+
 			confFrame.pressedNext(size);
 		}
 		
@@ -76,8 +69,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			confFrame.uploadImageCheckBox();
 		}
 		if(source.getText() == confFrame.checkToSelfUploadSound.getText()) {
-			System.out.println("sound picked");
-			System.out.println("why can't I commit");
+			confFrame.uploadSoundCheckBox();
 		}
 	}
 }
