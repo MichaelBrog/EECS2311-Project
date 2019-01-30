@@ -52,6 +52,13 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 			confFrame.pressedPrevious(size);
 		}
+		else if (e.getActionCommand() == "Upload Image") {
+			confFrame.pressedUploadImage();
+		}
+		else if (e.getActionCommand() == "Upload Sound") {
+			confFrame.pressedUploadSound();
+		}
+			
 	}
 
 	/**

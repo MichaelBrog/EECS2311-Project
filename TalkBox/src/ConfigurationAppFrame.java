@@ -1,3 +1,12 @@
+/**
+ * 
+ * Text field - restrict to 100
+ * progres bar
+ * JFilerChooser
+ * 
+ * 
+ * */
+
 
 import java.awt.Container;
 import java.awt.event.ActionListener;
@@ -8,10 +17,15 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 
 public class ConfigurationAppFrame extends JFrame{
@@ -47,8 +61,13 @@ public class ConfigurationAppFrame extends JFrame{
 	JComboBox<String> comboBox = new JComboBox<String>(numbers);  // The user puts the number of buttons he wants. Must be a natural number
 	
 	GroupLayout layout;
+	JTextField text;						// A text field for the user to input number of buttons
 
 	
+	//-- file fields --
+	JFileChooser file; 						// The file system that the client will see in order to  choose sound / image
+	FileNameExtensionFilter filterImage;			// A filter that the client will see so he chooses the correct file format
+	FileNameExtensionFilter filterSound;			// A filter that the client will see so he chooses the correct file format
 	// ---------------------------------------------
 	
 	
@@ -92,6 +111,14 @@ public class ConfigurationAppFrame extends JFrame{
 		next.addActionListener(l);
 		exit = new JButton("Exit");
 		exit.addActionListener(l);
+		text = new JTextField();
+		
+		// ------------ FILE CHANGE ----
+		file = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		filterImage = new FileNameExtensionFilter("PNG and GIF images", "png", "gif");    /////////// CHECK PROPER IMAGE FORMAT
+		filterSound = new FileNameExtensionFilter("mp3 and wav", "mp3", "wav");    		  /////////// CHECK PROPER SOUND FORMAT
+		//------------------------------
+		
 		
 		// Initialized for later use:
 		pickImage = new JButton("Pick Image");
@@ -115,16 +142,17 @@ public class ConfigurationAppFrame extends JFrame{
 	 * */
 	private void initializePanel() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
-		this.setSize(439, 118);
+		this.setSize(455, 118);
 		
 		// Automatic gap insertion
 		layout.setAutoCreateContainerGaps(true);
 		layout.setAutoCreateGaps(true);
 	    
 		
-	    // Initialize components
+	    // Initialize components 
 		title.setText("Welcome to the Configuration Wizard for your Talk Box");
-		labelForTextField.setText("Please select the number of buttons you want to have: ");
+	//	labelForTextField.setText("Please select the number of buttons you want to have: ");
+		labelForTextField.setText("Please put the number of buttons  (1 to 100) default is 1: ");
 		
 		layout.setAutoCreateContainerGaps(true);
 		layout.setAutoCreateGaps(true);
@@ -136,7 +164,7 @@ public class ConfigurationAppFrame extends JFrame{
 						.addComponent(exit))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(blankSpace)
-						.addComponent(comboBox)
+						.addComponent(text)
 						.addComponent(next)
 		));
 		
@@ -147,7 +175,7 @@ public class ConfigurationAppFrame extends JFrame{
 						.addComponent(blankSpace))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(labelForTextField)
-						.addComponent(comboBox))
+						.addComponent(text))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(exit)
 						.addComponent(next)
@@ -160,7 +188,11 @@ public class ConfigurationAppFrame extends JFrame{
 	 * Returns the integer value which represents the number of buttons selected
 	 * */
 	public int getSizeButtons() {
-		return Integer.parseInt((String) this.comboBox.getSelectedItem());
+		//return Integer.parseInt((String) this.comboBox.getSelectedItem());
+		if (Integer.parseInt(text.getText()) > 0 && Integer.parseInt(text.getText()) <= 100)
+			return Integer.parseInt(text.getText());
+		
+		return 1;
 	}
 	
 	/**
@@ -199,6 +231,8 @@ public class ConfigurationAppFrame extends JFrame{
 		// Middle setting
 		else {
 			uncheck();
+			int helper = page + 1;
+			title.setText("Please choose an image and sound for button " + helper);
 		}
 		
 		page ++;
@@ -216,6 +250,8 @@ public class ConfigurationAppFrame extends JFrame{
 		// If the current page is the last page, needs special setting
 		if (page == size + 1) {
 			firstPage();
+			int helper = page - 1;
+			title.setText("Please choose an image and sound for button " + helper);
 		}
 		// If the current page is the first initialized page
 		else if (page == 1) {
@@ -224,9 +260,11 @@ public class ConfigurationAppFrame extends JFrame{
 			uncheck();
 		}
 		// Middle setting
-		else 
+		else {
 			uncheck();
-		
+			int helper = page - 1;
+			title.setText("Please choose an image and sound for button " + helper);
+		}
 		page --;
 	}
 	
@@ -242,14 +280,14 @@ public class ConfigurationAppFrame extends JFrame{
 	 *  Sets the outline of the first page
 	 * */
 	private void firstPage () {
-		title.setText("Please choose an image and sound:");
+		title.setText("Please choose an image and sound for button 1");
 		panel.removeAll();
 		panel.revalidate();
 		panel.repaint();
 		layout = new GroupLayout(panel);
 		panel.setLayout(layout);
 		
-		this.setSize(450, 150);
+		this.setSize(520, 150);
 		
 		layout.setAutoCreateContainerGaps(true);
 		layout.setAutoCreateGaps(true);
@@ -362,6 +400,36 @@ public class ConfigurationAppFrame extends JFrame{
 		else
 			pickSound.setText("Pick Sound");
 			
+	}
+	
+	/**
+	 * The method opens up a 'file chooser' to select an image
+	 * */
+	public void pressedUploadImage () {
+		file.setDialogTitle("Choose an image");
+		file.setAcceptAllFileFilterUsed(false); // ?
+		
+		file.addChoosableFileFilter(filterImage);
+
+		int retV = file.showOpenDialog(null);
+		if (retV == JFileChooser.APPROVE_OPTION) {
+			System.out.println(file.getSelectedFile().getPath());
+		}
+	}
+	
+	/**
+	 * The method opens up a 'file chooser' to select a sound
+	 * */
+	public void pressedUploadSound () {
+		file.setDialogTitle("Choose a sound");
+		file.setAcceptAllFileFilterUsed(false); // ?
+		
+		file.addChoosableFileFilter(filterImage);
+
+		int retV = file.showOpenDialog(null);
+		if (retV == JFileChooser.APPROVE_OPTION) {
+			System.out.println(file.getSelectedFile().getPath());
+		}
 	}
 	
 	/**
