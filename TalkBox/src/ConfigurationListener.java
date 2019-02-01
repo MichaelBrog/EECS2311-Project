@@ -3,6 +3,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.JCheckBox; 
+
 public class ConfigurationListener implements ActionListener, ItemListener{
 	/**
 	 * Implement the Action listener of the pressed buttons/ check box in the configuration app
@@ -10,13 +12,8 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	//------------------ Fields --------------------------
 	ConfigurationAppFrame confFrame;					  // An instance of ConfigurationAppFrame.
 	public static int size = 0;
+	private boolean first = true;
 	//----------------------------------------------------
-	//	####################
-	//	Please use method insideComboBox from ConfigurationAppFrame to get the number of buttons the user wants, 
-	// 		then update field 'size' accordingly
-	//	Should be done when the button 'next' is pressed for the first time (can be verified if page == 0 is true)
-	//	####################
-	
 	
 	/**
 	 * A constructor that calls and initialized the configuration app frame with the current
@@ -38,31 +35,30 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			confFrame.dispose();
 			System.exit(0);
 		}
-		if(confFrame.page == 0) {
-			if (e.getActionCommand() == "next") {
-				size = confFrame.comboBox.getSelectedIndex();
-				confFrame.pressedNext(size);
-				
-			}
-		}
-		else if (confFrame.page == 1) {
-			if (e.getActionCommand() == "next") {
-				confFrame.pressedNext(size);
-			}
-			if (e.getActionCommand() == "previous") {
-				size = 0;
-				confFrame.pressedPrevious(size);
-			}
-		else if (confFrame.page == 2) {
-			
-		}
 
-			
+		else if (e.getActionCommand() == "Next") {
+			if (first) {
+				size = confFrame.getSizeButtons();
+				first = false;
+			}
+
+			confFrame.pressedNext(size);
 		}
 		
-		// TODO Auto-generated method stub
-		
-		
+		else if (e.getActionCommand() == "Previous") {
+			if (ConfigurationAppFrame.page == 1) {
+				first = true;
+			}
+			
+			confFrame.pressedPrevious(size);
+		}
+		else if (e.getActionCommand() == "Upload Image") {
+			confFrame.pressedUploadImage();
+		}
+		else if (e.getActionCommand() == "Upload Sound") {
+			confFrame.pressedUploadSound();
+		}
+			
 	}
 
 	/**
@@ -72,43 +68,14 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * */
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		Object source = e.getItemSelectable();
-		
-		//if(source == "pickImage") {
-		if(source == confFrame.pickImage) {
-			System.out.println("image picked");
+
+		JCheckBox source = (JCheckBox) e.getItemSelectable();
+
+		if(source.getText() == confFrame.checkToSelfUploadImage.getText()) {
 			confFrame.uploadImageCheckBox();
 		}
-//		else if(source == "pickSound") {
-		if(source == confFrame.pickSound) {
+		if(source.getText() == confFrame.checkToSelfUploadSound.getText()) {
 			confFrame.uploadSoundCheckBox();
-			System.out.println("sound picked");
-			System.out.println("why can't I commit");
-
-
 		}
-		
-//hello
-//		if (e.getStateChange() == ItemEvent.SELECTED) {
-//		if(source == "pickImage") {
-//			System.out.println("image picked");
-//			confFrame.uploadImageCheckBox();
-//		}
-//		else if(source == "pickSound") {
-//			confFrame.uploadSoundCheckBox();
-//			System.out.println("sound picked");
-//
-//		}
-//		}
-//		if (e.getStateChange() == ItemEvent.DESELECTED) {
-//			if(source == "pickImage") {
-//				System.out.println("image picked");
-//				confFrame.uploadImageCheckBox();
-//			}
-//			else if(source == "pickSound") {
-//				confFrame.uploadSoundCheckBox();
-//				System.out.println("sound picked");
-//			}	
-//		}	
 	}
 }

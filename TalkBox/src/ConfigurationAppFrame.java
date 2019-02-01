@@ -1,3 +1,12 @@
+/**
+ * 
+ * Text field - restrict to 100
+ * progres bar
+ * JFilerChooser
+ * 
+ * 
+ * */
+
 
 import java.awt.Container;
 import java.awt.event.ActionListener;
@@ -8,10 +17,15 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 
 public class ConfigurationAppFrame extends JFrame{
@@ -34,10 +48,8 @@ public class ConfigurationAppFrame extends JFrame{
 	JLabel labelForImage, labelForSound; 	// The labels for the sound and image buttons
 	JLabel blankSpace = new JLabel(""); 	// Space holder
 	
-	JButton uploadImage;					// A button for the user to upload an image
-	JButton uploadSound;	 				// A button for the user to upload a sound
-	JButton pickImage;						// A button for the user to pick from out image store
-	JButton pickSound;						// A button for the user to pick from our sound store
+	JButton pickImage;						// A button for the user to pick from out image store / upload at check
+	JButton pickSound;						// A button for the user to pick from our sound store / upload at check
 	JCheckBox checkToSelfUploadSound;		// A check box for the user to check if wants to upload his own sound
 	JCheckBox checkToSelfUploadImage;		// A check box for the user to check if wants to upload his own image
 	
@@ -49,8 +61,13 @@ public class ConfigurationAppFrame extends JFrame{
 	JComboBox<String> comboBox = new JComboBox<String>(numbers);  // The user puts the number of buttons he wants. Must be a natural number
 	
 	GroupLayout layout;
-	Container container;					// Container
+	JTextField text;						// A text field for the user to input number of buttons
+
 	
+	//-- file fields --
+	JFileChooser file; 						// The file system that the client will see in order to  choose sound / image
+	FileNameExtensionFilter filterImage;			// A filter that the client will see so he chooses the correct file format
+	FileNameExtensionFilter filterSound;			// A filter that the client will see so he chooses the correct file format
 	// ---------------------------------------------
 	
 	
@@ -72,8 +89,6 @@ public class ConfigurationAppFrame extends JFrame{
 		this.setResizable(false);
 		initializeComponents(l, i);
         initializePanel();	
-        
-       
 	}
 	
 	/**
@@ -92,16 +107,20 @@ public class ConfigurationAppFrame extends JFrame{
 		labelForTextField = new JLabel("");
 		previous = new JButton("Previous");
 		previous.addActionListener(l);
-		next = new JButton("next");
+		next = new JButton("Next");
 		next.addActionListener(l);
 		exit = new JButton("Exit");
 		exit.addActionListener(l);
+		text = new JTextField();
+		
+		// ------------ FILE CHANGE ----
+		file = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		filterImage = new FileNameExtensionFilter("PNG and GIF images", "png", "gif");    /////////// CHECK PROPER IMAGE FORMAT
+		filterSound = new FileNameExtensionFilter("mp3 and wav", "mp3", "wav");    		  /////////// CHECK PROPER SOUND FORMAT
+		//------------------------------
+		
 		
 		// Initialized for later use:
-		uploadImage = new JButton("Upload Image");
-		uploadImage.addActionListener(l);
-		uploadSound = new JButton("Upload Sound");
-		uploadSound.addActionListener(l);
 		pickImage = new JButton("Pick Image");
 		pickImage.addActionListener(l);
 		pickSound = new JButton("Pick Sound");
@@ -123,16 +142,17 @@ public class ConfigurationAppFrame extends JFrame{
 	 * */
 	private void initializePanel() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
-		this.setSize(439, 118);
+		this.setSize(455, 118);
 		
 		// Automatic gap insertion
 		layout.setAutoCreateContainerGaps(true);
 		layout.setAutoCreateGaps(true);
 	    
 		
-	    // Initialize components
+	    // Initialize components 
 		title.setText("Welcome to the Configuration Wizard for your Talk Box");
-		labelForTextField.setText("Please select the number of buttons you want to have: ");
+	//	labelForTextField.setText("Please select the number of buttons you want to have: ");
+		labelForTextField.setText("Please put the number of buttons  (1 to 100) default is 1: ");
 		
 		layout.setAutoCreateContainerGaps(true);
 		layout.setAutoCreateGaps(true);
@@ -144,7 +164,7 @@ public class ConfigurationAppFrame extends JFrame{
 						.addComponent(exit))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(blankSpace)
-						.addComponent(comboBox)
+						.addComponent(text)
 						.addComponent(next)
 		));
 		
@@ -155,7 +175,7 @@ public class ConfigurationAppFrame extends JFrame{
 						.addComponent(blankSpace))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(labelForTextField)
-						.addComponent(comboBox))
+						.addComponent(text))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(exit)
 						.addComponent(next)
@@ -167,8 +187,27 @@ public class ConfigurationAppFrame extends JFrame{
 	/**
 	 * Returns the integer value which represents the number of buttons selected
 	 * */
-	public int insideComboBox() {
-		return this.comboBox.getSelectedIndex();
+	public int getSizeButtons() {
+		//return Integer.parseInt((String) this.comboBox.getSelectedItem());
+		if (Integer.parseInt(text.getText()) > 0 && Integer.parseInt(text.getText()) <= 100)
+			return Integer.parseInt(text.getText());
+		
+		return 1;
+	}
+	
+	/**
+	 * The method unchecks the check boxes 
+	 * */
+	private void uncheck () 
+	{
+		if (checkToSelfUploadSound.isSelected())
+			checkToSelfUploadSound.setSelected(false);
+		
+		if (checkToSelfUploadImage.isSelected())
+			checkToSelfUploadImage.setSelected(false);
+		
+		uploadImageCheckBox();
+		uploadSoundCheckBox();
 	}
 	
 	/**
@@ -179,22 +218,21 @@ public class ConfigurationAppFrame extends JFrame{
 	 * The method updated the view to go to the next page 
 	 * */
 	public void pressedNext (int size) {
+
 		// If next goes to the last page - special setting
-		if (page == size)
+		if (page == size) {
 			lastPage();
-		// If next goes to the first initial setting - special settign
-		else if (page == 0)
+		}
+		// If next goes to the first initial setting - special setting
+		else if (page == 0) {
 			firstPage();
+			
+		}
 		// Middle setting
 		else {
-			if (checkToSelfUploadSound.isSelected()) {
-				checkToSelfUploadSound.setSelected(false);
-				layout.replace(uploadSound, pickSound);
-			}
-			if (checkToSelfUploadImage.isSelected()) {
-				checkToSelfUploadImage.setSelected(false);
-				layout.replace(uploadImage, pickImage);
-			}
+			uncheck();
+			int helper = page + 1;
+			title.setText("Please choose an image and sound for button " + helper);
 		}
 		
 		page ++;
@@ -211,33 +249,26 @@ public class ConfigurationAppFrame extends JFrame{
 	public void pressedPrevious (int size) {
 		// If the current page is the last page, needs special setting
 		if (page == size + 1) {
-			System.out.println("1st if");
 			firstPage();
+			int helper = page - 1;
+			title.setText("Please choose an image and sound for button " + helper);
 		}
 		// If the current page is the first initialized page
 		else if (page == 1) {
-			System.out.println("2nd if");
 			refresh();
 			initializePanel();
+			uncheck();
 		}
 		// Middle setting
 		else {
-			System.out.println("3rd if");
-			if (checkToSelfUploadSound.isSelected()) {
-				checkToSelfUploadSound.setSelected(false);
-				layout.replace(uploadSound, pickSound);
-			}
-			if (checkToSelfUploadImage.isSelected()) {
-				checkToSelfUploadImage.setSelected(false);
-				layout.replace(uploadImage, pickImage);
-			}
+			uncheck();
+			int helper = page - 1;
+			title.setText("Please choose an image and sound for button " + helper);
 		}
-
 		page --;
 	}
 	
 	private void refresh () {
-		System.out.println("represh");
 		panel.removeAll();
 		panel.revalidate();
 		panel.repaint();
@@ -249,14 +280,14 @@ public class ConfigurationAppFrame extends JFrame{
 	 *  Sets the outline of the first page
 	 * */
 	private void firstPage () {
-		title.setText("Please choose an image and sound:");
+		title.setText("Please choose an image and sound for button 1");
 		panel.removeAll();
 		panel.revalidate();
 		panel.repaint();
 		layout = new GroupLayout(panel);
 		panel.setLayout(layout);
 		
-		this.setSize(450, 150);
+		this.setSize(520, 150);
 		
 		layout.setAutoCreateContainerGaps(true);
 		layout.setAutoCreateGaps(true);
@@ -350,28 +381,61 @@ public class ConfigurationAppFrame extends JFrame{
 	
 	/**
 	 * Pressed on check box of upload image - it updates the look of the panel
+	 * Changes the text on the button
 	 * */
 	public void uploadImageCheckBox () {
 		if (checkToSelfUploadImage.isSelected()) 
-			layout.replace(pickImage, uploadImage);
+			pickImage.setText("Upload Image");
 		else
-			layout.replace(uploadImage, pickImage);
+			pickImage.setText("Pick Image");
 	}
 	
 	/**
 	 * Pressed on check box of upload image - it updates the look of the panel
+	 * Changes the text on the button
 	 * */
 	public void uploadSoundCheckBox () {
 		if (checkToSelfUploadSound.isSelected()) 
-			layout.replace(pickSound, uploadSound);
+			pickSound.setText("Upload Sound");
 		else
-			layout.replace(uploadSound, pickSound);
+			pickSound.setText("Pick Sound");
+			
+	}
+	
+	/**
+	 * The method opens up a 'file chooser' to select an image
+	 * */
+	public void pressedUploadImage () {
+		file.setDialogTitle("Choose an image");
+		file.setAcceptAllFileFilterUsed(false); // ?
+		
+		file.addChoosableFileFilter(filterImage);
+
+		int retV = file.showOpenDialog(null);
+		if (retV == JFileChooser.APPROVE_OPTION) {
+			System.out.println(file.getSelectedFile().getPath());
+		}
+	}
+	
+	/**
+	 * The method opens up a 'file chooser' to select a sound
+	 * */
+	public void pressedUploadSound () {
+		file.setDialogTitle("Choose a sound");
+		file.setAcceptAllFileFilterUsed(false); // ?
+		
+		file.addChoosableFileFilter(filterImage);
+
+		int retV = file.showOpenDialog(null);
+		if (retV == JFileChooser.APPROVE_OPTION) {
+			System.out.println(file.getSelectedFile().getPath());
+		}
 	}
 	
 	/**
 	 * A main method to test the view of the configuration app
 	 * */
-	public static void main (String[] args) {
+/*	public static void main (String[] args) {
 		
 		Scanner scan = new Scanner(System.in);
 		ConfigurationAppFrame conf = new ConfigurationAppFrame(null, null);
@@ -406,7 +470,7 @@ public class ConfigurationAppFrame extends JFrame{
 		//conf.pressedPrevious(2);
 		
 		scan.close();
-	}
+	}*/
 	
 }
 
