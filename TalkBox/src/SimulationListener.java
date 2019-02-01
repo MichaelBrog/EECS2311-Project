@@ -24,18 +24,24 @@ public class SimulationListener implements ActionListener{
 		simFrame = new SimulatorFrame(this, n);
 	}
 	
+	public SimulationListener(SimulatorFrame sf)
+	{
+		
+	}
+	
 	
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == "Hi")
+		if (e.getActionCommand() == "Happy")
 		{
 			// TODO Auto-generated method stub
 			// open the sound file as a Java input stream
-		    String file = "Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\hello.mp3";
-		    String music = "hello.mp3";
+			System.out.println("Happy");
+		    String file = "Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Battery.mp3";
+		    String music = "Battery.mp3";
 		    Media hit = new Media(new File(music).toURI().toString());
 		    MediaPlayer mediaPlayer = new MediaPlayer(hit);
 		    mediaPlayer.play();
