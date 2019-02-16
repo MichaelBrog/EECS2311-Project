@@ -65,7 +65,7 @@ public class ConfigurationAppFrame extends JFrame{
 
 	
 	//-- file fields --
-	JFileChooser file; 						// The file system that the client will see in order to  choose sound / image
+	JFileChooser file; 			   			        // The file system that the client will see in order to  choose sound / image
 	FileNameExtensionFilter filterImage;			// A filter that the client will see so he chooses the correct file format
 	FileNameExtensionFilter filterSound;			// A filter that the client will see so he chooses the correct file format
 	// ---------------------------------------------
@@ -116,7 +116,7 @@ public class ConfigurationAppFrame extends JFrame{
 		// ------------ FILE CHANGE ----
 		file = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 		filterImage = new FileNameExtensionFilter("PNG and GIF images", "png", "gif");    /////////// CHECK PROPER IMAGE FORMAT
-		filterSound = new FileNameExtensionFilter("mp3 and wav", "mp3", "wav");    		  /////////// CHECK PROPER SOUND FORMAT
+		filterSound = new FileNameExtensionFilter("mp3 and wav", "mp4", "wav");    		  /////////// CHECK PROPER SOUND FORMAT
 		//------------------------------
 		
 		
@@ -404,8 +404,9 @@ public class ConfigurationAppFrame extends JFrame{
 	
 	/**
 	 * The method opens up a 'file chooser' to select an image
+	 * @return the path of the file chosen
 	 * */
-	public void pressedUploadImage () {
+	public String pressedUploadImage () {
 		file.setDialogTitle("Choose an image");
 		file.setAcceptAllFileFilterUsed(false); // ?
 		
@@ -413,23 +414,27 @@ public class ConfigurationAppFrame extends JFrame{
 
 		int retV = file.showOpenDialog(null);
 		if (retV == JFileChooser.APPROVE_OPTION) {
-			System.out.println(file.getSelectedFile().getPath());
+			return file.getSelectedFile().getPath();
 		}
+		return "";
 	}
 	
 	/**
 	 * The method opens up a 'file chooser' to select a sound
+	 * @return the path of the file chosen 
 	 * */
-	public void pressedUploadSound () {
+	public String pressedUploadSound () {
 		file.setDialogTitle("Choose a sound");
 		file.setAcceptAllFileFilterUsed(false); // ?
 		
-		file.addChoosableFileFilter(filterImage);
+		file.addChoosableFileFilter(filterSound);
 
 		int retV = file.showOpenDialog(null);
 		if (retV == JFileChooser.APPROVE_OPTION) {
-			System.out.println(file.getSelectedFile().getPath());
+			return file.getSelectedFile().getPath();
 		}
+		
+		return "";
 	}
 	
 	/**

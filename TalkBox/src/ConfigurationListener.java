@@ -1,11 +1,17 @@
+/*
+ * write object/ read object
+ * */
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.Serializable;
+import java.nio.file.Path;
 
 import javax.swing.JCheckBox; 
 
-public class ConfigurationListener implements ActionListener, ItemListener{
+public class ConfigurationListener implements ActionListener, ItemListener, TalkBoxConfiguration{
 	/**
 	 * Implement the Action listener of the pressed buttons/ check box in the configuration app
 	 * */
@@ -53,10 +59,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			confFrame.pressedPrevious(size);
 		}
 		else if (e.getActionCommand() == "Upload Image") {
-			confFrame.pressedUploadImage();
+			System.out.println(confFrame.pressedUploadImage());
 		}
 		else if (e.getActionCommand() == "Upload Sound") {
-			confFrame.pressedUploadSound();
+			System.out.println(confFrame.pressedUploadSound());
 		}
 			
 	}
@@ -77,5 +83,41 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		if(source.getText() == confFrame.checkToSelfUploadSound.getText()) {
 			confFrame.uploadSoundCheckBox();
 		}
+	}
+
+	
+	
+	// -------------------------------------------------------------------------------
+	// ------ Following methods implement the TalkBoxConfiguration interface ---------
+	// -------------------------------------------------------------------------------
+	
+	@Override
+	public int getNumberOfAudioButtons() {
+		// TODO Auto-generated method stub
+		return size;
+	}
+
+	@Override
+	public int getNumberOfAudioSets() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTotalNumberOfButtons() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Path getRelativePathToAudioFiles() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String[][] getAudioFileNames() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

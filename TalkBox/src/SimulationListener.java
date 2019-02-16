@@ -74,12 +74,6 @@ public class SimulationListener implements ActionListener{
 //		
 //		
 //	}
-//	
-//	
-//=======
-//
-//>>>>>>> branch 'master' of https://github.com/ryang-123/EECS2311-Project
-	
 
 	
 
