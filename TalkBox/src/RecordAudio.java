@@ -8,7 +8,10 @@ public class RecordAudio implements Runnable{
     static final long RECORD_TIME = 1000;  // 0.5 minute
  
     // path of the wav file
-    File wavFile = new File("//Users/ninayanin//eclipse-workspace//EECS2311-tests//serializingTest//TalkBoxData//RecordAudio.wav");
+    String homeDirectory = System.getProperty("user.dir" );
+    
+    File wavFileM = new File(homeDirectory + "//src//TalkBoxData//RecordAudio.wav");	// mac / linux
+    File wavFileW = new File(homeDirectory + "\\src\\TalkBoxData\\RecordAudio.wav");	// windows
  
     // format of audio file
     AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
@@ -69,7 +72,10 @@ public class RecordAudio implements Runnable{
             System.out.println("Start recording...");
  
             // start recording
-            AudioSystem.write(ais, fileType, wavFile);
+     	      if (System.getProperty("os.name").startsWith("Windows"))
+     	    	 AudioSystem.write(ais, fileType, wavFileW);
+     	      else
+     	    	  AudioSystem.write(ais, fileType, wavFileM);
  
         } catch (LineUnavailableException ex) {
             ex.printStackTrace();
@@ -77,4 +83,5 @@ public class RecordAudio implements Runnable{
             ioe.printStackTrace();
         }
 	}
+	
 }
