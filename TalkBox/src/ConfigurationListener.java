@@ -30,6 +30,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if (e.getActionCommand() == "Exit") {
 			confFrame.setVisible(false);
 			confFrame.dispose();
