@@ -49,6 +49,31 @@ public class SimulationListener implements ActionListener{
 	}
 
 	
+	public SimulationListener(SimulatorFrame sf)
+	{
+		
+	}
+	
+	
+	
+	
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		
+//		if (e.getActionCommand() == "Happy")
+//		{
+//			// TODO Auto-generated method stub
+//			// open the sound file as a Java input stream
+//			System.out.println("Happy");
+//		    String file = "Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Battery.mp3";
+//		    String music = "Battery.mp3";
+//		    Media hit = new Media(new File(music).toURI().toString());
+//		    MediaPlayer mediaPlayer = new MediaPlayer(hit);
+//		    mediaPlayer.play();
+//		}
+//		
+//		
+//	}
 
 	
 
