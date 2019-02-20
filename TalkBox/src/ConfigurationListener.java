@@ -52,6 +52,19 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 			confFrame.pressedPrevious(size);
 		}
+		else if (e.getActionCommand() == "pickImage") {
+
+		}
+		else if (e.getActionCommand() == "pickSound") {
+			
+			confFrame.pressedPrevious(size);
+		}
+		
+		
+		
+		
+		
+		
 	}
 	
 	
