@@ -6,6 +6,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.JOptionPane;
+
+import java.io.File;
+
 public class SimulatorFrame extends JFrame {
 
 	/**
@@ -185,6 +192,7 @@ public class SimulatorFrame extends JFrame {
 			System.out.println("here");
 
 			pics[indexOfButton].setIcon(icon);
+			pics[indexOfButton].addActionListener(new SimulationListener(4));
 			
 			
 		} catch (IndexOutOfBoundsException e) {
@@ -223,13 +231,13 @@ public class SimulatorFrame extends JFrame {
 
 		SimulatorFrame s = new SimulatorFrame(null, 4);
 
-		s.SetButton("Happy", "C:\\Users\\ryann\\git\\EECS2311-Project\\TalkBox\\src\\Happy.jpg", 0);
+		s.SetButton("Happy", "C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Happy.jpg", 0);
 
-		s.SetButton("Sad", "C:\\Users\\ryann\\git\\EECS2311-Project\\TalkBox\\src\\Sad.jpg",
+		s.SetButton("Sad", "C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Sad.jpg",
 
 				1);
 
-		s.SetButton("Angry","C:\\Users\\ryann\\git\\EECS2311-Project\\TalkBox\\src\\Angry.jpg", 2);
+		s.SetButton("Angry","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Angry.jpg", 2);
 
 				//new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
 		//s.SetButton("Perplexed", new ImageIcon("Perplexed.png"), 3);
@@ -242,9 +250,9 @@ public class SimulatorFrame extends JFrame {
 
 				//"C:\\Users\\mostafa\\git\\EECS2311-Project\\TalkBox\\src\\Angry.jpg", 2);
 
-		s.SetButton("Perplexed","C:\\Users\\ryann\\git\\EECS2311-Project\\TalkBox\\src\\Perplexed.jpg", 3);
+		s.SetButton("Perplexed","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Perplexed.jpg", 3);
 
-
+	
 
 
 	}
