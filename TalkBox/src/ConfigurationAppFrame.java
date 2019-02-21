@@ -10,6 +10,7 @@
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.util.Scanner;
 
 import javax.swing.GroupLayout;
@@ -71,10 +72,16 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	JTextField text;						// A text field for the user to input number of buttons
 	
 	//-- file fields --
-	JFileChooser file; 			   			// The file system that the client will see in order to  choose sound / image
+	JFileChooser file_Audio; 			   	// The file system that the client will see in order to  choose sound
+	JFileChooser file_Image; 			   	// The file system that the client will see in order to  choose image
 	FileNameExtensionFilter filterImage;	// A filter that the client will see so he chooses the correct file format
 	FileNameExtensionFilter filterSound;	// A filter that the client will see so he chooses the correct file format
 	
+	String homeDirectory = System.getProperty("user.dir");
+	String saved_audio_path_M = homeDirectory + "/src/soundRepository";	// mac/ linux/ unix
+	String saved_audio_path_W = homeDirectory + "\\src\\soundRepository"; // windows
+	String saved_image_path_M = homeDirectory + "/src/imageRepository";	// mac/ linux/ unix
+	String saved_image_path_W = homeDirectory + "\\src\\imageRepository"; // windows
 	//-- previous options saver --
 	
 	
@@ -124,9 +131,10 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		text = new JTextField();
 		
 		// ------------ FILE CHANGE ----
-		file = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-		filterImage = new FileNameExtensionFilter("PNG and GIF images", "png", "gif");    /////////// CHECK PROPER IMAGE FORMAT
-		filterSound = new FileNameExtensionFilter("mp4 and wav", "mp4", "wav");    		  /////////// CHECK PROPER SOUND FORMAT
+		this.file_Audio = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		this.file_Image = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		filterImage = new FileNameExtensionFilter("PNG, GIF and JPG images", "png", "gif", "jpg");    /////////// CHECK PROPER IMAGE FORMAT
+		filterSound = new FileNameExtensionFilter("mp3 and wav", "mp3", "wav");    		  /////////// CHECK PROPER SOUND FORMAT
 		//------------------------------
 		
 		// Initialized for later use:
@@ -482,7 +490,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 									.addComponent(this.startRecord)
 									.addComponent(this.stopRecord))
 							.addComponent(this.previewSound)
-							.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createSequentialGroup() 
 								.addComponent(previous)
 								.addComponent(next)))
 			);
@@ -522,14 +530,17 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	 * @return the path of the file chosen
 	 * */
 	public String pressedUploadImage () {
-		file.setDialogTitle("Choose an image");
-		file.setAcceptAllFileFilterUsed(false); // ?
-		
-		file.addChoosableFileFilter(filterImage);
 
-		int retV = file.showOpenDialog(null);
+		this.file_Image.setDialogTitle("Choose an image");
+		file_Image.setAcceptAllFileFilterUsed(false); // ?
+		file_Image.changeToParentDirectory();
+		
+		file_Image.addChoosableFileFilter(filterImage);
+		file_Image.setCurrentDirectory(FileSystemView.getFileSystemView().getHomeDirectory());
+
+		int retV = file_Image.showOpenDialog(null);
 		if (retV == JFileChooser.APPROVE_OPTION) {
-			return file.getSelectedFile().getPath();
+			return file_Image.getSelectedFile().getPath();
 		}
 		return "";
 	}
@@ -539,19 +550,61 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	 * @return the path of the file chosen 
 	 * */
 	public String pressedUploadSound () {
-		file.setDialogTitle("Choose a sound");
-		file.setAcceptAllFileFilterUsed(false); // ?
 		
-		file.addChoosableFileFilter(filterSound);
+		this.file_Audio.setDialogTitle("Choose a sound");
+		file_Audio.setAcceptAllFileFilterUsed(false); // ?
+		
+		file_Audio.setCurrentDirectory(FileSystemView.getFileSystemView().getHomeDirectory());
 
-		int retV = file.showOpenDialog(null);
+		file_Audio.addChoosableFileFilter(filterSound);
+
+		int retV = file_Audio.showOpenDialog(null);
 		if (retV == JFileChooser.APPROVE_OPTION) {
-			return file.getSelectedFile().getPath();
+			return file_Audio.getSelectedFile().getPath();
 		}
 		
 		return "";
 	}
 
+	public String pressedPickSound () {
+
+		file_Audio.setDialogTitle("Choose a sound");
+		file_Audio.setAcceptAllFileFilterUsed(false); // ?
+	
+		file_Audio.addChoosableFileFilter(filterSound);
+		
+		if (System.getProperty("os.name").startsWith("Windows"))
+			file_Audio.setCurrentDirectory(new File (this.saved_audio_path_W));
+		else
+			file_Audio.setCurrentDirectory(new File (this.saved_audio_path_M));
+		
+		int retV = file_Audio.showOpenDialog(null);
+		if (retV == JFileChooser.APPROVE_OPTION) {
+			return file_Audio.getSelectedFile().getPath();
+		}
+		
+		return "";
+	}
+	
+	public String pressedPickImage () {
+		file_Image.setDialogTitle("Choose an Image");
+		file_Image.setAcceptAllFileFilterUsed(false); // ?
+	
+		file_Image.addChoosableFileFilter(filterImage);
+		
+		if (System.getProperty("os.name").startsWith("Windows"))
+			file_Image.setCurrentDirectory(new File (this.saved_image_path_W));
+		else
+			file_Image.setCurrentDirectory(new File (this.saved_image_path_M));
+		
+		int retV = file_Image.showOpenDialog(null);
+		if (retV == JFileChooser.APPROVE_OPTION) {
+			return file_Image.getSelectedFile().getPath();
+		}
+		
+		return "";
+	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

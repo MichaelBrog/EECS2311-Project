@@ -12,6 +12,9 @@ import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class SimulatorFrame extends JFrame {
 
@@ -224,9 +227,44 @@ public class SimulatorFrame extends JFrame {
 	 */
 
 	public static void main(String[] args) {
-
+		//This needs to be changed to the number of buttons that will be on the simulator 
 		SimulatorFrame s = new SimulatorFrame(null, 4);
 
+		//Deserializing the file for use here
+		
+		/*
+		ConfigurationAppFrame ConfAppFram = null;
+	      try {
+	         FileInputStream fileIn = new FileInputStream("/ConfigurationAppFrame.ser");
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         ConfAppFram = (ConfigurationAppFrame) in.readObject();
+	         in.close();
+	         fileIn.close();
+	      } catch (IOException i) {
+	         i.printStackTrace();
+	         return;
+	      } catch (ClassNotFoundException c) {
+	         System.out.println("ConfigurationAppFrame class not found");
+	         c.printStackTrace();
+	         return;
+	      }
+		
+		//This needs to be changed to the number of buttons that will be on the simulator 
+		SimulatorFrame s = new SimulatorFrame(null, 4);
+		//SimulatorFrame s = new SimulatorFrame(null, image_location.length);
+		
+		//need to store both the text for the button and the image?
+		
+		//image_location needs to be changed to the appropriate array
+		String[] image_location = new String[50];
+		for(int i = 0; i < image_location.length; i++) {
+			//If we just want the file name can either clip the string
+			//or can use regex to grab it
+			s.SetButton("Button: " + i, image_location[i], i);
+		}
+		*/
+		
+		
 		s.SetButton("Happy", "C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Happy.jpg", 0);
 
 		s.SetButton("Sad", "C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Sad.jpg",
