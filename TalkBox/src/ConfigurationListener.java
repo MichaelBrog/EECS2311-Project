@@ -72,6 +72,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		if (e.getActionCommand() == "Exit") {
 			File file;
 			if (System.getProperty("os.name").startsWith("Windows"))
@@ -85,7 +86,6 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 					file.createNewFile();
 				PrintWriter pt = new PrintWriter(file);
 				pt.println(size);
-				System.out.println("HERE");
 				pt.close();
 				
 			} catch (FileNotFoundException e1) {
@@ -456,6 +456,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	public Path getRelativePathToAudioFiles() {
 		// TODO Auto-generated method stub
 		Path path = FileSystems.getDefault().getPath("TalkBoxData");
+		
 		return path;
 	}
 
@@ -465,7 +466,6 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		
 		return null;
 	}
-
 	
 	// Thread interface
 	@Override
