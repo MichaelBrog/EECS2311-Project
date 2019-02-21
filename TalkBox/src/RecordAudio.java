@@ -23,8 +23,8 @@ public class RecordAudio implements Runnable{
      * Defines an audio format
      */
     AudioFormat getAudioFormat() {
-        float sampleRate = 16000;
-        int sampleSizeInBits = 8;
+        float sampleRate = 44100;
+        int sampleSizeInBits = 16;
         int channels = 1;
         boolean signed = true;
         boolean bigEndian = true;
@@ -32,9 +32,6 @@ public class RecordAudio implements Runnable{
                                              channels, signed, bigEndian);
         return format;
     }
- 
-
-
  
     /**
      * Closes the target data line to finish capturing and recording
@@ -45,7 +42,6 @@ public class RecordAudio implements Runnable{
         System.out.println("Finished");
     }
  
-
     /**
      * Captures the sound and record into a WAV file
      */
