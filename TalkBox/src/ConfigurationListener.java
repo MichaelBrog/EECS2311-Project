@@ -99,7 +99,6 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 //		}
 //			
 //	}
-//>>>>>>> branch 'master' of https://github.com/ryang-123/EECS2311-Project
 
 		}
 		else if (e.getActionCommand() == "pickSound") {
