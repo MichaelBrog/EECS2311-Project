@@ -396,7 +396,6 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 			
 
 		/*JCheckBox source = (JCheckBox) e.getItemSelectable();
-
 		if(source.getText() == confFrame.checkToSelfUploadImage.getText()) {
 			confFrame.uploadImageCheckBox();
 		}
