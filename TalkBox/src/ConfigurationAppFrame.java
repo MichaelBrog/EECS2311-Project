@@ -490,7 +490,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 									.addComponent(this.startRecord)
 									.addComponent(this.stopRecord))
 							.addComponent(this.previewSound)
-							.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createSequentialGroup() 
 								.addComponent(previous)
 								.addComponent(next)))
 			);
