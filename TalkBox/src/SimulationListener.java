@@ -46,8 +46,6 @@ public class SimulationListener implements ActionListener{
 				Clip clip = AudioSystem.getClip();
 				clip.open(audioInput);
 				clip.start();
-				
-				JOptionPane.showMessageDialog(null, "press okay to stop playing");
 			}
 			else
 			{
@@ -89,6 +87,7 @@ public class SimulationListener implements ActionListener{
 //		    mediaPlayer.play();
 //
 //		}
+		
 		
 		String filePath = "test.wav";
 		playMusic(filePath);

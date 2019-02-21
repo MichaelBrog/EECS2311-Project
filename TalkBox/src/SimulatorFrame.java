@@ -183,10 +183,6 @@ public class SimulatorFrame extends JFrame {
 
 
 			ImageIcon icon = new ImageIcon(image);
-			
-			
-			
-			
 
 			pics[indexOfButton].setText(buttonName);
 			System.out.println("here");
@@ -239,16 +235,6 @@ public class SimulatorFrame extends JFrame {
 
 		s.SetButton("Angry","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Angry.jpg", 2);
 
-				//new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
-		//s.SetButton("Perplexed", new ImageIcon("Perplexed.png"), 3);
-	//	SimulatorFrame s = new SimulatorFrame(null, 4);
-	//	s.SetButton("Happy", new ImageIcon("Happy.png"), 0);
-	//	s.SetButton("Sad",new ImageIcon("https://thumbs.dreamstime.com/z/perplexed-expression-real-man-50490656.jpg"),  1);
-	//	s.SetButton("Angry",new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
-	//	s.SetButton("Perplexed",new ImageIcon("Perplexed.png"), 3);
-
-
-				//"C:\\Users\\mostafa\\git\\EECS2311-Project\\TalkBox\\src\\Angry.jpg", 2);
 
 		s.SetButton("Perplexed","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Perplexed.jpg", 3);
 
