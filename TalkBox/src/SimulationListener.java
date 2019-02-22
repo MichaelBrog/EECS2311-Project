@@ -1,6 +1,9 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.sound.*;
 import javax.sound.sampled.AudioInputStream;
@@ -8,6 +11,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 
+/*import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;*/
 
 public class SimulationListener implements ActionListener{
 	/**
@@ -15,7 +20,9 @@ public class SimulationListener implements ActionListener{
 	 * */
 	//------------------ Fields --------------------------
 	SimulatorFrame simFrame;
-	
+	static File[] audio_array;
+	String homeDirectory = System.getProperty("user.dir" );
+	int numberOfButtons = 0;
 	//----------------------------------------------------
 	
 	/**
@@ -23,23 +30,36 @@ public class SimulationListener implements ActionListener{
 	 * 			The number of buttons in the panel
 	 * A constructor that calls and initialized the configuration app frame with the current
 	 * action listener
+	 * @throws IOException 
 	 * */
-	public SimulationListener (int n) {
-		simFrame = new SimulatorFrame(this, n);
+	public SimulationListener () throws IOException {
+		String str = "";
+		if (System.getProperty("os.name").startsWith("Windows"))
+			 str = new String(Files.readAllBytes(Paths.get(homeDirectory + "\\src\\TalkBoxData\\numberOfButtons.txt")));
+		else
+			str = new String(Files.readAllBytes(Paths.get(homeDirectory + "/src/TalkBoxData/numberOfButtons.txt")));
+			
+		System.out.println(str);
+		int numberOfButtons = Integer.parseInt(str);
+		/*audio_array = audio;*/
+		simFrame = new SimulatorFrame(this, numberOfButtons);
 	}
 	
 	
 	
 	
 
-	public static void playMusic(String musicLocation)
+	//public static void playMusic(String musicLocation)
+	public static void playMusic(File musicLocation)
 	{
 	
 		try
 		{
-			File musicPath = new File(musicLocation);
+			//File musicPath = new File(musicLocation);
+			File musicPath = musicLocation;
 			if (musicPath.exists())
 			{
+				
 				AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
 				Clip clip = AudioSystem.getClip();
 				clip.open(audioInput);
@@ -49,7 +69,7 @@ public class SimulationListener implements ActionListener{
 			}
 			else
 			{
-				System.out.println("Can't find file");
+				System.out.println("Can't find file at location: " + musicLocation);
 			}
 		}
 		
@@ -88,13 +108,19 @@ public class SimulationListener implements ActionListener{
 //
 //		}
 		
+		String command_num = e.getActionCommand();
+		int numberOnly= Integer.parseInt(command_num.replaceAll("[^0-9]", ""));
+		System.out.println(numberOnly);
+		
+		
+		
+		
+		
 		String filePath = "test.wav";
-		playMusic(filePath);
+		playMusic(audio_array[numberOnly + 1]);
+
+		//playMusic(filePath);
 		
 		
 	}
 }
-	
-	
-
-	
