@@ -30,7 +30,6 @@ public class SimulationListener implements ActionListener{
 	public SimulationListener (File[] audio) {
 		
 		audio_array = audio;
-		//simFrame = new SimulatorFrame(this, n);
 	}
 	
 	
@@ -53,7 +52,7 @@ public class SimulationListener implements ActionListener{
 				clip.open(audioInput);
 				clip.start();
 				
-				JOptionPane.showMessageDialog(null, "press okay to stop playing");
+				//JOptionPane.showMessageDialog(null, "press okay to stop playing");
 			}
 			else
 			{
@@ -96,19 +95,12 @@ public class SimulationListener implements ActionListener{
 //
 //		}
 		
+		//determines the number of the button by taking the actioncommand which is the image name
+		//Then using regex to take the number out of it, ideally we find a better way to do this
 		String command_num = e.getActionCommand();
 		int numberOnly= Integer.parseInt(command_num.replaceAll("[^0-9]", ""));
-		System.out.println(numberOnly);
-		System.out.println("name of file is " + audio_array[numberOnly - 1].getName());
-		
-		
-		
-		
-		String filePath = "test.wav";
-		playMusic(audio_array[numberOnly - 1]);
 
-		//playMusic(filePath);
-		
+		playMusic(audio_array[numberOnly - 1]);		
 		
 	}
 }
