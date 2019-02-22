@@ -242,10 +242,9 @@ public class SimulatorFrame extends JFrame {
 		SimulatorFrame sim = new SimulatorFrame(null, 4);
 		
 		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
+			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\";  // mac/ linux/ unix
 		else
-			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
-
+			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
 		File[] files = new File(saved_image_path).listFiles();
 
 		for (int k = 0; k < number_of_buttons; k++) {
