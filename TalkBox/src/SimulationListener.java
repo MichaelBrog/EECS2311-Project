@@ -17,6 +17,7 @@ public class SimulationListener implements ActionListener{
 	 * */
 	//------------------ Fields --------------------------
 	SimulatorFrame simFrame;
+	static File[] audio_array;
 	
 	//----------------------------------------------------
 	
@@ -26,30 +27,36 @@ public class SimulationListener implements ActionListener{
 	 * A constructor that calls and initialized the configuration app frame with the current
 	 * action listener
 	 * */
-	public SimulationListener (int n) {
-		simFrame = new SimulatorFrame(this, n);
+	public SimulationListener (File[] audio) {
+		
+		audio_array = audio;
 	}
 	
 	
 	
 	
 
-	public static void playMusic(String musicLocation)
+	//public static void playMusic(String musicLocation)
+	public static void playMusic(File musicLocation)
 	{
 	
 		try
 		{
-			File musicPath = new File(musicLocation);
+			//File musicPath = new File(musicLocation);
+			File musicPath = musicLocation;
 			if (musicPath.exists())
 			{
+				
 				AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
 				Clip clip = AudioSystem.getClip();
 				clip.open(audioInput);
 				clip.start();
+				
+				//JOptionPane.showMessageDialog(null, "press okay to stop playing");
 			}
 			else
 			{
-				System.out.println("Can't find file");
+				System.out.println("Can't find file at location: " + musicLocation);
 			}
 		}
 		
@@ -88,14 +95,12 @@ public class SimulationListener implements ActionListener{
 //
 //		}
 		
-		
-		String filePath = "test.wav";
-		playMusic(filePath);
-		
+		//determines the number of the button by taking the actioncommand which is the image name
+		//Then using regex to take the number out of it, ideally we find a better way to do this
+		String command_num = e.getActionCommand();
+		int numberOnly= Integer.parseInt(command_num.replaceAll("[^0-9]", ""));
+
+		playMusic(audio_array[numberOnly - 1]);		
 		
 	}
 }
-	
-	
-
-	

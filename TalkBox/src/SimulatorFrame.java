@@ -14,8 +14,13 @@ import javax.swing.JOptionPane;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Scanner;
 
 public class SimulatorFrame extends JFrame {
 
@@ -42,11 +47,12 @@ public class SimulatorFrame extends JFrame {
 	JButton[] pics; // An array of buttons. Size initialized by the desired amount of buttons
 
 	JPanel panel; // The used panel
+	SimulatorFrame sim;
+
 
 	// -----------------------------------------
 
 	public SimulatorFrame(ActionListener l, int n) {
-
 		super("FrameDemo");
 
 		initializePanel(l, n);
@@ -62,6 +68,85 @@ public class SimulatorFrame extends JFrame {
 		setLocationRelativeTo(null);
 
 		setVisible(true);
+
+		int number_of_buttons = n;
+		String saved_image_path = "";
+		String homeDirectory = System.getProperty("user.dir");
+		File current_image_file;
+		File current_sound_file;
+		ImageIcon[] image_array = new ImageIcon[n];
+		File[] audio_array = new File[n];
+		ImageIcon image_file;
+		File audio_file = null;
+
+		//changes the location depending on the operating system
+		if (System.getProperty("os.name").startsWith("Windows"))
+			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+		else
+			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
+
+		File[] files = new File(saved_image_path).listFiles();
+
+		//For loop going until the # of buttons in order to match all the images and sounds to the buttons
+		for (int k = 0; k < number_of_buttons; k++) {
+			current_image_file = null;
+			
+			//Finds the correct file name and sets it to current_image_file
+			for (File file : files) {
+				if (file.getName().startsWith("Image_" + (k + 1) + ".ser")) {
+					current_image_file = file;
+				}
+			}
+			current_sound_file = null;
+			//Finds the correct file name and sets it to current_sound_file
+			for (File file : files) {
+				if (file.getName().startsWith("Audio_" + (k + 1) + ".ser")) {
+					current_sound_file = file;
+				}
+			}
+			//deserializing the image file and turning the file to an image and sets it in image_file
+			image_file = null;
+			if (current_image_file != null) {
+				try {
+					FileInputStream fileIn = new FileInputStream(current_image_file.getPath());
+					ObjectInputStream in = new ObjectInputStream(fileIn);
+					image_file = new ImageIcon(ImageIO.read((File) in.readObject()));
+					in.close();
+					fileIn.close();
+				} catch (IOException i) {
+					i.printStackTrace();
+					return;
+				} catch (ClassNotFoundException c) {
+					System.out.println("File class not found");
+					c.printStackTrace();
+					return;
+				}
+				//deserializing the audio file and sets it in audio_file
+				audio_file = null;
+				if (current_sound_file != null) {
+					try {
+						FileInputStream fileIn = new FileInputStream(current_sound_file.getPath());
+						ObjectInputStream in = new ObjectInputStream(fileIn);
+						audio_file = (File) in.readObject();
+						in.close();
+						fileIn.close();
+					} catch (IOException i) {
+						i.printStackTrace();
+						return;
+					} catch (ClassNotFoundException c) {
+						System.out.println("File class not found");
+						c.printStackTrace();
+						return;
+					}
+				}
+				//adding both the image and audio files to an array
+				//The image array might not be needed 
+				audio_array[k] = audio_file;
+				image_array[k] = image_file;
+				
+			this.SetButton(current_image_file.getName(), image_array[k], audio_array, k);
+			}	
+		}
 
 	}
 
@@ -111,17 +196,18 @@ public class SimulatorFrame extends JFrame {
 	 * 
 	 *          the client Associate the action listener l to the buttons ---
 	 * 
-	 *          GridLayout ? ----- >>>>>>> branch 'master' of
-	 * 
-	 *          https://github.com/ryang-123/EECS2311-Project
 	 * 
 	 */
 
 	private void initializePanel(ActionListener l, int n) {
-
+		int row_num = 1;
 		pics = new JButton[n];
 
-		panel = new JPanel(new GridLayout(1, n, 1, 1));
+		
+		if(n > 5) {
+			row_num = (int) (1 + Math.floor(n / 5));
+		}
+		panel = new JPanel(new GridLayout(row_num, n, 5, 5));
 
 		for (int i = 0; i < pics.length; i++) {
 
@@ -182,20 +268,14 @@ public class SimulatorFrame extends JFrame {
 	 */
 
 	//public void SetButton(String buttonName, String image, int indexOfButton) throws IndexOutOfBoundsException {
-	public void SetButton(String buttonName, ImageIcon icon, int indexOfButton) throws IndexOutOfBoundsException {
+	public void SetButton(String buttonName, ImageIcon icon, File[] audio, int indexOfButton) throws IndexOutOfBoundsException {
 		try {
-
-
-
-
 			//ImageIcon icon = new ImageIcon(image);
 
 
 			pics[indexOfButton].setText(buttonName);
-			System.out.println("here");
-
 			pics[indexOfButton].setIcon(icon);
-			pics[indexOfButton].addActionListener(new SimulationListener(4));
+			pics[indexOfButton].addActionListener(new SimulationListener(audio));
 			
 			
 		} catch (IndexOutOfBoundsException e) {
@@ -231,79 +311,34 @@ public class SimulatorFrame extends JFrame {
 	 */
 
 	public static void main(String[] args) {
-		// This needs to be changed to the number of buttons that will be on the
-		// simulator
-		int number_of_buttons = 4;
+		int number_of_buttons = 0;
 		String saved_image_path = "";
 		String homeDirectory = System.getProperty("user.dir");
 		File current_file = null;
-		ImageIcon[] image_array = new ImageIcon[4];
-		ImageIcon image_file;
-
-		SimulatorFrame sim = new SimulatorFrame(null, 4);
-		
+	
 		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
-		else
 			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+		else
+			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 
-		for (int k = 0; k < number_of_buttons; k++) {
+			current_file = null;
+			//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method
 			for (File file : files) {
-				if (file.getName().startsWith("Image_" + (k + 1) + ".ser")) {
+				if (file.getName().endsWith("Buttons" + ".txt")) {
 					current_file = file;
-					System.out.println(file.getName());
-					System.out.println(file.getPath());
-
 				}
-			}
-			image_file = null;
-			if (current_file != null) {
-				try {
-					FileInputStream fileIn = new FileInputStream(current_file.getPath());
-					ObjectInputStream in = new ObjectInputStream(fileIn);
-					//image_file_temp = ImageIO.read((File) in.readObject());
-					image_file = new ImageIcon(ImageIO.read((File) in.readObject()));
-					in.close();
-					fileIn.close();
-				} catch (IOException i) {
-					i.printStackTrace();
-					return;
-				} catch (ClassNotFoundException c) {
-					System.out.println("ConfigurationAppFrame class not found");
-					c.printStackTrace();
-					return;
-				}
-				image_array[k] = image_file;
-				sim.SetButton(current_file.getName(), image_array[k], k);
-			}
+			}		
+		//scanner to scan the file and get an int value for the number of buttons
+		Scanner scan = null;
+		try {
+			scan = new Scanner(current_file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-		
-		//This needs to be changed to the number of buttons that will be on the simulator 
-		//SimulatorFrame s = new SimulatorFrame(null, image_location.length);
-		
-		//need to store both the text for the button and the image?
-//		
-//		//image_location needs to be changed to the appropriate array
-//		String[] image_location = new String[50];
-//		for(int i = 0; i < image_location.length; i++) {
-//			//If we just want the file name can either clip the string
-//			//or can use regex to grab it
-//			s.SetButton("Button: " + i, image_location[i], i);
-//		}
-//		}
-//		
-		//s.SetButton("Happy", "C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Happy.jpg", 0);
 
-		//s.SetButton("Sad", "C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Sad.jpg",
+		number_of_buttons = Integer.parseInt(scan.next());
 
 		//	1);
 
@@ -313,6 +348,7 @@ public class SimulatorFrame extends JFrame {
 		//s.SetButton("Perplexed","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Perplexed.jpg", 3);
 
 	
+		new SimulatorFrame(null, number_of_buttons);
 
 
 	}
