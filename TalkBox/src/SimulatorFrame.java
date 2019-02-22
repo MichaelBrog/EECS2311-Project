@@ -14,8 +14,13 @@ import javax.swing.JOptionPane;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Scanner;
 
 public class SimulatorFrame extends JFrame {
 
@@ -68,36 +73,50 @@ public class SimulatorFrame extends JFrame {
 		
 		
 		
-		int number_of_buttons = 4;
+		int number_of_buttons = n;
 		String saved_image_path = "";
 		String homeDirectory = System.getProperty("user.dir");
-		File current_file = null;
-		ImageIcon[] image_array = new ImageIcon[4];
+		File current_image_file;
+		File current_sound_file;
+		ImageIcon[] image_array = new ImageIcon[n];
+		Clip[] clip_array = new Clip[n];
+		File[] audio_array = new File[n];
 		ImageIcon image_file;
+		Clip audio_file;
+		File file1 = null;
 
-		//SimulatorFrame sim = new SimulatorFrame(null, 4);
 		
 		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
-		else
 			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+		else
+			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 
 		for (int k = 0; k < number_of_buttons; k++) {
-			current_file = null;
+			current_image_file = null;
 			for (File file : files) {
 				if (file.getName().startsWith("Image_" + (k + 1) + ".ser")) {
-					current_file = file;
+					current_image_file = file;
 					System.out.println(file.getName());
 					System.out.println(file.getPath());
 
 				}
 			}
+			current_sound_file = null;
+			for (File file : files) {
+				if (file.getName().startsWith("Audio_" + (k + 1) + ".ser")) {
+					current_sound_file = file;
+					System.out.println(file.getName());
+					System.out.println(file.getPath());
+
+				}
+			}
+			//deserializing the image file 
 			image_file = null;
-			if (current_file != null) {
+			if (current_image_file != null) {
 				try {
-					FileInputStream fileIn = new FileInputStream(current_file.getPath());
+					FileInputStream fileIn = new FileInputStream(current_image_file.getPath());
 					ObjectInputStream in = new ObjectInputStream(fileIn);
 					image_file = new ImageIcon(ImageIO.read((File) in.readObject()));
 					in.close();
@@ -110,9 +129,34 @@ public class SimulatorFrame extends JFrame {
 					c.printStackTrace();
 					return;
 				}
+				//deserializing the audio file 
+				audio_file = null;
+				if (current_sound_file != null) {
+					try {
+						FileInputStream fileIn = new FileInputStream(current_image_file.getPath());
+						ObjectInputStream in = new ObjectInputStream(fileIn);
+						file1 = (File) in.readObject();
+//						AudioInputStream audioInput = AudioSystem.getAudioInputStream(file1);
+//						audio_file = AudioSystem.getClip();
+						in.close();
+						fileIn.close();
+					} catch (IOException i) {
+						i.printStackTrace();
+						return;
+					} catch (ClassNotFoundException c) {
+						System.out.println("File class not found");
+						c.printStackTrace();
+						return;
+					}
+				
+			
+				audio_array[k] = file1;
+					clip_array[k] = audio_file;
 				image_array[k] = image_file;
-			this.SetButton(current_file.getName(), image_array[k], k);
+				
+			this.SetButton(current_image_file.getName(), image_array[k], audio_array, k);
 			}
+			}	
 		}
 
 	}
@@ -234,7 +278,7 @@ public class SimulatorFrame extends JFrame {
 	 */
 
 	//public void SetButton(String buttonName, String image, int indexOfButton) throws IndexOutOfBoundsException {
-	public void SetButton(String buttonName, ImageIcon icon, int indexOfButton) throws IndexOutOfBoundsException {
+	public void SetButton(String buttonName, ImageIcon icon, File[] audio, int indexOfButton) throws IndexOutOfBoundsException {
 		try {
 			//ImageIcon icon = new ImageIcon(image);
 			
@@ -246,7 +290,7 @@ public class SimulatorFrame extends JFrame {
 			System.out.println("here");
 
 			pics[indexOfButton].setIcon(icon);
-			pics[indexOfButton].addActionListener(new SimulationListener(4));
+			pics[indexOfButton].addActionListener(new SimulationListener(audio));
 			
 			
 		} catch (IndexOutOfBoundsException e) {
@@ -280,104 +324,49 @@ public class SimulatorFrame extends JFrame {
 	 * 
 	 * 
 	 */
+	
+	
+	
+	
+	
+	
 
 	public static void main(String[] args) {
-		
-		new SimulatorFrame(null, 4);
-		System.out.println("hi");
-
-		// This needs to be changed to the number of buttons that will be on the
-		// simulator
-//		int number_of_buttons = 4;
-//		String saved_image_path = "";
-//		String homeDirectory = System.getProperty("user.dir");
-//		File current_file = null;
-//		ImageIcon[] image_array = new ImageIcon[4];
-//		ImageIcon image_file;
-//
-//		SimulatorFrame sim = new SimulatorFrame(null, 4);
-//		
-//		if (System.getProperty("os.name").startsWith("Windows"))
-//			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
-//		else
-//			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
-//
-//		File[] files = new File(saved_image_path).listFiles();
-//
-//		for (int k = 0; k < number_of_buttons; k++) {
-//			current_file = null;
-//			for (File file : files) {
-//				if (file.getName().startsWith("Image_" + (k + 1) + ".ser")) {
-//					current_file = file;
-//					System.out.println(file.getName());
-//					System.out.println(file.getPath());
-//
-//				}
-//			}
-//			image_file = null;
-//			if (current_file != null) {
-//				try {
-//					FileInputStream fileIn = new FileInputStream(current_file.getPath());
-//					ObjectInputStream in = new ObjectInputStream(fileIn);
-//					image_file = new ImageIcon(ImageIO.read((File) in.readObject()));
-//					in.close();
-//					fileIn.close();
-//				} catch (IOException i) {
-//					i.printStackTrace();
-//					return;
-//				} catch (ClassNotFoundException c) {
-//					System.out.println("File class not found");
-//					c.printStackTrace();
-//					return;
-//				}
-//				image_array[k] = image_file;
-//			sim.SetButton(current_file.getName(), image_array[k], k);
-//			}
-//		}
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-		
-		//This needs to be changed to the number of buttons that will be on the simulator 
-		//SimulatorFrame s = new SimulatorFrame(null, image_location.length);
-		
-		//need to store both the text for the button and the image?
-//		
-//		//image_location needs to be changed to the appropriate array
-//		String[] image_location = new String[50];
-//		for(int i = 0; i < image_location.length; i++) {
-//			//If we just want the file name can either clip the string
-//			//or can use regex to grab it
-//			s.SetButton("Button: " + i, image_location[i], i);
-//		}
-//		}
-//		
-		//s.SetButton("Happy", "C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Happy.jpg", 0);
-
-		//s.SetButton("Sad", "C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Sad.jpg",
-
-		//	1);
-
-		//s.SetButton("Angry","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Angry.jpg", 2);
-
-				//new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
-		//s.SetButton("Perplexed", new ImageIcon("Perplexed.png"), 3);
-	//	SimulatorFrame s = new SimulatorFrame(null, 4);
-	//	s.SetButton("Happy", new ImageIcon("Happy.png"), 0);
-	//	s.SetButton("Sad",new ImageIcon("https://thumbs.dreamstime.com/z/perplexed-expression-real-man-50490656.jpg"),  1);
-	//	s.SetButton("Angry",new ImageIcon("https://www.improvisedlife.com/cms/wp-content/uploads/2017/11/angry-emoji-1.jpg"), 2);
-	//	s.SetButton("Perplexed",new ImageIcon("Perplexed.png"), 3);
-
-
-				//"C:\\Users\\mostafa\\git\\EECS2311-Project\\TalkBox\\src\\Angry.jpg", 2);
-
-		//s.SetButton("Perplexed","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Perplexed.jpg", 3);
-
+		int number_of_buttons = 0;
+		String saved_image_path = "";
+		String homeDirectory = System.getProperty("user.dir");
+		File current_file = null;
 	
+		if (System.getProperty("os.name").startsWith("Windows"))
+			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+		else
+			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
+
+		File[] files = new File(saved_image_path).listFiles();
+
+			current_file = null;
+			for (File file : files) {
+				if (file.getName().endsWith("Buttons" + ".txt")) {
+					current_file = file;
+					System.out.println(file.getName());
+					System.out.println(file.getPath());
+
+				}
+			}		
+		
+
+		Scanner scan = null;
+		
+		try {
+			scan = new Scanner(current_file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+
+		number_of_buttons = Integer.parseInt(scan.next());
+
+		new SimulatorFrame(null, number_of_buttons);
 
 
 	}

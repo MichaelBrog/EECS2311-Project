@@ -17,6 +17,7 @@ public class SimulationListener implements ActionListener{
 	 * */
 	//------------------ Fields --------------------------
 	SimulatorFrame simFrame;
+	static File[] audio_array;
 	
 	//----------------------------------------------------
 	
@@ -26,20 +27,24 @@ public class SimulationListener implements ActionListener{
 	 * A constructor that calls and initialized the configuration app frame with the current
 	 * action listener
 	 * */
-	public SimulationListener (int n) {
-		simFrame = new SimulatorFrame(this, n);
+	public SimulationListener (File[] audio) {
+		
+		audio_array = audio;
+		//simFrame = new SimulatorFrame(this, n);
 	}
 	
 	
 	
 	
 
-	public static void playMusic(String musicLocation)
+	//public static void playMusic(String musicLocation)
+	public static void playMusic(File musicLocation)
 	{
 	
 		try
 		{
-			File musicPath = new File(musicLocation);
+			//File musicPath = new File(musicLocation);
+			File musicPath = musicLocation;
 			if (musicPath.exists())
 			{
 				AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
@@ -51,7 +56,7 @@ public class SimulationListener implements ActionListener{
 			}
 			else
 			{
-				System.out.println("Can't find file");
+				System.out.println("Can't find file at location: " + musicLocation);
 			}
 		}
 		
@@ -90,8 +95,18 @@ public class SimulationListener implements ActionListener{
 //
 //		}
 		
+		String command_num = e.getActionCommand();
+		int numberOnly= Integer.parseInt(command_num.replaceAll("[^0-9]", ""));
+		System.out.println(numberOnly);
+		
+		
+		
+		
+		
 		String filePath = "test.wav";
-		playMusic(filePath);
+		playMusic(audio_array[numberOnly + 1]);
+
+		//playMusic(filePath);
 		
 		
 	}
