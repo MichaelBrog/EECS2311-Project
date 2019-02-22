@@ -98,9 +98,8 @@ public class SimulationListener implements ActionListener{
 		//determines the number of the button by taking the actioncommand which is the image name
 		//Then using regex to take the number out of it, ideally we find a better way to do this
 		String command_num = e.getActionCommand();
-		int numberOnly= Integer.parseInt(command_num.replaceAll("[^0-9]", ""));
-
-		playMusic(audio_array[numberOnly - 1]);		
+		int numberOnly= Integer.parseInt(command_num);
+		playMusic(audio_array[numberOnly]);		
 		
 	}
 }
