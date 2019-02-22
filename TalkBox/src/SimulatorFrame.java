@@ -200,10 +200,14 @@ public class SimulatorFrame extends JFrame {
 	 */
 
 	private void initializePanel(ActionListener l, int n) {
-
+		int row_num = 1;
 		pics = new JButton[n];
 
-		panel = new JPanel(new GridLayout(1, n, 1, 1));
+		
+		if(n > 5) {
+			row_num = (int) (1 + Math.floor(n / 5));
+		}
+		panel = new JPanel(new GridLayout(row_num, n, 5, 5));
 
 		for (int i = 0; i < pics.length; i++) {
 
