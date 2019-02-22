@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -71,7 +72,30 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		if (e.getActionCommand() == "Exit") {
+			File file;
+			if (System.getProperty("os.name").startsWith("Windows"))
+				file = new File(homeDirectory + "\\src\\TalkBoxData\\numberOfButtons.txt");
+			else
+				file = new File(homeDirectory + "/src/TalkBoxData/numberOfButtons.txt");
+			
+			try {
+				
+				if (!file.exists())
+					file.createNewFile();
+				PrintWriter pt = new PrintWriter(file);
+				pt.println(size);
+				pt.close();
+				
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			confFrame.setVisible(false);
 			confFrame.dispose();
 			System.exit(0);
@@ -432,6 +456,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	public Path getRelativePathToAudioFiles() {
 		// TODO Auto-generated method stub
 		Path path = FileSystems.getDefault().getPath("TalkBoxData");
+		
 		return path;
 	}
 
@@ -441,7 +466,6 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		
 		return null;
 	}
-
 	
 	// Thread interface
 	@Override
