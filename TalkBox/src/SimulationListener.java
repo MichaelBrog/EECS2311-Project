@@ -99,13 +99,13 @@ public class SimulationListener implements ActionListener{
 		String command_num = e.getActionCommand();
 		int numberOnly= Integer.parseInt(command_num.replaceAll("[^0-9]", ""));
 		System.out.println(numberOnly);
-		
+		System.out.println("name of file is " + audio_array[numberOnly - 1].getName());
 		
 		
 		
 		
 		String filePath = "test.wav";
-		playMusic(audio_array[numberOnly + 1]);
+		playMusic(audio_array[numberOnly - 1]);
 
 		//playMusic(filePath);
 		

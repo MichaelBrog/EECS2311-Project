@@ -133,7 +133,7 @@ public class SimulatorFrame extends JFrame {
 				audio_file = null;
 				if (current_sound_file != null) {
 					try {
-						FileInputStream fileIn = new FileInputStream(current_image_file.getPath());
+						FileInputStream fileIn = new FileInputStream(current_sound_file.getPath());
 						ObjectInputStream in = new ObjectInputStream(fileIn);
 						file1 = (File) in.readObject();
 //						AudioInputStream audioInput = AudioSystem.getAudioInputStream(file1);
@@ -148,14 +148,13 @@ public class SimulatorFrame extends JFrame {
 						c.printStackTrace();
 						return;
 					}
-				
-			
+					System.out.println("Audio got to array: " + k);
+				}
 				audio_array[k] = file1;
 					clip_array[k] = audio_file;
 				image_array[k] = image_file;
 				
 			this.SetButton(current_image_file.getName(), image_array[k], audio_array, k);
-			}
 			}	
 		}
 
