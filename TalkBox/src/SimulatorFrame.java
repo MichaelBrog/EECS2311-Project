@@ -42,6 +42,8 @@ public class SimulatorFrame extends JFrame {
 	JButton[] pics; // An array of buttons. Size initialized by the desired amount of buttons
 
 	JPanel panel; // The used panel
+	SimulatorFrame sim;
+
 
 	// -----------------------------------------
 
@@ -62,6 +64,56 @@ public class SimulatorFrame extends JFrame {
 		setLocationRelativeTo(null);
 
 		setVisible(true);
+		
+		
+		
+		
+		int number_of_buttons = 4;
+		String saved_image_path = "";
+		String homeDirectory = System.getProperty("user.dir");
+		File current_file = null;
+		ImageIcon[] image_array = new ImageIcon[4];
+		ImageIcon image_file;
+
+		//SimulatorFrame sim = new SimulatorFrame(null, 4);
+		
+		if (System.getProperty("os.name").startsWith("Windows"))
+			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
+		else
+			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+
+		File[] files = new File(saved_image_path).listFiles();
+
+		for (int k = 0; k < number_of_buttons; k++) {
+			current_file = null;
+			for (File file : files) {
+				if (file.getName().startsWith("Image_" + (k + 1) + ".ser")) {
+					current_file = file;
+					System.out.println(file.getName());
+					System.out.println(file.getPath());
+
+				}
+			}
+			image_file = null;
+			if (current_file != null) {
+				try {
+					FileInputStream fileIn = new FileInputStream(current_file.getPath());
+					ObjectInputStream in = new ObjectInputStream(fileIn);
+					image_file = new ImageIcon(ImageIO.read((File) in.readObject()));
+					in.close();
+					fileIn.close();
+				} catch (IOException i) {
+					i.printStackTrace();
+					return;
+				} catch (ClassNotFoundException c) {
+					System.out.println("File class not found");
+					c.printStackTrace();
+					return;
+				}
+				image_array[k] = image_file;
+			this.SetButton(current_file.getName(), image_array[k], k);
+			}
+		}
 
 	}
 
@@ -230,54 +282,58 @@ public class SimulatorFrame extends JFrame {
 	 */
 
 	public static void main(String[] args) {
+		
+		new SimulatorFrame(null, 4);
+		System.out.println("hi");
+
 		// This needs to be changed to the number of buttons that will be on the
 		// simulator
-		int number_of_buttons = 4;
-		String saved_image_path = "";
-		String homeDirectory = System.getProperty("user.dir");
-		File current_file = null;
-		ImageIcon[] image_array = new ImageIcon[4];
-		ImageIcon image_file;
-
-		SimulatorFrame sim = new SimulatorFrame(null, 4);
-		
-		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
-		else
-			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
-
-		File[] files = new File(saved_image_path).listFiles();
-
-		for (int k = 0; k < number_of_buttons; k++) {
-			for (File file : files) {
-				if (file.getName().startsWith("Image_" + (k + 1) + ".ser")) {
-					current_file = file;
-					System.out.println(file.getName());
-					System.out.println(file.getPath());
-
-				}
-			}
-			image_file = null;
-			if (current_file != null) {
-				try {
-					FileInputStream fileIn = new FileInputStream(current_file.getPath());
-					ObjectInputStream in = new ObjectInputStream(fileIn);
-					//image_file_temp = ImageIO.read((File) in.readObject());
-					image_file = new ImageIcon(ImageIO.read((File) in.readObject()));
-					in.close();
-					fileIn.close();
-				} catch (IOException i) {
-					i.printStackTrace();
-					return;
-				} catch (ClassNotFoundException c) {
-					System.out.println("ConfigurationAppFrame class not found");
-					c.printStackTrace();
-					return;
-				}
-				image_array[k] = image_file;
-				sim.SetButton(current_file.getName(), image_array[k], k);
-			}
-		}
+//		int number_of_buttons = 4;
+//		String saved_image_path = "";
+//		String homeDirectory = System.getProperty("user.dir");
+//		File current_file = null;
+//		ImageIcon[] image_array = new ImageIcon[4];
+//		ImageIcon image_file;
+//
+//		SimulatorFrame sim = new SimulatorFrame(null, 4);
+//		
+//		if (System.getProperty("os.name").startsWith("Windows"))
+//			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
+//		else
+//			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+//
+//		File[] files = new File(saved_image_path).listFiles();
+//
+//		for (int k = 0; k < number_of_buttons; k++) {
+//			current_file = null;
+//			for (File file : files) {
+//				if (file.getName().startsWith("Image_" + (k + 1) + ".ser")) {
+//					current_file = file;
+//					System.out.println(file.getName());
+//					System.out.println(file.getPath());
+//
+//				}
+//			}
+//			image_file = null;
+//			if (current_file != null) {
+//				try {
+//					FileInputStream fileIn = new FileInputStream(current_file.getPath());
+//					ObjectInputStream in = new ObjectInputStream(fileIn);
+//					image_file = new ImageIcon(ImageIO.read((File) in.readObject()));
+//					in.close();
+//					fileIn.close();
+//				} catch (IOException i) {
+//					i.printStackTrace();
+//					return;
+//				} catch (ClassNotFoundException c) {
+//					System.out.println("File class not found");
+//					c.printStackTrace();
+//					return;
+//				}
+//				image_array[k] = image_file;
+//			sim.SetButton(current_file.getName(), image_array[k], k);
+//			}
+//		}
 	      
 	      
 	      
