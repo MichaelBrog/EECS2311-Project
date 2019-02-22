@@ -74,7 +74,7 @@ public class SimulatorFrame extends JFrame {
 		String homeDirectory = System.getProperty("user.dir");
 		File current_image_file;
 		File current_sound_file;
-		ImageIcon[] image_array = new ImageIcon[n];
+		//ImageIcon[] image_array = new ImageIcon[n];
 		File[] audio_array = new File[n];
 		ImageIcon image_file;
 		File audio_file = null;
@@ -142,9 +142,10 @@ public class SimulatorFrame extends JFrame {
 				//adding both the image and audio files to an array
 				//The image array might not be needed 
 				audio_array[k] = audio_file;
-				image_array[k] = image_file;
-				
-			this.SetButton(current_image_file.getName(), image_array[k], audio_array, k);
+				//image_array[k] = image_file;
+				String name = audio_file.getName().substring(0, (int) (audio_file.getName().length() - 4));
+				//this.SetButton(name, image_array[k], audio_array, k);
+				this.SetButton(name, image_file, audio_array, k);
 			}	
 		}
 
@@ -205,7 +206,7 @@ public class SimulatorFrame extends JFrame {
 
 		
 		if(n > 5) {
-			row_num = (int) (1 + Math.floor(n / 5));
+			row_num = (int) ( Math.floor(n / 5));
 		}
 		panel = new JPanel(new GridLayout(row_num, n, 5, 5));
 
@@ -272,6 +273,7 @@ public class SimulatorFrame extends JFrame {
 		try {
 			pics[indexOfButton].setText(buttonName);
 			pics[indexOfButton].setIcon(icon);
+			pics[indexOfButton].setActionCommand(indexOfButton + "");
 			pics[indexOfButton].addActionListener(new SimulationListener(audio));
 			
 			
