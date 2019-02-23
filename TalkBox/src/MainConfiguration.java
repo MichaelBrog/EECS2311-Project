@@ -10,25 +10,33 @@ import java.util.stream.Collectors;
 public class MainConfiguration {
 
 	public static void main(String[] args) {
+		String homeDirectory = System.getProperty("user.dir");
+		//input stream example
+		InputStream inputStream = MainConfiguration.class.getResourceAsStream("/hello.txt");
+		String result = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
+		System.out.println(result);
+		
+		try {
+			Files.createDirectories(Paths.get(homeDirectory + FilePathResource.REL_FILE_PATH));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		//create a class called filepathreasources
+		try {
+			Files.createDirectories(Paths.get("/path/to/directory"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
 		ConfigurationListener conf = new ConfigurationListener();
 		conf.confFrame.setVisible(true);
 		conf.confFrame.pack();
 		
 		
 		//input stream example
-		InputStream inputStream = MainConfiguration.class.getResourceAsStream("/hello.txt");
-		String result = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
-		System.out.println(result);
-		
-		//Files.createDirectories(Paths.get(homeDir + FilePathResource.REL_FILE_PATH));
-		//create a class called filepathreasources
-		
-		try {
-			Files.createDirectories(Paths.get("/path/to/directory"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		
 		//new File("./names.txt");
 
