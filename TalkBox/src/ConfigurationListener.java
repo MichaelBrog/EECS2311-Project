@@ -52,6 +52,15 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	String new_image_path_W = homeDirectory + "\\src\\TalkBoxData\\Image_"; // windows
 	//----------------------------------------------------
 	
+	
+	/*
+	 * files should be accessible, not a hardcoded path 
+	 * getresourcesstream
+	 */
+	
+	
+	
+	
 	/**
 	 * A constructor that calls and initialized the configuration app frame with the current
 	 * action listener

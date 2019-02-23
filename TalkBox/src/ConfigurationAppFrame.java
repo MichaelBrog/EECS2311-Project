@@ -11,6 +11,8 @@
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Scanner;
 
 import javax.swing.GroupLayout;
@@ -26,6 +28,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+
+import junit.framework.Test;
 
 
 public class ConfigurationAppFrame extends JFrame implements Runnable{
@@ -82,7 +86,14 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	String saved_audio_path_W = homeDirectory + "\\src\\soundRepository"; // windows
 	String saved_image_path_M = homeDirectory + "/src/imageRepository";	// mac/ linux/ unix
 	String saved_image_path_W = homeDirectory + "\\src\\imageRepository"; // windows
+	
+	
+	
+	
 	//-- previous options saver --
+	
+	
+	
 	
 	
 	// ---------------------------------------------
