@@ -79,7 +79,7 @@ import javax.swing.JFrame;
 	        
 	        Thread.sleep(1500);
 	        SimulatorFrame sf = new SimulatorFrame(config, config.size);
-	        Thread.sleep(10000);
+	        Thread.sleep(40000);
 	        //sf.sim.panel.setVisible(true);
 			
 			
