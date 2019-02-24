@@ -91,6 +91,12 @@ public class SimulatorFrame extends JFrame {
 			saved_image_path = "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
+		
+		
+		if (!new File(saved_image_path).exists()) {
+			JOptionPane.showMessageDialog(null, "Talk Box data folder named \"imageRepository\" was not found, please reload configurator and ensure simulator is in same folder as \"imageRepository\"");
+		}		
+		
 
 		//For loop going until the # of buttons in order to match all the images and sounds to the buttons
 		for (int k = 0; k < number_of_buttons; k++) {
@@ -340,23 +346,25 @@ public class SimulatorFrame extends JFrame {
 			//saved_image_path = homeDirectory + "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
+		if (new File(saved_image_path).exists()) {
 
-		current_file = null;
-		//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method
-		for (File file : files) {
-			if (file.getName().endsWith("Buttons" + ".txt")) {
-				current_file = file;
+			current_file = null;
+			//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method
+			for (File file : files) {
+				if (file.getName().endsWith("Buttons" + ".txt")) {
+					current_file = file;
+				}
+			}		
+			//scanner to scan the file and get an int value for the number of buttons
+			if(current_file != null) {
+				scan = null;
+				try {
+					scan = new Scanner(current_file);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				number_of_buttons = Integer.parseInt(scan.next());
 			}
-		}		
-		//scanner to scan the file and get an int value for the number of buttons
-		if(current_file != null) {
-			scan = null;
-			try {
-				scan = new Scanner(current_file);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			number_of_buttons = Integer.parseInt(scan.next());
 		}
 		if(number_of_buttons != 0)
 			new SimulatorFrame(null, number_of_buttons);
