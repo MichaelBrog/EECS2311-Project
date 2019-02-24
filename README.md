@@ -19,7 +19,7 @@ Functionality (Basic Explanation):
 A user opens up a configuration app and sets it up based on their specific needs. The configuration is then sent to the
 simulator frame app which outputs and simmulates the TalkBox appropiates, mimicking the physical hardware in the process.
 
-**Note that this set-up porcess can be found in the user manual documentation**
+**Note that this set-up process can be found in the user manual documentation**
 
 Functionality (Detailed Explanation):
 
