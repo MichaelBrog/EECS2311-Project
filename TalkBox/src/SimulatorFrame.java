@@ -12,12 +12,16 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 
+import junit.framework.Test;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
@@ -81,7 +85,8 @@ public class SimulatorFrame extends JFrame {
 
 		//changes the location depending on the operating system
 		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+			//saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+			saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
 		else
 			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
 
@@ -317,30 +322,45 @@ public class SimulatorFrame extends JFrame {
 		String saved_image_path = "";
 		String homeDirectory = System.getProperty("user.dir");
 		File current_file = null;
+		Scanner scan;
+		String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		String decodedPath = "";
+		try {
+			decodedPath = URLDecoder.decode(path, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 	
 		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+			saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
+			//saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
 		else
 			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
+			//saved_image_path = homeDirectory + "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 
-			current_file = null;
-			//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method
-			for (File file : files) {
-				if (file.getName().endsWith("Buttons" + ".txt")) {
-					current_file = file;
-				}
-			}		
+		current_file = null;
+		//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method
+		for (File file : files) {
+			if (file.getName().endsWith("Buttons" + ".txt")) {
+				current_file = file;
+			}
+		}		
 		//scanner to scan the file and get an int value for the number of buttons
-		Scanner scan = null;
-		try {
-			scan = new Scanner(current_file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		if(current_file != null) {
+			scan = null;
+			try {
+				scan = new Scanner(current_file);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			number_of_buttons = Integer.parseInt(scan.next());
 		}
 
-		number_of_buttons = Integer.parseInt(scan.next());
 
 		//	1);
 
@@ -349,9 +369,13 @@ public class SimulatorFrame extends JFrame {
 
 		//s.SetButton("Perplexed","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Perplexed.jpg", 3);
 
-	
-		new SimulatorFrame(null, number_of_buttons);
 
 
+
+
+		if(number_of_buttons != 0)
+			new SimulatorFrame(null, number_of_buttons);
+		else 
+			new SimulatorFrame(null, 0);
 	}
 }
