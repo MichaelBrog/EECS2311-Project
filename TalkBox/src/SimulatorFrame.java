@@ -362,7 +362,7 @@ public class SimulatorFrame extends JFrame {
 				}
 			}		
 			//scanner to scan the file and get an int value for the number of buttons
-			if(current_file != null || !Objects.equals(protocol, "jar")) {
+			//if(current_file != null || !Objects.equals(protocol, "jar")) {
 				scan = null;
 				try {
 					scan = new Scanner(current_file);
@@ -371,7 +371,7 @@ public class SimulatorFrame extends JFrame {
 				}
 				number_of_buttons = Integer.parseInt(scan.next());
 			}
-		}
+	//	}
 
 
 		//	1);
