@@ -45,6 +45,7 @@ public class MainConfiguration {
 		else
 			index = Paths.get(jarDir + serialized_data_folder_M);
 
+
 		    try {
 				Files.walk(index)
 				     .sorted(Comparator.reverseOrder())  // as the file tree is traversed depth-first and that deleted dirs have to be empty  

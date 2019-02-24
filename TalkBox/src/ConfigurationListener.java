@@ -3,6 +3,7 @@
  * */
  
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
@@ -112,6 +114,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		else if (e.getActionCommand() == "Next") {
 			
 			if (first) {
+
 			/*	File dir;
 				if (System.getProperty("os.name").startsWith("Windows"))
 					dir = new File (".\\imageReasource\\TalkBoxData");

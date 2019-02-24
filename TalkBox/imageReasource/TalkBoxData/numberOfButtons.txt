@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+1
+=======
+1
+>>>>>>> branch 'master' of https://github.com/ryang-123/EECS2311-Project

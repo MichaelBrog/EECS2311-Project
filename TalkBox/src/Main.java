@@ -1,10 +1,12 @@
-import java.io.IOException;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-	//	SimulationListener sim = new SimulationListener();
-	}
-}
+		System.out.println("Fun with Git");
+		System.out.println("Hello World+++");
+		System.out.println("No change ::");
+		System.out.println("Hello Darkness my old friend");
+		System.out.println("NOPE");
+	}}
 

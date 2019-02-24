@@ -8,8 +8,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+/*import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;*/
 
 public class SimulationListener implements ActionListener{
 	/**
