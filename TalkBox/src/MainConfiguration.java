@@ -40,9 +40,9 @@ public class MainConfiguration {
 
 		
 		if (System.getProperty("os.name").startsWith("Windows")) 
-			index = Paths.get(jarDir + "\\imageReasource");
+			index = Paths.get(jarDir + "\\imageReasource\\TalkBoxData");
 		else
-			index = Paths.get(jarDir + "/imageReasource");
+			index = Paths.get(jarDir + "/imageReasource/TalkBoxData");
 
 		if (!Files.exists(index)) {
 		    try {
