@@ -48,10 +48,10 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	private boolean pickedSound = false;				// must pick a sound before going next
 	Thread thread;
 	String homeDirectory = System.getProperty("user.dir" );
-	String new_audio_path_M = homeDirectory + "/src/TalkBoxData/Audio_";	// mac/ linux/ unix
-	String new_audio_path_W = homeDirectory + "\\src\\TalkBoxData\\Audio_"; // windows
-	String new_image_path_M = homeDirectory + "/src/TalkBoxData/Image_";	// mac/ linux/ unix
-	String new_image_path_W = homeDirectory + "\\src\\TalkBoxData\\Image_"; // windows
+	String new_audio_path_M =  "./imageReasource/TalkBoxData/Audio_";	// mac/ linux/ unix
+	String new_audio_path_W =   ".\\imageReasource\\TalkBoxData\\Audio_"; // windows
+	String new_image_path_M =   "./imageReasource/TalkBoxData/Image_";	// mac/ linux/ unix
+	String new_image_path_W =   ".\\imageReasource\\TalkBoxData\\Image_"; // windows
 	//----------------------------------------------------
 	
 	
@@ -83,11 +83,12 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getActionCommand() == "Exit") {
+
 			File file;
 			if (System.getProperty("os.name").startsWith("Windows"))
-				file = new File(homeDirectory + "\\src\\TalkBoxData\\numberOfButtons.txt");
+				file = new File(".\\imageReasource\\TalkBoxData\\numberOfButtons.txt");
 			else
-				file = new File(homeDirectory + "/src/TalkBoxData/numberOfButtons.txt");
+				file = new File("./imageReasource/TalkBoxData/numberOfButtons.txt");
 			
 			try {
 				
@@ -113,6 +114,17 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		else if (e.getActionCommand() == "Next") {
 			
 			if (first) {
+
+			/*	File dir;
+				if (System.getProperty("os.name").startsWith("Windows"))
+					dir = new File (".\\imageReasource\\TalkBoxData");
+				else
+					dir = new File ("./imageReasource/TalkBoxData");
+				
+				for(File file: dir.listFiles()) 
+				    if (!file.isDirectory()) 
+				        file.delete();
+				*/
 				size = confFrame.getSizeButtons();
 				this.complete = new boolean[size+1];
 				complete[0] = false;
@@ -277,9 +289,9 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 			String audio_path;
 			
 			if (System.getProperty("os.name").startsWith("Windows"))
-				audio_path = homeDirectory + "\\src\\TalkBoxData\\RecordAudio.wav";
+				audio_path = ".\\imageReasource\\TalkBoxData\\RecordAudio.wav";
 			else
-				audio_path = homeDirectory + "/src/TalkBoxData/RecordAudio.wav";
+				audio_path = "./imageReasource/TalkBoxData/RecordAudio.wav";
 			
 			File soundFile = new File (audio_path);			
 			FileOutputStream output;

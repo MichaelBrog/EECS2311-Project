@@ -1,4 +1,3 @@
-
 import javax.sound.sampled.*;
 import java.io.*;
  
@@ -10,8 +9,8 @@ public class RecordAudio implements Runnable{
     // path of the wav file
     String homeDirectory = System.getProperty("user.dir" );
     
-    File wavFileM = new File(homeDirectory + "//src//TalkBoxData//RecordAudio.wav");	// mac / linux
-    File wavFileW = new File(homeDirectory + "\\src\\TalkBoxData\\RecordAudio.wav");	// windows
+    File wavFileM = new File( "./imageReasource/TalkBoxData/RecordAudio.wav");	// mac / linux
+    File wavFileW = new File( ".\\imageReasource\\TalkBoxData\\RecordAudio.wav");	// windows
  
     // format of audio file
     AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;

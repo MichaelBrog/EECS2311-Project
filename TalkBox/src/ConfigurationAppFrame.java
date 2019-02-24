@@ -1,10 +1,6 @@
 
 /**
  * 
- * Text field - restrict to 100
- * progres bar
- * JFilerChooser
- * 
  * 
  * */
 
@@ -85,15 +81,15 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	FileNameExtensionFilter filterSound;	// A filter that the client will see so he chooses the correct file format
 	
 	String homeDirectory = System.getProperty("user.dir");
-//	String saved_audio_path_M = homeDirectory + "/src/soundRepository";	// mac/ linux/ unix
-//	String saved_audio_path_W = homeDirectory + "\\src\\soundRepository"; // windows
-//	String saved_image_path_M = homeDirectory + "/src/imageRepository";	// mac/ linux/ unix
-//	String saved_image_path_W = homeDirectory + "\\src\\imageRepository"; // windows
-	String saved_audio_path_M = homeDirectory + "/soundRepository";	// mac/ linux/ unix
-	String saved_audio_path_W = homeDirectory + "\\soundRepository"; // windows
-	String saved_image_path_M = homeDirectory + "/imageRepository";	// mac/ linux/ unix
-	String saved_image_path_W = homeDirectory + "\\imageRepository"; // windows
-	
+	String saved_audio_path_M = "./imageReasource/soundRepository";	// mac/ linux/ unix
+	String saved_audio_path_W = ".\\imageReasource\\soundRepository"; // windows
+	String saved_image_path_M = "./imageReasource/imageRepository";	// mac/ linux/ unix
+	String saved_image_path_W = ".\\imageReasource\\imageRepository"; // windows
+/*	String saved_audio_path_M = "./soundRepository";	// mac/ linux/ unix
+	String saved_audio_path_W = ".\\soundRepository"; // windows
+	String saved_image_path_M = "./imageRepository";	// mac/ linux/ unix
+	String saved_image_path_W = ".\\imageRepository"; // windows
+*/	
 	
 	
 	
@@ -591,15 +587,15 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	
 		file_Audio.addChoosableFileFilter(filterSound);
 		
-//		if (System.getProperty("os.name").startsWith("Windows"))
-//			file_Audio.setCurrentDirectory(new File (this.saved_audio_path_W));
-//		else
-//			file_Audio.setCurrentDirectory(new File (this.saved_audio_path_M));
+		if (System.getProperty("os.name").startsWith("Windows"))
+			file_Audio.setCurrentDirectory(new File (this.saved_audio_path_W));
+		else
+			file_Audio.setCurrentDirectory(new File (this.saved_audio_path_M));
 		
 		//This should return the correct file from the input stream
-		File temp_image = getResourceAsFile(this.saved_audio_path_W);
+		//File temp_image = getResourceAsFile(this.saved_audio_path_W);
 		
-		file_Audio.setCurrentDirectory(temp_image);
+		//file_Audio.setCurrentDirectory(temp_image);
 		
 		//InputStream inputStream = MainConfiguration.class.getResourceAsStream(this.saved_audio_path_M);
 
@@ -617,14 +613,14 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	
 		file_Image.addChoosableFileFilter(filterImage);
 		
-//		if (System.getProperty("os.name").startsWith("Windows"))
-//			file_Image.setCurrentDirectory(new File (this.saved_image_path_W));
-//		else
-//			file_Image.setCurrentDirectory(new File (this.saved_image_path_M));
+		if (System.getProperty("os.name").startsWith("Windows"))
+			file_Image.setCurrentDirectory(new File (this.saved_image_path_W));
+		else
+			file_Image.setCurrentDirectory(new File (this.saved_image_path_M));
 		
-		File temp_image = getResourceAsFile(this.saved_image_path_M);
+	//	File temp_image = getResourceAsFile(this.saved_image_path_M);
 		
-		file_Image.setCurrentDirectory(temp_image);
+	//	file_Image.setCurrentDirectory(temp_image);
 
 		int retV = file_Image.showOpenDialog(null);
 		if (retV == JFileChooser.APPROVE_OPTION) {
@@ -706,4 +702,3 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	}*/
 	
 }
-

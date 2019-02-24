@@ -85,10 +85,10 @@ public class SimulatorFrame extends JFrame {
 
 		//changes the location depending on the operating system
 		if (System.getProperty("os.name").startsWith("Windows"))
-			//saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
-			saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
+			saved_image_path =   ".\\imageReasource\\TalkBoxData\\"; // mac/ linux/ unix
+			//saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
 		else
-			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
+			saved_image_path = "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 
@@ -323,22 +323,23 @@ public class SimulatorFrame extends JFrame {
 		String homeDirectory = System.getProperty("user.dir");
 		File current_file = null;
 		Scanner scan;
-		String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		
+	/*	String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		String decodedPath = "";
 		try {
 			decodedPath = URLDecoder.decode(path, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		
 		
 	
 		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
-			//saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+			//saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
+			saved_image_path =   ".\\imageReasource\\TalkBoxData\\"; // mac/ linux/ unix
 		else
-			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
+			saved_image_path =   "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
 			//saved_image_path = homeDirectory + "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
