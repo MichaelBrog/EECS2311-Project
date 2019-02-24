@@ -30,6 +30,7 @@ public class MainConfiguration {
 		CodeSource codeSource = MainConfiguration.class.getProtectionDomain().getCodeSource();
 		File jarFile = null;
 		Path index = null;
+		
 		try {
 			jarFile = new File(codeSource.getLocation().toURI().getPath());
 		} catch (URISyntaxException e1) {
@@ -40,17 +41,9 @@ public class MainConfiguration {
 
 		
 		if (System.getProperty("os.name").startsWith("Windows")) 
-			index = Paths.get(jarDir + "\\imageReasource");
+			index = Paths.get(jarDir + serialized_data_folder_W);
 		else
-			index = Paths.get(jarDir + "/imageReasource");
-
-		if (!Files.exists(index)) {
-		    try {
-				index = Files.createDirectories(index);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
+			index = Paths.get(jarDir + serialized_data_folder_M);
 
 		    try {
 				Files.walk(index)
@@ -71,7 +64,7 @@ public class MainConfiguration {
 					e.printStackTrace();
 				}
 		    }
-		}
+		
 		
 		
 		
