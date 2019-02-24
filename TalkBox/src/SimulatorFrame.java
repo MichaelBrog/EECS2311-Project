@@ -320,14 +320,15 @@ public class SimulatorFrame extends JFrame {
 		String homeDirectory = System.getProperty("user.dir");
 		File current_file = null;
 		Scanner scan;
-		String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		
+	/*	String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		String decodedPath = "";
 		try {
 			decodedPath = URLDecoder.decode(path, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		
 		
 	
