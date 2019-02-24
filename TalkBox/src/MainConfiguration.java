@@ -18,6 +18,14 @@ public class MainConfiguration {
 	public static void main(String[] args) {
 		String homeDirectory = System.getProperty("user.dir");
 		String decodedPath = "";
+		String saved_image_path_W = "\\Talk_Box_Data\\Images"; // windows
+		String saved_image_path_M = "/Talk_Box_Data/Images";	// mac/ linux/ unix
+		String saved_audio_path_W = "\\Talk_Box_Data\\Sound"; // windows
+		String saved_audio_path_M = "/Talk_Box_Data/Sound";	// mac/ linux/ unix
+		String serialized_data_folder_W = "\\Talk_Box_Data\\Serialized_Data";
+		String serialized_data_folder_M = "/Talk_Box_Data/Serialized_Data";
+
+
 		//input stream example
 		
 		String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
@@ -60,12 +68,16 @@ public class MainConfiguration {
 
 		
 		try {
-			//This comment below will work in eclipe 
-			//Files.createDirectories(Paths.get("C://Users//Michael//Desktop//talk box data//test"));
-			
-			//This will not work in eclipse, because it's not a jar 
-			Files.createDirectories(Paths.get(jarDir + "//src//image"));
-			
+			if (System.getProperty("os.name").startsWith("Windows")) {
+				Files.createDirectories(Paths.get(jarDir + saved_image_path_W));
+				Files.createDirectories(Paths.get(jarDir + saved_audio_path_W));
+				Files.createDirectories(Paths.get(jarDir + serialized_data_folder_W));
+			}
+			else {
+				Files.createDirectories(Paths.get(jarDir + saved_image_path_M));
+				Files.createDirectories(Paths.get(jarDir + saved_audio_path_M));
+				Files.createDirectories(Paths.get(jarDir + serialized_data_folder_M));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
