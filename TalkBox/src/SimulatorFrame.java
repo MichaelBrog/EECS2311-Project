@@ -85,10 +85,10 @@ public class SimulatorFrame extends JFrame {
 
 		//changes the location depending on the operating system
 		if (System.getProperty("os.name").startsWith("Windows"))
-			//saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
-			saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
+			saved_image_path =   ".\\imageReasource\\TalkBoxData\\"; // mac/ linux/ unix
+			//saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
 		else
-			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
+			saved_image_path = "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 
@@ -332,10 +332,10 @@ public class SimulatorFrame extends JFrame {
 		
 	
 		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
-			//saved_image_path = homeDirectory + "\\src\\TalkBoxData\\"; // mac/ linux/ unix
+			//saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
+			saved_image_path =   ".\\imageReasource\\TalkBoxData\\"; // mac/ linux/ unix
 		else
-			saved_image_path = homeDirectory + "/src/TalkBoxData/"; // mac/ linux/ unix
+			saved_image_path =   "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
 			//saved_image_path = homeDirectory + "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
