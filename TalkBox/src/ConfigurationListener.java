@@ -149,15 +149,15 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		else if (e.getActionCommand() == "Next") {
 			
 			if (first) {
-				File dir;
-				if (System.getProperty("os.name").startsWith("Windows"))
-					dir = new File (homeDirectory + "\\src\\TalkBoxData");
-				else
-					dir = new File (homeDirectory + "/src/TalkBoxData");
-				
-				for(File file: dir.listFiles()) 
-				    if (!file.isDirectory()) 
-				        file.delete();
+//				File dir;
+//				if (System.getProperty("os.name").startsWith("Windows"))
+//					dir = new File (homeDirectory + "\\src\\TalkBoxData");
+//				else
+//					dir = new File (homeDirectory + "/src/TalkBoxData");
+//				
+//				for(File file: dir.listFiles()) 
+//				    if (!file.isDirectory()) 
+//				        file.delete();
 				
 				size = confFrame.getSizeButtons();
 				this.complete = new boolean[size+1];

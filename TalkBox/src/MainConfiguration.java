@@ -1,8 +1,11 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
@@ -10,6 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.CodeSource;
 import java.util.stream.Collectors;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import junit.framework.Test;
 
@@ -37,24 +43,6 @@ public class MainConfiguration {
 		}
 
 		
-//		InputStream inputStream = MainConfiguration.class.getResourceAsStream("/hello.txt");
-//		
-//		String result = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
-//		System.out.println(result);
-//		
-//		try {
-//			Files.createDirectories(Paths.get(homeDirectory + FilePathResource.REL_FILE_PATH));
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
-		//create a class called filepathreasources
-//		try {
-//			
-//			Files.createDirectories(Paths.get(decodedPath + "//test"));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		
 		
 		CodeSource codeSource = MainConfiguration.class.getProtectionDomain().getCodeSource();
 		File jarFile = null;
@@ -87,14 +75,40 @@ public class MainConfiguration {
 		conf.confFrame.pack();
 		
 		
-		//input stream example
+		printfiles("bye.wav", jarDir + saved_image_path_W + "/bye.wav");
+		
+		
+		
+		
+		
+		
+		
+	}
+	
 
-		
-		//new File("./names.txt");
+	public static void printfiles(String resourcePath, String file_location) {
+	    try {
+	        InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(resourcePath);
+	        if (in == null) {
+		        System.out.println("input is null");
+	            return;
+	        }
+	        File tempFile = new File(file_location);
+        	tempFile.createNewFile();
 
-		
-		
-		
+	        try (FileOutputStream out = new FileOutputStream(tempFile)) {
+	            //copy stream
+	            byte[] buffer = new byte[1024];
+	            int bytesRead;
+	            while ((bytesRead = in.read(buffer)) != -1) {
+	                out.write(buffer, 0, bytesRead);
+	            }
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        System.out.println("exception");
+	        return;
+	    }
 	}
 
 }
