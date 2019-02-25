@@ -24,6 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class SimulatorFrame extends JFrame {
@@ -282,6 +283,9 @@ public class SimulatorFrame extends JFrame {
 	//public void SetButton(String buttonName, String image, int indexOfButton) throws IndexOutOfBoundsException {
 	public void SetButton(String buttonName, ImageIcon icon, File[] audio, int indexOfButton) throws IndexOutOfBoundsException {
 		try {
+			//ImageIcon icon = new ImageIcon(image);
+
+
 			pics[indexOfButton].setText(buttonName);
 			pics[indexOfButton].setIcon(icon);
 			pics[indexOfButton].setActionCommand(indexOfButton + "");
@@ -326,6 +330,8 @@ public class SimulatorFrame extends JFrame {
 		String homeDirectory = System.getProperty("user.dir");
 		File current_file = null;
 		Scanner scan;
+		String protocol = SimulatorFrame.class.getResource("").getProtocol();
+
 		
 	/*	String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		String decodedPath = "";
@@ -356,7 +362,7 @@ public class SimulatorFrame extends JFrame {
 				}
 			}		
 			//scanner to scan the file and get an int value for the number of buttons
-			if(current_file != null) {
+			//if(current_file != null || !Objects.equals(protocol, "jar")) {
 				scan = null;
 				try {
 					scan = new Scanner(current_file);
@@ -365,7 +371,20 @@ public class SimulatorFrame extends JFrame {
 				}
 				number_of_buttons = Integer.parseInt(scan.next());
 			}
-		}
+	//	}
+
+
+		//	1);
+
+		//s.SetButton("Angry","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Angry.jpg", 2);
+
+
+		//s.SetButton("Perplexed","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Perplexed.jpg", 3);
+
+
+
+
+
 		if(number_of_buttons != 0)
 			new SimulatorFrame(null, number_of_buttons);
 		else 
