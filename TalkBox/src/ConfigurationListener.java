@@ -142,13 +142,13 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				page_counter ++;
 				pickedSound = false;
 				pickedImage = false;
-		}
+			}
 			
 		}
 		else if (e.getActionCommand() == "Pick Sound") {
 			String audio_path = confFrame.pressedPickSound();
 			
-			File imageFile = new File (audio_path);			
+			File audioFile = new File (audio_path);			
 			FileOutputStream output;
 			
 			try {
@@ -158,7 +158,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 					output = new FileOutputStream(new_audio_path_M + page_counter + ".ser");
 				
 				ObjectOutputStream objOutput = new ObjectOutputStream(output);
-				objOutput.writeObject(imageFile);
+				objOutput.writeObject(audioFile);
 				objOutput.close();
 				
 				pickedSound = true;
@@ -177,7 +177,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		else if (e.getActionCommand() == "Pick Image") {
 			
 			String image_path = confFrame.pressedPickImage();
-			File soundFile = new File (image_path);			
+			File imageFile = new File (image_path);			
 			FileOutputStream output;
 			
 			try {
@@ -187,7 +187,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 					output = new FileOutputStream(new_image_path_M + page_counter + ".ser");
 				
 				ObjectOutputStream objOutput = new ObjectOutputStream(output);
-				objOutput.writeObject(soundFile);
+				objOutput.writeObject(imageFile);
 				objOutput.close();
 				pickedImage = true;
 				
