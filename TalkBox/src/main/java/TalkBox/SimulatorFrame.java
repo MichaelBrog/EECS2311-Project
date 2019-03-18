@@ -30,12 +30,6 @@ import java.util.Scanner;
 
 public class SimulatorFrame extends JFrame {
 
-	/**
-	
-	 * 
-	
-	 */
-
 	private static final long serialVersionUID = 1L;
 
 	/**

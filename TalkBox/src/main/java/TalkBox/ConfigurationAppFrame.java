@@ -220,7 +220,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	 * A popup error for the user to see when input is invalid
 	 */
 	public void popupError () {
-		JOptionPane.showMessageDialog(null, "Invalid input");
+		JOptionPane.showMessageDialog(null, "Invalid input. The input should be a natural number");
 	}
 	
 	/**
