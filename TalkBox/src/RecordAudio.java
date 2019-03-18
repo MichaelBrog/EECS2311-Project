@@ -1,3 +1,4 @@
+package main.java.TalkBox;
 import javax.sound.sampled.*;
 import java.io.*;
  
@@ -5,12 +6,14 @@ import java.io.*;
 public class RecordAudio implements Runnable{
     // record duration, in milliseconds
     static final long RECORD_TIME = 1000;  // 0.5 minute
+    public int place;
  
     // path of the wav file
     String homeDirectory = System.getProperty("user.dir" );
-    
-    File wavFileM = new File( "./imageReasource/TalkBoxData/RecordAudio.wav");	// mac / linux
-    File wavFileW = new File( ".\\imageReasource\\TalkBoxData\\RecordAudio.wav");	// windows
+    String wavStrM = "./imageReasource/TalkBoxData/RecordAudio_";
+    String wavStrW = ".\\imageReasource\\TalkBoxData\\RecordAudio_";
+   // File wavFileM = new File( "./imageReasource/TalkBoxData/RecordAudio_");	// mac / linux
+    //File wavFileW = new File( ".\\imageReasource\\TalkBoxData\\RecordAudio.wav");	// windows
  
     // format of audio file
     AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
@@ -38,14 +41,21 @@ public class RecordAudio implements Runnable{
     void finish() {
         line.stop();
         line.close();
+        
         System.out.println("Finished");
     }
  
+    public void run(int index) {
+    	this.place = index;
+    	run();
+    }
+    
     /**
      * Captures the sound and record into a WAV file
      */
 	@Override
 	public void run() {
+		
 		// TODO Auto-generated method stub
 		try {
             AudioFormat format = getAudioFormat();
@@ -65,12 +75,17 @@ public class RecordAudio implements Runnable{
             AudioInputStream ais = new AudioInputStream(line);
  
             System.out.println("Start recording...");
- 
+           
+            //File wavFileM = new File(wavStrM + place + ".wav");
             // start recording
-     	      if (System.getProperty("os.name").startsWith("Windows"))
+     	      if (System.getProperty("os.name").startsWith("Windows")) {
+     	    	 File wavFileW = new File(wavStrW + place + ".wav");
      	    	 AudioSystem.write(ais, fileType, wavFileW);
-     	      else
+     	      }
+     	      else { 
+     	    	 File wavFileM = new File(wavStrM + place + ".wav");
      	    	  AudioSystem.write(ais, fileType, wavFileM);
+     	      }
  
         } catch (LineUnavailableException ex) {
             ex.printStackTrace();
