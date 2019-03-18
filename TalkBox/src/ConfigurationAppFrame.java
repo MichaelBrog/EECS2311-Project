@@ -1,3 +1,4 @@
+package main.java.TalkBox;
 
 /**
  * 
@@ -21,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
@@ -28,7 +30,7 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-import junit.framework.Test;
+//import junit.framework.Test;
 
 
 public class ConfigurationAppFrame extends JFrame implements Runnable{
@@ -47,8 +49,8 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	JLabel labelForImage, labelForSound; 	// The labels for the sound and image buttons
 	JLabel blankSpace = new JLabel(""); 	// Space holder
 	
-	JButton pickImage;						// A button for the user to pick from out image store / upload at check
-	JButton pickSound;						// A button for the user to pick from our sound store / upload at check
+	public JButton pickImage;						// A button for the user to pick from out image store / upload at check
+	public JButton pickSound;						// A button for the user to pick from our sound store / upload at check
 	JButton startRecord;					// A button to start recording
 	JButton stopRecord;					    // A button to stop recording
 	boolean recordSelected = false;			// set to true if recording was selected. Adjust panel view accordingly
@@ -57,14 +59,14 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 //	JCheckBox checkToSelfUploadImage;		// A check box for the user to check if wants to upload his own image
 	
 	String[] dropDownImageStrings = {"", "Pick Image", "Upload Image"};
-	JComboBox<String> dropDownImage = new JComboBox<String>(dropDownImageStrings);
+	public JComboBox<String> dropDownImage = new JComboBox<String>(dropDownImageStrings);
 	String[] dropDownSoundStrings = {"", "Pick Sound", "Upload Sound" , "Record Sound"};
-	JComboBox<String> dropDownSound = new JComboBox<String>(dropDownSoundStrings);
-	JButton previewImage;					// preview the image the user chose
-	JButton previewSound;					// preview the sound the user chose
+	public JComboBox<String> dropDownSound = new JComboBox<String>(dropDownSoundStrings);
+	public JButton previewImage;					// preview the image the user chose
+	public JButton previewSound;					// preview the sound the user chose
 	
 	
-	JButton next;							// A button to go to the next page
+	public JButton next;							// A button to go to the next page
 	JButton previous;						// A button to go to the previous page
 	JButton exit;							// A button to exit
 	
@@ -72,11 +74,11 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	JComboBox<String> comboBox = new JComboBox<String>(numbers);  // The user puts the number of buttons he wants. Must be a natural number
 	*/
 	GroupLayout layout;
-	JTextField text;						// A text field for the user to input number of buttons
+	public JTextField text;						// A text field for the user to input number of buttons
 	
 	//-- file fields --
-	JFileChooser file_Audio; 			   	// The file system that the client will see in order to  choose sound
-	JFileChooser file_Image; 			   	// The file system that the client will see in order to  choose image
+	public JFileChooser file_Audio; 			   	// The file system that the client will see in order to  choose sound
+	public JFileChooser file_Image; 			   	// The file system that the client will see in order to  choose image
 	FileNameExtensionFilter filterImage;	// A filter that the client will see so he chooses the correct file format
 	FileNameExtensionFilter filterSound;	// A filter that the client will see so he chooses the correct file format
 	
@@ -85,19 +87,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	String saved_audio_path_W = ".\\imageReasource\\soundRepository"; // windows
 	String saved_image_path_M = "./imageReasource/imageRepository";	// mac/ linux/ unix
 	String saved_image_path_W = ".\\imageReasource\\imageRepository"; // windows
-/*	String saved_audio_path_M = "./soundRepository";	// mac/ linux/ unix
-	String saved_audio_path_W = ".\\soundRepository"; // windows
-	String saved_image_path_M = "./imageRepository";	// mac/ linux/ unix
-	String saved_image_path_W = ".\\imageRepository"; // windows
-*/	
-	
-	
-	
-	//-- previous options saver --
-	
-	
-	
-	
+
 	
 	// ---------------------------------------------
 	// ---------------------------------------------
@@ -227,6 +217,13 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	}
 	
 	/**
+	 * A popup error for the user to see when input is invalid
+	 */
+	public void popupError () {
+		JOptionPane.showMessageDialog(null, "Invalid input. The input should be a natural number");
+	}
+	
+	/**
 	 * @return the integer value which represents the number of buttons selected
 	 * If the representation is not an integer - returns 0 for invalid input
 	 * */
@@ -235,6 +232,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 			if (Integer.parseInt(text.getText()) > 0 && Integer.parseInt(text.getText()) <= 100)
 				return Integer.parseInt(text.getText());
 		}
+		this.popupError();
 		return 0;
 		//return Integer.parseInt((String) this.comboBox.getSelectedItem()); if combo box
 	}
