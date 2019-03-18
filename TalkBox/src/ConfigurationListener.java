@@ -1,3 +1,4 @@
+package main.java.TalkBox;
 /*
  * write object/ read object
  * */
@@ -38,7 +39,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	 * Implement the Action listener of the pressed buttons/ check box in the configuration app
 	 * */
 	//------------------ Fields --------------------------
-	ConfigurationAppFrame confFrame;					  // An instance of ConfigurationAppFrame.
+	public ConfigurationAppFrame confFrame;					  // An instance of ConfigurationAppFrame.
 	RecordAudio record;
 	public static int size = 0;
 	private boolean complete[];
@@ -79,6 +80,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	 * */
 
 	@SuppressWarnings("deprecation")
+	//@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -127,15 +129,15 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				*/
 				size = confFrame.getSizeButtons();
 				this.complete = new boolean[size+1];
-				complete[0] = false;
+				this.complete[0] = false;
 				
 				if (size != 0) {
 					first = false;
-					complete[0] = true;
+					this.complete[0] = true;
 				}
 			}
 			
-			if (complete[page_counter] || (pickedSound && pickedImage)) {
+			if (this.complete[page_counter] || (pickedSound && pickedImage)) {
 				if (size != 0) {
 					confFrame.pressedNext(size);
 					confFrame.dropDownImage.setSelectedIndex(0);
@@ -145,13 +147,13 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				page_counter ++;
 				pickedSound = false;
 				pickedImage = false;
-		}
+			}
 			
 		}
 		else if (e.getActionCommand() == "Pick Sound") {
 			String audio_path = confFrame.pressedPickSound();
 			
-			File imageFile = new File (audio_path);			
+			File audioFile = new File (audio_path);			
 			FileOutputStream output;
 			
 			try {
@@ -161,7 +163,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 					output = new FileOutputStream(new_audio_path_M + page_counter + ".ser");
 				
 				ObjectOutputStream objOutput = new ObjectOutputStream(output);
-				objOutput.writeObject(imageFile);
+				objOutput.writeObject(audioFile);
 				objOutput.close();
 				
 				pickedSound = true;
@@ -180,7 +182,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		else if (e.getActionCommand() == "Pick Image") {
 			
 			String image_path = confFrame.pressedPickImage();
-			File soundFile = new File (image_path);			
+			File imageFile = new File (image_path);			
 			FileOutputStream output;
 			
 			try {
@@ -190,7 +192,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 					output = new FileOutputStream(new_image_path_M + page_counter + ".ser");
 				
 				ObjectOutputStream objOutput = new ObjectOutputStream(output);
-				objOutput.writeObject(soundFile);
+				objOutput.writeObject(imageFile);
 				objOutput.close();
 				pickedImage = true;
 				
@@ -275,7 +277,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 			
 			thread = new Thread(new Runnable() {
             public void run() {
-              record.run();
+              record.run(page_counter);
               
             }
         });
@@ -284,14 +286,14 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		}
 		else if (e.getActionCommand() == "Stop Recording") {
 			record.finish();
-			thread.stop();
-		
+			thread.interrupt();
+			 
 			String audio_path;
 			
 			if (System.getProperty("os.name").startsWith("Windows"))
-				audio_path = ".\\imageReasource\\TalkBoxData\\RecordAudio.wav";
+				audio_path = ".\\imageReasource\\TalkBoxData\\RecordAudio" + page_counter + ".wav";
 			else
-				audio_path = "./imageReasource/TalkBoxData/RecordAudio.wav";
+				audio_path = "./imageReasource/TalkBoxData/RecordAudio_"+ page_counter + ".wav";
 			
 			File soundFile = new File (audio_path);			
 			FileOutputStream output;
@@ -327,6 +329,8 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 						fileIn = new FileInputStream(new_audio_path_W + page_counter + ".ser");
 					else
 						fileIn = new FileInputStream(new_audio_path_M + page_counter + ".ser");
+					
+					System.out.println("preview : " + new_audio_path_M + page_counter + ".ser");
 					
 					 ObjectInputStream in = new ObjectInputStream(fileIn);
 				     File input = (File) in.readObject();
