@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Scanner;
@@ -87,7 +88,10 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	String saved_audio_path_W = ".\\imageReasource\\soundRepository"; // windows
 	String saved_image_path_M = "./imageReasource/imageRepository";	// mac/ linux/ unix
 	String saved_image_path_W = ".\\imageReasource\\imageRepository"; // windows
-
+	
+	JTextField buttonName;		// The text field the user will use to write the name of the button
+	String[] buttonNames;
+	JLabel labelForButtonName;	// the label for the button
 	
 	// ---------------------------------------------
 	// ---------------------------------------------
@@ -126,6 +130,8 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	private void initializeComponents (ActionListener l, ItemListener i) {
 		title = new JLabel();
 		labelForTextField = new JLabel("");
+		labelForButtonName = new JLabel("Give a name to the button: ");
+		buttonName = new JTextField();
 		previous = new JButton("Previous");
 		previous.addActionListener(l);
 		next = new JButton("Next");
@@ -237,21 +243,6 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		//return Integer.parseInt((String) this.comboBox.getSelectedItem()); if combo box
 	}
 	
-/*	*//**
-	 * The method unchecks the check boxes 
-	 * *//*
-	private void uncheck () 
-	{
-		if (checkToSelfUploadSound.isSelected())
-			checkToSelfUploadSound.setSelected(false);
-		
-		if (checkToSelfUploadImage.isSelected())
-			checkToSelfUploadImage.setSelected(false);
-		
-	//	uploadImageCheckBox();
-	//	uploadSoundCheckBox();
-	}
-	*/
 	/**
 	 * @param size
 	 * 			The number of buttons the user works with 
@@ -260,15 +251,21 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	 * The method updated the view to go to the next page 
 	 * */
 	public void pressedNext (int size) {
-
 		// If next goes to the last page - special setting
 		if (page == size) {
 			lastPage();
+			buttonNames[page-1] = buttonName.getText();
 			page ++;
 		}
 		// If next goes to the first initial setting - special setting
 		else if (page == 0) {
+			buttonNames = new String[size];
+			// set initial names to null
+			for (int i = 0; i < buttonNames.length; i ++)
+				buttonNames[i] = "";
+				
 			page ++;
+			buttonName.setText("");
 			firstPage();
 			
 		}
@@ -276,6 +273,9 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		else {
 			
 			//uncheck();
+			buttonNames[page-1] = buttonName.getText();
+			
+			buttonName.setText(buttonNames[page]);
 			int helper = page + 1;
 			if (this.recordSelected) {
 				recordSelected = false;
@@ -295,11 +295,14 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	 * 
 	 * */
 	public void pressedPrevious (int size) {
+		
 		// If the current page is the last page, needs special setting
 		if (page == size + 1) {
 			firstPage();
+		//	buttonName.setText(buttonNames[page-1]);
 			int helper = page - 1;
 			title.setText("Please choose an image and sound for button " + helper);
+			buttonName.setText(buttonNames[page-2]);
 		}
 		// If the current page is the first initialized page
 		else if (page == 1) {
@@ -316,6 +319,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 				repaintForRecord();
 			}
 			title.setText("Please choose an image and sound for button " + helper);
+			buttonName.setText(buttonNames[page-2]);
 		}
 		page --;
 	}
@@ -333,6 +337,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	 * */
 	private void firstPage () {
 		title.setText("Please choose an image and sound for button " + (page));
+		
 		panel.removeAll();
 		panel.revalidate();
 		panel.repaint();
@@ -340,7 +345,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		panel.setLayout(layout);
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		
-		this.setSize(520, 190);
+		this.setSize(520, 220);
 		
 		layout.setAutoCreateContainerGaps(true);
 		layout.setAutoCreateGaps(true);
@@ -351,12 +356,14 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 						.addComponent(dropDownImage)
 						.addComponent(pickImage)
 						.addComponent(this.previewImage)
+						.addComponent(this.labelForButtonName)
 						.addComponent(exit))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(blankSpace)
 						.addComponent(dropDownSound)
 						.addComponent(pickSound)
 						.addComponent(this.previewSound)
+						.addComponent(this.buttonName)
 						.addGroup(layout.createSequentialGroup()
 							.addComponent(previous)
 							.addComponent(next)))
@@ -378,6 +385,9 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 				.addGroup(layout.createParallelGroup()
 						.addComponent(this.previewImage)
 						.addComponent(this.previewSound))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(this.labelForButtonName)
+						.addComponent(this.buttonName))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(exit)
 						.addGroup(layout.createParallelGroup()
@@ -437,8 +447,43 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		);
 		
 	}
-/*	
-	*//**
+	
+	/**
+	 * The method returns the text in the button
+	 * @return
+	 */
+	public String getText () {
+		return this.buttonName.getText();
+	}
+	
+	/**
+	 * The method prints the button names into a file called names
+	 * @throws IOException 
+	 */
+	public void printNamesToFile () throws IOException {
+		File names;
+		if (System.getProperty("os.name").startsWith("Windows"))
+			names = new File (".\\imageReasource\\TalkBoxData\\names.txt");
+		else
+			names = new File ("./imageReasource/TalkBoxData/names.txt");
+		
+		if (!names.exists()) 
+			names.createNewFile();
+		
+	/*	for(File file: names.listFiles()) 
+		    if (!file.isDirectory()) 
+		        file.delete();*/
+		
+		PrintWriter pt = new PrintWriter(names);
+
+		for (int i = 0; i < this.buttonNames.length; i ++) 
+			pt.println(buttonNames[i]);
+		
+		pt.close();
+	}
+	
+	
+	/**
 	 * Picked from the image drop down menu
 	 * Changes the text on the button
 	  */

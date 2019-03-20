@@ -13,11 +13,14 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 
+import java.io.BufferedReader;
+
 //import junit.framework.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -52,7 +55,7 @@ public class SimulatorFrame extends JFrame {
 
 	// -----------------------------------------
 
-	public SimulatorFrame(ActionListener l, int n) {
+	public SimulatorFrame(ActionListener l, int n) throws IOException {
 		super("FrameDemo");
 
 		initializePanel(l, n);
@@ -93,7 +96,25 @@ public class SimulatorFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "Talk Box data folder named \"imageRepository\" was not found, please reload configurator and ensure simulator is in same folder as \"imageRepository\"");
 		}		
 		
-
+		
+		File namesReader;
+		
+		if (System.getProperty("os.name").startsWith("Windows"))
+			namesReader = new File (".\\imageReasource\\TalkBoxData\\names.txt");
+		else
+			namesReader = new File ("./imageReasource/TalkBoxData/names.txt");
+		
+		if (!namesReader.exists()) {
+			JOptionPane.showMessageDialog(null, "There isn't any available configuration yet");
+			return;
+		}
+		
+		FileReader fr = new FileReader(namesReader);
+		BufferedReader br = new BufferedReader(fr);
+		String[] name = new String [number_of_buttons];
+		
+		
+		
 		//For loop going until the # of buttons in order to match all the images and sounds to the buttons
 		for (int k = 0; k < number_of_buttons; k++) {
 			current_image_file = null;
@@ -150,11 +171,19 @@ public class SimulatorFrame extends JFrame {
 				//The image array might not be needed 
 				audio_array[k] = audio_file;
 				//image_array[k] = image_file;
-				String name = audio_file.getName().substring(0, (int) (audio_file.getName().length() - 4));
+
+				
+				name[k] = br.readLine();
+				
+				
+				
 				//this.SetButton(name, image_array[k], audio_array, k);
-				this.SetButton(name, image_file, audio_array, k);
+				this.SetButton(name[k], image_file, audio_array, k);
 			}	
 		}
+		
+		br.close();
+		fr.close();
 
 	}
 
@@ -314,12 +343,13 @@ public class SimulatorFrame extends JFrame {
 	 * 
 	 * 
 	 * A main method to test the view of the simulator app
+	 * @throws IOException 
 	 * 
 	 * 
 	 * 
 	 */
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		int number_of_buttons = 0;
 		String saved_image_path = "";
 		String homeDirectory = System.getProperty("user.dir");
@@ -375,8 +405,6 @@ public class SimulatorFrame extends JFrame {
 
 
 		//s.SetButton("Perplexed","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Perplexed.jpg", 3);
-
-
 
 
 

@@ -47,6 +47,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	private boolean first = true;
 	private boolean pickedImage = false;				// must pick an image before pressing next
 	private boolean pickedSound = false;				// must pick a sound before going next
+	private boolean pickedName = false;
 	Thread thread;
 	String homeDirectory = System.getProperty("user.dir" );
 	String new_audio_path_M =  "./imageReasource/TalkBoxData/Audio_";	// mac/ linux/ unix
@@ -99,6 +100,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				PrintWriter pt = new PrintWriter(file);
 				pt.println(size);
 				pt.close();
+				confFrame.printNamesToFile();
 				
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -117,7 +119,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 			
 			if (first) {
 
-			/*	File dir;
+				File dir;
 				if (System.getProperty("os.name").startsWith("Windows"))
 					dir = new File (".\\imageReasource\\TalkBoxData");
 				else
@@ -126,7 +128,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				for(File file: dir.listFiles()) 
 				    if (!file.isDirectory()) 
 				        file.delete();
-				*/
+				
 				size = confFrame.getSizeButtons();
 				this.complete = new boolean[size+1];
 				this.complete[0] = false;
@@ -135,9 +137,12 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 					first = false;
 					this.complete[0] = true;
 				}
+			}else {
+				if (!confFrame.getText().equals(""))
+					pickedName = true;
 			}
 			
-			if (this.complete[page_counter] || (pickedSound && pickedImage)) {
+			if (this.complete[page_counter] || (pickedSound && pickedImage && pickedName)) {
 				if (size != 0) {
 					confFrame.pressedNext(size);
 					confFrame.dropDownImage.setSelectedIndex(0);
@@ -147,6 +152,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				page_counter ++;
 				pickedSound = false;
 				pickedImage = false;
+				pickedName = false;
 			}
 			
 		}
