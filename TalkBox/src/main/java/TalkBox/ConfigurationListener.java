@@ -41,7 +41,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	//------------------ Fields --------------------------
 	public ConfigurationAppFrame confFrame;					  // An instance of ConfigurationAppFrame.
 	RecordAudio record;
-	public static int size = 0;
+	public static int size = 0;								// the number of buttons in the simulation app
 	private boolean complete[];
 	private int page_counter = 0;
 	private boolean first = true;
@@ -420,6 +420,46 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		       
 			}
 		}// preview image
+		else if (e.getActionCommand() == "Demo") {
+			
+			File file;
+			if (System.getProperty("os.name").startsWith("Windows"))
+				file = new File(".\\imageReasource\\TalkBoxData\\numberOfButtons.txt");
+			else
+				file = new File("./imageReasource/TalkBoxData/numberOfButtons.txt");
+			
+			try {
+				
+				if (!file.exists())
+					file.createNewFile();
+				PrintWriter pt = new PrintWriter(file);
+				pt.println(size);
+				pt.close();
+				confFrame.printNamesToFile();
+				
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			
+			
+			this.thread = new Thread(new Runnable() {
+				public void run() {
+				try {
+					System.out.println("I am here!");
+					SimulationListener sim = new SimulationListener(size);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("I am in an error section");
+					e.printStackTrace();
+				}
+			}});
+			thread.start();
+		}
 	}
 
 	/**
@@ -449,14 +489,6 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 			confFrame.resetDropMenu();
 		}
 			
-
-		/*JCheckBox source = (JCheckBox) e.getItemSelectable();
-		if(source.getText() == confFrame.checkToSelfUploadImage.getText()) {
-			confFrame.uploadImageCheckBox();
-		}
-		if(source.getText() == confFrame.checkToSelfUploadSound.getText()) {
-			confFrame.uploadSoundCheckBox();
-		}*/
 	}
 
 	

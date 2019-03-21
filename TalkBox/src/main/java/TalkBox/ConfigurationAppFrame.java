@@ -92,6 +92,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	JTextField buttonName;		// The text field the user will use to write the name of the button
 	String[] buttonNames;
 	JLabel labelForButtonName;	// the label for the button
+	JButton demo;	// a button the user will push and redirected to the simulation app
 	
 	// ---------------------------------------------
 	// ---------------------------------------------
@@ -129,6 +130,8 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	 * */
 	private void initializeComponents (ActionListener l, ItemListener i) {
 		title = new JLabel();
+		demo = new JButton("Demo");
+		demo.addActionListener(l);
 		labelForTextField = new JLabel("");
 		labelForButtonName = new JLabel("Give a name to the button: ");
 		buttonName = new JTextField();
@@ -422,14 +425,14 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 				.addGroup(layout.createParallelGroup()
 						.addComponent(title)
 						.addComponent(blankSpace)
-						.addComponent(blankSpace))
+						.addComponent(demo))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(blankSpace)
 						.addComponent(blankSpace)
 						.addComponent(exit))
 		);
 		
-		layout.linkSize(SwingConstants.HORIZONTAL, previous, exit);
+		layout.linkSize(SwingConstants.HORIZONTAL, previous, exit, demo);
 		 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup()
@@ -442,7 +445,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 						.addComponent(blankSpace))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(previous)
-						.addComponent(blankSpace)
+						.addComponent(demo)
 						.addComponent(exit))
 		);
 		

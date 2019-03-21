@@ -2,6 +2,7 @@ package main.java.TalkBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 //import javax.sound.*;
 import javax.sound.sampled.AudioInputStream;
@@ -33,10 +34,24 @@ public class SimulationListener implements ActionListener{
 		audio_array = audio;
 	}
 	
+	/**
+	 * 
+	 * @param numButtons 
+	 * 				the number of buttons in the simulation app
+	 * 
+	 * @throws IOException
+	 */
+	public SimulationListener (int num) throws IOException {
+		
+		simFrame = new SimulatorFrame(this, num);
+	}
+	
+	public SimulationListener () throws IOException {
+		
+		simFrame = new SimulatorFrame(this, 0);
+	}
 	
 	
-	
-
 	//public static void playMusic(String musicLocation)
 	public static void playMusic(File musicLocation)
 	{

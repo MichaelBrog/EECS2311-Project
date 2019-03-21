@@ -51,7 +51,7 @@ public class SimulatorFrame extends JFrame {
 
 	JPanel panel; // The used panel
 	SimulatorFrame sim;
-
+	int number_of_buttons = 0;	// the number of buttons the user picked
 
 	// -----------------------------------------
 
@@ -62,7 +62,7 @@ public class SimulatorFrame extends JFrame {
 
 		// frame.getContentPane().setBackground(Color.cyan);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		setPreferredSize(new Dimension(1100, 300));
 
@@ -72,7 +72,7 @@ public class SimulatorFrame extends JFrame {
 
 		setVisible(true);
 
-		int number_of_buttons = n;
+		number_of_buttons = n;
 		String saved_image_path = "";
 		String homeDirectory = System.getProperty("user.dir");
 		File current_image_file;
@@ -338,7 +338,10 @@ public class SimulatorFrame extends JFrame {
 
 	}
 
-	/**
+	
+	
+	
+/*	/**
 	 * 
 	 * 
 	 * 
@@ -348,7 +351,7 @@ public class SimulatorFrame extends JFrame {
 	 * 
 	 * 
 	 */
-
+/*
 	public static void main(String[] args) throws IOException {
 		int number_of_buttons = 0;
 		String saved_image_path = "";
@@ -358,14 +361,14 @@ public class SimulatorFrame extends JFrame {
 		String protocol = SimulatorFrame.class.getResource("").getProtocol();
 
 		
-	/*	String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		String decodedPath = "";
 		try {
 			decodedPath = URLDecoder.decode(path, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}*/
+		}
 		
 		
 	
@@ -412,5 +415,5 @@ public class SimulatorFrame extends JFrame {
 			new SimulatorFrame(null, number_of_buttons);
 		else 
 			new SimulatorFrame(null, 0);
-	}
+	}*/
 }
