@@ -94,6 +94,9 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	JLabel labelForButtonName;	// the label for the button
 	JButton demo;	// a button the user will push and redirected to the simulation app
 	
+	JLabel configurationName;
+	JTextField textConfName;
+	
 	// ---------------------------------------------
 	// ---------------------------------------------
 	
@@ -109,7 +112,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	public ConfigurationAppFrame (ActionListener l, ItemListener i){
 		super("Configuration App Wizard");
 		
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		JFrame.setDefaultLookAndFeelDecorated(true);							
 		
 		this.setResizable(false);
@@ -142,6 +145,8 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		exit = new JButton("Exit");
 		exit.addActionListener(l);
 		text = new JTextField();
+		configurationName = new JLabel("Name your profile:");
+		textConfName = new JTextField();
 		
 		// ------------ FILE CHANGE ----
 		this.file_Audio = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -183,7 +188,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	 * */
 	private void initializePanel() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
-		this.setSize(455, 118);
+		this.setSize(455, 148);
 		
 		// Automatic gap insertion
 		layout.setAutoCreateContainerGaps(true);
@@ -192,20 +197,18 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		
 	    // Initialize components 
 		title.setText("Welcome to the Configuration Wizard for your Talk Box");
-	//	labelForTextField.setText("Please select the number of buttons you want to have: ");
 		labelForTextField.setText("Please put the number of buttons  (1 to 100) default is 1: ");
-		
-		layout.setAutoCreateContainerGaps(true);
-		layout.setAutoCreateGaps(true);
 	    
 		layout.setHorizontalGroup(layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup()
 						.addComponent(title)
 						.addComponent(labelForTextField)
+						.addComponent(this.configurationName)
 						.addComponent(exit))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(blankSpace)
 						.addComponent(text)
+						.addComponent(this.textConfName)
 						.addComponent(next)
 		));
 		
@@ -218,6 +221,9 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 						.addComponent(labelForTextField)
 						.addComponent(text))
 				.addGroup(layout.createParallelGroup()
+						.addComponent(this.configurationName)
+						.addComponent(this.textConfName))
+				.addGroup(layout.createParallelGroup()
 						.addComponent(exit)
 						.addComponent(next)
 		));
@@ -228,8 +234,8 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	/**
 	 * A popup error for the user to see when input is invalid
 	 */
-	public void popupError () {
-		JOptionPane.showMessageDialog(null, "Invalid input. The input should be a natural number");
+	public void popupError (String err) {
+		JOptionPane.showMessageDialog(null, err);
 	}
 	
 	/**
@@ -241,9 +247,16 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 			if (Integer.parseInt(text.getText()) > 0 && Integer.parseInt(text.getText()) <= 100)
 				return Integer.parseInt(text.getText());
 		}
-		this.popupError();
+		this.popupError("Invalid input. The input for number of buttons should be a natural number and you need to name your profile");
 		return 0;
 		//return Integer.parseInt((String) this.comboBox.getSelectedItem()); if combo box
+	}
+	
+	public String getProfileName() {
+		if (this.textConfName.getText().equals(""))
+			this.popupError("Invalid input. The input for number of buttons should be a natural number and you need to name your profile");
+		
+		return this.textConfName.getText();
 	}
 	
 	/**

@@ -54,6 +54,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	String new_audio_path_W =   ".\\imageReasource\\TalkBoxData\\Audio_"; // windows
 	String new_image_path_M =   "./imageReasource/TalkBoxData/Image_";	// mac/ linux/ unix
 	String new_image_path_W =   ".\\imageReasource\\TalkBoxData\\Image_"; // windows
+	String profileName;
 	//----------------------------------------------------
 	
 	
@@ -71,6 +72,8 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	 * */
 	public ConfigurationListener () {
 		confFrame = new ConfigurationAppFrame(this, this);     //Creates the GUI and associated this listeners with buttons and check boxes
+		confFrame.setVisible(true);
+		confFrame.pack();
 		record = new RecordAudio();
 		
 	}
@@ -87,32 +90,34 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 
 		if (e.getActionCommand() == "Exit") {
 
-			File file;
-			if (System.getProperty("os.name").startsWith("Windows"))
-				file = new File(".\\imageReasource\\TalkBoxData\\numberOfButtons.txt");
-			else
-				file = new File("./imageReasource/TalkBoxData/numberOfButtons.txt");
+			if (page_counter != 0) {
 			
-			try {
+				File file;
+				if (System.getProperty("os.name").startsWith("Windows"))
+					file = new File(".\\imageReasource\\TalkBoxData\\numberOfButtons.txt");
+				else
+					file = new File("./imageReasource/TalkBoxData/numberOfButtons.txt");
 				
-				if (!file.exists())
-					file.createNewFile();
-				PrintWriter pt = new PrintWriter(file);
-				pt.println(size);
-				pt.close();
-				confFrame.printNamesToFile();
-				
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				try {
+					
+					if (!file.exists())
+						file.createNewFile();
+					PrintWriter pt = new PrintWriter(file);
+					pt.println(size);
+					pt.close();
+					confFrame.printNamesToFile();
+					
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-			
 			confFrame.setVisible(false);
 			confFrame.dispose();
-			System.exit(0);
+		
 		}
 
 		else if (e.getActionCommand() == "Next") {
@@ -130,17 +135,24 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				        file.delete();
 				
 				size = confFrame.getSizeButtons();
+				profileName = confFrame.getProfileName();
+				
+				
+				
 				this.complete = new boolean[size+1];
 				this.complete[0] = false;
 				
-				if (size != 0) {
+				if (size != 0 && !profileName.equals("")) {
 					first = false;
 					this.complete[0] = true;
 				}
 			}else {
-				if (!confFrame.getText().equals(""))
+				if (!confFrame.getText().equals(""))		
 					pickedName = true;
 			}
+			
+			if (pickedSound && pickedImage && pickedName)
+				complete[page_counter] = true;
 			
 			if (this.complete[page_counter] || (pickedSound && pickedImage && pickedName)) {
 				if (size != 0) {
@@ -152,8 +164,12 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				page_counter ++;
 				pickedSound = false;
 				pickedImage = false;
-				pickedName = false;
+				
 			}
+			else {
+				confFrame.popupError("You need to choose an audio, an image and name it");
+			}
+			pickedName = false;
 			
 		}
 		else if (e.getActionCommand() == "Pick Sound") {
@@ -173,9 +189,6 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				objOutput.close();
 				
 				pickedSound = true;
-				
-				if (pickedSound && pickedImage)
-					complete[page_counter] = true;
 				
 				
 				
@@ -202,8 +215,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				objOutput.close();
 				pickedImage = true;
 				
-				if (pickedSound && pickedImage)
-					complete[page_counter] = true;
+				
 				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -315,8 +327,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				objOutput.close();
 				pickedSound = true;
 				
-				if (pickedSound && pickedImage)
-					complete[page_counter] = true;
+			
 				
 				
 			}
@@ -438,10 +449,8 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				confFrame.printNamesToFile();
 				
 			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
@@ -450,11 +459,8 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 			this.thread = new Thread(new Runnable() {
 				public void run() {
 				try {
-					System.out.println("I am here!");
 					SimulationListener sim = new SimulationListener(size);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					System.out.println("I am in an error section");
 					e.printStackTrace();
 				}
 			}});
