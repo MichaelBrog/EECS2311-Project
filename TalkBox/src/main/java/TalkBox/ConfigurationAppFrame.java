@@ -40,7 +40,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	 * */
 	// ---------------------------------------------
 	// ------------- Fields ------------------------
-	public static int page = 0; 			// The 'page' the user is currently in.
+	public  int page = 0; 			// The 'page' the user is currently in.
 	
 	JPanel panel; 							// The first panel we will work with
 	
@@ -289,6 +289,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		else {
 			
 			//uncheck();
+			System.out.println(page);
 			buttonNames[page-1] = buttonName.getText();
 			
 			buttonName.setText(buttonNames[page]);
@@ -544,7 +545,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 			panel.setLayout(layout);
 			JFrame.setDefaultLookAndFeelDecorated(true);
 			
-			this.setSize(610, 190);
+			this.setSize(610, 220);
 			
 			layout.setAutoCreateContainerGaps(true);
 			layout.setAutoCreateGaps(true);
@@ -555,6 +556,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 							.addComponent(dropDownImage)
 							.addComponent(pickImage)
 							.addComponent(this.previewImage)
+							.addComponent(this.labelForButtonName)
 							.addComponent(exit))
 					.addGroup(layout.createParallelGroup()
 							.addComponent(blankSpace)
@@ -563,6 +565,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 									.addComponent(this.startRecord)
 									.addComponent(this.stopRecord))
 							.addComponent(this.previewSound)
+							.addComponent(this.buttonName)
 							.addGroup(layout.createSequentialGroup() 
 								.addComponent(previous)
 								.addComponent(next)))
@@ -586,6 +589,9 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 					.addGroup(layout.createParallelGroup()
 							.addComponent(this.previewImage)
 							.addComponent(this.previewSound))
+					.addGroup(layout.createParallelGroup()
+							.addComponent(this.labelForButtonName)
+							.addComponent(this.buttonName))
 					.addGroup(layout.createParallelGroup()
 							.addComponent(exit)
 							.addGroup(layout.createParallelGroup()

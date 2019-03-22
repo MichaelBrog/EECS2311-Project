@@ -225,7 +225,8 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		
 		else if (e.getActionCommand() == "Previous") {
 			page_counter --;
-			if (ConfigurationAppFrame.page == 1) {
+			//if (ConfigurationAppFrame.page == 1) {
+			if (confFrame.page == 1) {
 				first = true;
 			}
 			

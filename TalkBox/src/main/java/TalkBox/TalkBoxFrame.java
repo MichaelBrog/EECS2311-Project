@@ -63,6 +63,7 @@ public class TalkBoxFrame extends JFrame {
 		
 		title = new JLabel("Welcome to the Talk Box App");
 		title.setFont(new Font("Arial", Font.BOLD, 18));
+		title.setAlignmentX(100);
 		
 		panel = new JPanel();
 		layout = new GroupLayout(panel);
