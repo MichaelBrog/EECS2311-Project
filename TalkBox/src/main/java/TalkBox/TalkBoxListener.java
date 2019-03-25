@@ -80,7 +80,7 @@ public class TalkBoxListener implements ActionListener {
 				@Override
 				public void run() {
 					try {
-						sim = new SimulationListener();
+						sim = new SimulationListener(log);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

@@ -86,6 +86,24 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	}
 	
 	/**
+	 * A constructor that calls and initialized the configuration app frame with the current
+	 * action listener
+	 * */
+	public ConfigurationListener () {
+		confFrame = new ConfigurationAppFrame(this, this);     //Creates the GUI and associated this listeners with buttons and check boxes
+		confFrame.setVisible(true);
+		confFrame.pack();
+		record = new RecordAudio();
+		log = new LogFile();
+		
+		try {
+			log.writeToLog("Opened 'Configuration app'");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Please create action events for pressing next, previous and exit
 	 * Please note that the methods pressedNext and pressedPrevious can be used to adjust the GUI
 	 * */

@@ -1,24 +1,24 @@
-Mon Mar 25 11:28:32 EDT 2019, Opened new TalkBox App
-Mon Mar 25 11:28:33 EDT 2019, Pressed: 'Set Configuration' in the 'Talk Box App'
-Mon Mar 25 11:28:33 EDT 2019, Opened new thread of 'Configuration app'
-Mon Mar 25 11:28:33 EDT 2019, Opened 'Configuration app'
-Mon Mar 25 11:28:35 EDT 2019, Pressed: 'Next' in the 'Configuration App'
-Mon Mar 25 11:28:35 EDT 2019, It is the first time next is pressed
-Mon Mar 25 11:28:35 EDT 2019, Record the number of buttons the user wants
-Mon Mar 25 11:28:35 EDT 2019, Gets the name of the profile
-Mon Mar 25 11:28:35 EDT 2019, Goes to the next page in the configuration app
-Mon Mar 25 11:28:36 EDT 2019, Pressed: 'Pick Image' in the 'Configuration App'
-Mon Mar 25 11:28:38 EDT 2019, It serializes the selected image file and saves it in TalkBoxData
-Mon Mar 25 11:28:39 EDT 2019, Pressed: 'Pick Sound' in the 'Configuration App'
-Mon Mar 25 11:28:40 EDT 2019, It serializes the selected audio file and saves it in TalkBoxData
-Mon Mar 25 11:28:42 EDT 2019, Pressed: 'Preview Sound' in the 'Configuration App'
-Mon Mar 25 11:28:44 EDT 2019, Play the selected sound
-Mon Mar 25 11:28:44 EDT 2019, Pressed: 'Next' in the 'Configuration App'
-Mon Mar 25 11:28:44 EDT 2019, Goes to the next page in the configuration app
-Mon Mar 25 11:28:45 EDT 2019, Pressed: 'Exit' in the 'Configuration App'
-Mon Mar 25 11:28:45 EDT 2019, Creates a new file for the numberOfButtons.txt
-Mon Mar 25 11:28:45 EDT 2019, Write the number of buttons 1 to numberOfButtons.txt
-Mon Mar 25 11:28:45 EDT 2019, Close 'Configuration app'
-Mon Mar 25 11:28:46 EDT 2019, Pressed: 'Exit' in the 'Talk Box App'
-Mon Mar 25 11:28:46 EDT 2019, TalkBox app is terminating
-Mon Mar 25 11:28:46 EDT 2019, TalkBoxApp has terminated
+Mon Mar 25 11:40:56 EDT 2019, Opened new TalkBox App
+Mon Mar 25 11:40:59 EDT 2019, Pressed: 'Set Configuration' in the 'Talk Box App'
+Mon Mar 25 11:40:59 EDT 2019, Opened new thread of 'Configuration app'
+Mon Mar 25 11:40:59 EDT 2019, Opened 'Configuration app'
+Mon Mar 25 11:41:02 EDT 2019, Pressed: 'Next' in the 'Configuration App'
+Mon Mar 25 11:41:02 EDT 2019, It is the first time next is pressed
+Mon Mar 25 11:41:02 EDT 2019, Record the number of buttons the user wants
+Mon Mar 25 11:41:02 EDT 2019, Gets the name of the profile
+Mon Mar 25 11:41:02 EDT 2019, Goes to the next page in the configuration app
+Mon Mar 25 11:41:03 EDT 2019, Pressed: 'Pick Image' in the 'Configuration App'
+Mon Mar 25 11:41:04 EDT 2019, It serializes the selected image file and saves it in TalkBoxData
+Mon Mar 25 11:41:05 EDT 2019, Pressed: 'Pick Sound' in the 'Configuration App'
+Mon Mar 25 11:41:06 EDT 2019, It serializes the selected audio file and saves it in TalkBoxData
+Mon Mar 25 11:41:07 EDT 2019, Pressed: 'Next' in the 'Configuration App'
+Mon Mar 25 11:41:07 EDT 2019, Goes to the next page in the configuration app
+Mon Mar 25 11:41:08 EDT 2019, Pressed: 'Demo' in the 'Configuration App'
+Mon Mar 25 11:41:08 EDT 2019, Opens a demo of the selected configuration in a new thread
+Mon Mar 25 11:41:11 EDT 2019, Pressed: 'Exit' in the 'Configuration App'
+Mon Mar 25 11:41:11 EDT 2019, Write the number of buttons 1 to numberOfButtons.txt
+Mon Mar 25 11:41:11 EDT 2019, Close 'Configuration app'
+Mon Mar 25 11:41:12 EDT 2019, Pressed: 'Choose Configuration' in the 'Talk Box App'
+Mon Mar 25 11:41:15 EDT 2019, Pressed: 'Exit' in the 'Talk Box App'
+Mon Mar 25 11:41:15 EDT 2019, TalkBox app is terminating
+Mon Mar 25 11:41:15 EDT 2019, TalkBoxApp has terminated

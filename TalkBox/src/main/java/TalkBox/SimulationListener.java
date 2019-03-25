@@ -23,6 +23,7 @@ public class SimulationListener implements ActionListener{
 	SimulatorFrame simFrame;
 	static File[] audio_array;
 	int number_of_buttons = 0;
+	LogFile log;
 	//----------------------------------------------------
 	
 	/**
@@ -48,9 +49,14 @@ public class SimulationListener implements ActionListener{
 		simFrame = new SimulatorFrame(this, num);
 	}
 	
-	public SimulationListener () throws IOException {
+	/**
+	 * @param log
+	 * 			The log instance to write to
+	 * @throws IOException
+	 */
+	public SimulationListener (LogFile log) throws IOException {
 		
-		
+		this.log = log;
 		String saved_image_path = "";
 		String homeDirectory = System.getProperty("user.dir");
 		File current_file = null;
@@ -84,11 +90,50 @@ public class SimulationListener implements ActionListener{
 				number_of_buttons = Integer.parseInt(scan.next());
 		}// if
 		
-		
-		
 		simFrame = new SimulatorFrame(this, number_of_buttons);
 	}
 	
+	/**
+	 * No argument constructor
+	 * @throws IOException
+	 */
+	public SimulationListener () throws IOException {
+		this.log = new LogFile();
+		String saved_image_path = "";
+		String homeDirectory = System.getProperty("user.dir");
+		File current_file = null;
+		Scanner scan;
+		String protocol = SimulatorFrame.class.getResource("").getProtocol();
+	
+		if (System.getProperty("os.name").startsWith("Windows"))
+			saved_image_path =   ".\\imageReasource\\TalkBoxData\\"; // mac/ linux/ unix
+		else
+			saved_image_path =   "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
+
+		File[] files = new File(saved_image_path).listFiles();
+		if (new File(saved_image_path).exists()) {
+
+			current_file = null;
+			
+			//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method
+			for (File file : files) {
+				if (file.getName().endsWith("Buttons" + ".txt")) {
+					current_file = file;
+				}
+			}		
+			
+			//scanner to scan the file and get an int value for the number of buttons
+				scan = null;
+				try {
+					scan = new Scanner(current_file);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				number_of_buttons = Integer.parseInt(scan.next());
+		}// if
+		
+		simFrame = new SimulatorFrame(this, number_of_buttons);
+	}
 	
 	//public static void playMusic(String musicLocation)
 	public static void playMusic(File musicLocation)
