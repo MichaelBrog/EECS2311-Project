@@ -34,7 +34,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities; 
 
-public class ConfigurationListener implements ActionListener, ItemListener, TalkBoxConfiguration, Runnable{
+public class ConfigurationListener implements ActionListener, ItemListener{
 	/**
 	 * Implement the Action listener of the pressed buttons/ check box in the configuration app
 	 * */
@@ -55,6 +55,7 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	String new_image_path_M =   "./imageReasource/TalkBoxData/Image_";	// mac/ linux/ unix
 	String new_image_path_W =   ".\\imageReasource\\TalkBoxData\\Image_"; // windows
 	String profileName;
+	LogFile log;
 	//----------------------------------------------------
 	
 	
@@ -70,12 +71,18 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	 * A constructor that calls and initialized the configuration app frame with the current
 	 * action listener
 	 * */
-	public ConfigurationListener () {
+	public ConfigurationListener (LogFile log) {
 		confFrame = new ConfigurationAppFrame(this, this);     //Creates the GUI and associated this listeners with buttons and check boxes
 		confFrame.setVisible(true);
 		confFrame.pack();
 		record = new RecordAudio();
+		this.log = log;
 		
+		try {
+			log.writeToLog("Opened 'Configuration app'");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 	/**
@@ -89,6 +96,11 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getActionCommand() == "Exit") {
+			try {
+				log.writeToLog("Pressed: 'Exit' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 
 			if (page_counter != 0) {
 			
@@ -100,17 +112,24 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				
 				try {
 					
-					if (!file.exists())
+					if (!file.exists()) {
 						file.createNewFile();
+						log.writeToLog("Creates a new file for the numberOfButtons.txt");
+						
+					}
+					
+					try {
+						log.writeToLog("Write the number of buttons " + size + " to numberOfButtons.txt");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					
 					PrintWriter pt = new PrintWriter(file);
 					pt.println(size);
 					pt.close();
 					confFrame.printNamesToFile();
 					
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
+				}  catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -118,11 +137,29 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 			confFrame.setVisible(false);
 			confFrame.dispose();
 		
+			try {
+				log.writeToLog("Close 'Configuration app'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 
 		else if (e.getActionCommand() == "Next") {
+			try {
+				log.writeToLog("Pressed: 'Next' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			
 			if (first) {
+				
+				try {
+					log.writeToLog("It is the first time next is pressed");
+					log.writeToLog("Record the number of buttons the user wants");
+					log.writeToLog("Gets the name of the profile");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 
 				File dir;
 				if (System.getProperty("os.name").startsWith("Windows"))
@@ -133,6 +170,8 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				for(File file: dir.listFiles()) 
 				    if (!file.isDirectory()) 
 				        file.delete();
+				
+				
 				
 				size = confFrame.getSizeButtons();
 				profileName = confFrame.getProfileName();
@@ -159,6 +198,12 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 					confFrame.pressedNext(size);
 					confFrame.dropDownImage.setSelectedIndex(0);
 					confFrame.dropDownSound.setSelectedIndex(0);
+					
+					try {
+						log.writeToLog("Goes to the next page in the configuration app");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
 				complete[page_counter] = true;
 				page_counter ++;
@@ -167,12 +212,24 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				
 			}
 			else {
+				try {
+					log.writeToLog("Not enough information is provided. Output an error message and doesn't go next");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				
 				confFrame.popupError("You need to choose an audio, an image and name it");
 			}
 			pickedName = false;
 			
 		}
 		else if (e.getActionCommand() == "Pick Sound") {
+			try {
+				log.writeToLog("Pressed: 'Pick Sound' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			String audio_path = confFrame.pressedPickSound();
 			
 			File audioFile = new File (audio_path);			
@@ -189,22 +246,33 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				objOutput.close();
 				
 				pickedSound = true;
-				
+				log.writeToLog("It serializes the selected audio file and saves it in TalkBoxData");
 				
 				
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				try {
+					log.writeToLog("Serialization of the file has FAILED");
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
 				e1.printStackTrace();
 			}	
 		}// pick sound 
 		
 		else if (e.getActionCommand() == "Pick Image") {
+			try {
+				log.writeToLog("Pressed: 'Pick Image' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			
 			String image_path = confFrame.pressedPickImage();
 			File imageFile = new File (image_path);			
 			FileOutputStream output;
 			
 			try {
+				
+				
 				if (System.getProperty("os.name").startsWith("Windows")) 
 					output = new FileOutputStream(new_image_path_W + page_counter + ".ser");
 				else 
@@ -214,20 +282,41 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				objOutput.writeObject(imageFile);
 				objOutput.close();
 				pickedImage = true;
-				
+				log.writeToLog("It serializes the selected image file and saves it in TalkBoxData");
 				
 				
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
+				try {
+					log.writeToLog("Serialization of the file has FAILED");
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
 				e1.printStackTrace();
 			}	
 		}// pick Image
 		
 		else if (e.getActionCommand() == "Previous") {
+			try {
+				log.writeToLog("Pressed: 'Previous' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			page_counter --;
-			//if (ConfigurationAppFrame.page == 1) {
 			if (confFrame.page == 1) {
+				try {
+					log.writeToLog("Got to the first page of the configuration app");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				
 				first = true;
+			}
+			try {
+				log.writeToLog("Gone to the previous page");
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
 			
 			confFrame.pressedPrevious(size);
@@ -239,6 +328,13 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 			complete[page_counter] = true;
 		}
 		else if (e.getActionCommand() == "Upload Image") {
+			try {
+				log.writeToLog("Pressed: 'Upload Image' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+			
 			String image_path = confFrame.pressedUploadImage();
 			
 			File imageFile = new File (image_path);
@@ -259,13 +355,26 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 					complete[page_counter] = true;
 				
 				
+				log.writeToLog("Serializes the image file");
+				
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				try {
+					log.writeToLog("Serialization of the file has FAILED");
+				} catch (IOException e2) {
+					e1.printStackTrace();
+				}
+				
 				e1.printStackTrace();
 			}
 			
 		}
 		else if (e.getActionCommand() == "Upload Sound") {
+			try {
+				log.writeToLog("Pressed: 'Upload Sound' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			String audio_path = confFrame.pressedUploadSound();
 			
 			File soundFile = new File (audio_path);			
@@ -285,14 +394,26 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				if (pickedSound && pickedImage)
 					complete[page_counter] = true;
 				
+				log.writeToLog("Serializes the sound file");
 				
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				try {
+					log.writeToLog("Serialization of the file has FAILED");
+				} catch (IOException e2) {
+					e1.printStackTrace();
+				}
+				
 				e1.printStackTrace();
 			}
 		}// upload sound
 		
 		else if (e.getActionCommand() == "Start Recording") {
+			try {
+				log.writeToLog("Pressed: 'Start Recording' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			
 			thread = new Thread(new Runnable() {
             public void run() {
@@ -302,10 +423,28 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
         });
 		thread.start();
 		
+		try {
+			log.writeToLog("Opened new thread of 'Record Audio'");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		}
 		else if (e.getActionCommand() == "Stop Recording") {
+			try {
+				log.writeToLog("Pressed: 'Stop Recording' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			record.finish();
 			thread.interrupt();
+			
+			try {
+				log.writeToLog("Closes the thread of Record Audio");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			 
 			String audio_path;
 			
@@ -328,17 +467,26 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				objOutput.close();
 				pickedSound = true;
 				
-			
-				
-				
+				log.writeToLog("Serializes the record file");
 			}
 			catch (IOException e1) {
-			// TODO Auto-generated catch block
+				try {
+					log.writeToLog("Serialization of the file has FAILED");
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+				
 				e1.printStackTrace();
 			}
 		}// record sound
 		
 		else if (e.getActionCommand() == "Preview Sound") {
+			try {
+				log.writeToLog("Pressed: 'Preview Sound' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			if (this.pickedSound || this.complete[page_counter]) {
 				
 				FileInputStream fileIn;
@@ -347,8 +495,6 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 						fileIn = new FileInputStream(new_audio_path_W + page_counter + ".ser");
 					else
 						fileIn = new FileInputStream(new_audio_path_M + page_counter + ".ser");
-					
-					System.out.println("preview : " + new_audio_path_M + page_counter + ".ser");
 					
 					 ObjectInputStream in = new ObjectInputStream(fileIn);
 				     File input = (File) in.readObject();
@@ -365,17 +511,14 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 			        in.close();
 			        fileIn.close();
 				        
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (LineUnavailableException e1) {
-					e1.printStackTrace();
-				} catch (UnsupportedAudioFileException e1) {
-					e1.printStackTrace();
-				} catch (InterruptedException e1) {
+			        log.writeToLog("Play the selected sound");
+				} catch (Exception e1) {
+					try {
+						log.writeToLog("Serialization of the audio file has FAILED");
+					} catch (IOException e2) {
+						e2.printStackTrace();
+					}
+					
 					e1.printStackTrace();
 				}
 		       
@@ -383,6 +526,12 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		}// preview sound
 		
 		else if (e.getActionCommand() == "Preview Image") {
+			try {
+				log.writeToLog("Pressed: 'Preview Image' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			if (this.pickedImage || this.complete[page_counter]) {
 				
 				FileInputStream fileIn;
@@ -421,18 +570,26 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				     });
 			        in.close();
 			        fileIn.close();
+			        log.writeToLog("Opens the selected image in a new window");
 				        
-				} catch (FileNotFoundException e1) {
+				} catch (Exception e1) {
+					try {
+						log.writeToLog("Serialization of the file has FAILED");
+					} catch (IOException e2) {
+						e2.printStackTrace();
+					}
+					
 					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				}
+				} 
 		       
 			}
 		}// preview image
 		else if (e.getActionCommand() == "Demo") {
+			try {
+				log.writeToLog("Pressed: 'Demo' in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			
 			File file;
 			if (System.getProperty("os.name").startsWith("Windows"))
@@ -449,13 +606,16 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 				pt.close();
 				confFrame.printNamesToFile();
 				
-			} catch (FileNotFoundException e1) {
+			} catch (Exception e1) {
+				
 				e1.printStackTrace();
+			} 
+			
+			try {
+				log.writeToLog("Opens a demo of the selected configuration in a new thread");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-
-			
 			
 			this.thread = new Thread(new Runnable() {
 				public void run() {
@@ -478,69 +638,59 @@ public class ConfigurationListener implements ActionListener, ItemListener, Talk
 		JComboBox combo = (JComboBox) e.getSource();
 		
 		if (combo.getSelectedItem() == "Pick Image" ) {
+			try {
+				log.writeToLog("Chose: 'Pick Image' in the 'Configuration App' -> set button to 'Pick Image'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			confFrame.uploadImageDropMenu("Pick Image");
 		}
 		else if (combo.getSelectedItem() == "Upload Image") {
+			try {
+				log.writeToLog("Chose: 'Upload Image' in the 'Configuration App' -> set button to 'Upload Image'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			confFrame.uploadImageDropMenu("Upload Image");
 		}
 		else if (combo.getSelectedItem() == "Upload Sound" ) {
+			try {
+				log.writeToLog("Chose: 'Upload Sound' in the 'Configuration App' -> set button to 'Upload Sound'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			confFrame.uploadSoundDropMenu("Upload Sound");
 		}
 		else if (combo.getSelectedItem() == "Pick Sound") {
+			try {
+				log.writeToLog("Chose: 'Pick Sound' in the 'Configuration App' -> set button to 'Pick Sound'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			confFrame.uploadSoundDropMenu("Pick Sound");
 		}
 		else if (combo.getSelectedItem() == "Record Sound") {
+			try {
+				log.writeToLog("Chose: 'Record Sound' in the 'Configuration App' -> set button to 'Record Sound'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			confFrame.uploadSoundDropMenu("Record Sound");
 		}
 		else if (combo.getSelectedItem() == "") {
+			try {
+				log.writeToLog("Reset the drop down menu in the 'Configuration App'");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 			confFrame.resetDropMenu();
 		}
 			
-	}
-
-	
-	
-	// -------------------------------------------------------------------------------
-	// ------ Following methods implement the TalkBoxConfiguration interface ---------
-	// -------------------------------------------------------------------------------
-	
-	@Override
-	public int getNumberOfAudioButtons() {
-		// TODO Auto-generated method stub
-		return size;
-	}
-
-	@Override
-	public int getNumberOfAudioSets() {
-		// TODO Auto-generated method stub
-		return size;
-	}
-
-	@Override
-	public int getTotalNumberOfButtons() {
-		// TODO Auto-generated method stub
-		return size;
-	}
-
-	@Override
-	public Path getRelativePathToAudioFiles() {
-		// TODO Auto-generated method stub
-		Path path = FileSystems.getDefault().getPath("TalkBoxData");
-		
-		return path;
-	}
-
-	@Override
-	public String[][] getAudioFileNames() {
-		// TODO Auto-generated method stub
-		
-		return null;
-	}
-	
-	// Thread interface
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
 	}
 }
