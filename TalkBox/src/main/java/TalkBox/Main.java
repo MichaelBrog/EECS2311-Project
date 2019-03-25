@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		
+		LogFile log = new LogFile();
 		int number_of_buttons = 0;
 		String saved_image_path = "";
 		String homeDirectory = System.getProperty("user.dir");
@@ -47,7 +47,7 @@ public class Main {
 
 		if(number_of_buttons != 0) {
 		//	new SimulatorFrame(null, number_of_buttons);
-			 sim = new SimulationListener(number_of_buttons);
+			 sim = new SimulationListener(number_of_buttons, log);
 		}
 		else 
 			sim = new SimulationListener();

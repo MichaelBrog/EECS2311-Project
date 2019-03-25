@@ -301,11 +301,12 @@ public class SimulatorFrame extends JFrame {
 	 *                                   updating and changing the text associated
 	 * 
 	 *                                   with specific buttons.
+	 * @throws IOException 
 	 * 
 	 */
 
 	//public void SetButton(String buttonName, String image, int indexOfButton) throws IndexOutOfBoundsException {
-	public void SetButton(String buttonName, ImageIcon icon, File[] audio, int indexOfButton) throws IndexOutOfBoundsException {
+	public void SetButton(String buttonName, ImageIcon icon, File[] audio, int indexOfButton) throws IndexOutOfBoundsException, IOException {
 		try {
 			//ImageIcon icon = new ImageIcon(image);
 

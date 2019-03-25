@@ -88,8 +88,9 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	/**
 	 * A constructor that calls and initialized the configuration app frame with the current
 	 * action listener
+	 * @throws IOException 
 	 * */
-	public ConfigurationListener () {
+	public ConfigurationListener () throws IOException {
 		confFrame = new ConfigurationAppFrame(this, this);     //Creates the GUI and associated this listeners with buttons and check boxes
 		confFrame.setVisible(true);
 		confFrame.pack();
@@ -638,7 +639,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			this.thread = new Thread(new Runnable() {
 				public void run() {
 				try {
-					SimulationListener sim = new SimulationListener(size);
+					SimulationListener sim = new SimulationListener(size, log);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

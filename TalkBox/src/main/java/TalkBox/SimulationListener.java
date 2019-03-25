@@ -31,9 +31,10 @@ public class SimulationListener implements ActionListener{
 	 * 			The number of buttons in the panel
 	 * A constructor that calls and initialized the configuration app frame with the current
 	 * action listener
+	 * @throws IOException 
 	 * */
-	public SimulationListener (File[] audio) {
-		
+	public SimulationListener (File[] audio) throws IOException {
+		log = new LogFile();
 		audio_array = audio;
 	}
 	
@@ -44,9 +45,10 @@ public class SimulationListener implements ActionListener{
 	 * 
 	 * @throws IOException
 	 */
-	public SimulationListener (int num) throws IOException {
+	public SimulationListener (int num, LogFile log) throws IOException {
 		
 		simFrame = new SimulatorFrame(this, num);
+		this.log = log;
 	}
 	
 	/**
@@ -84,13 +86,26 @@ public class SimulationListener implements ActionListener{
 				scan = null;
 				try {
 					scan = new Scanner(current_file);
+					log.writeToLog("Finds the number of buttons the simulation has");
+					
 				} catch (FileNotFoundException e) {
+					try {
+						log.writeToLog("Counld not find the number of buttons the simulation app has");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 					e.printStackTrace();
 				}
 				number_of_buttons = Integer.parseInt(scan.next());
 		}// if
 		
 		simFrame = new SimulatorFrame(this, number_of_buttons);
+		
+		try {
+			log.writeToLog("Opened 'Simulation app'");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 	/**
@@ -126,17 +141,31 @@ public class SimulationListener implements ActionListener{
 				scan = null;
 				try {
 					scan = new Scanner(current_file);
+					
+						log.writeToLog("Finds the number of buttons the simulation has");
+					
 				} catch (FileNotFoundException e) {
+					try {
+						log.writeToLog("Counld not find the number of buttons the simulation app has");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 					e.printStackTrace();
 				}
 				number_of_buttons = Integer.parseInt(scan.next());
 		}// if
-		
+	
 		simFrame = new SimulatorFrame(this, number_of_buttons);
+		
+		try {
+			log.writeToLog("Opened 'Simulation app'");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 	//public static void playMusic(String musicLocation)
-	public static void playMusic(File musicLocation)
+	public  void playMusic(File musicLocation)
 	{
 	
 		try
@@ -152,15 +181,30 @@ public class SimulationListener implements ActionListener{
 				clip.start();
 				
 				//JOptionPane.showMessageDialog(null, "press okay to stop playing");
+				try {
+					log.writeToLog("Found the audio files");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 			else
 			{
-				System.out.println("Can't find file at location: " + musicLocation);
+				//System.out.println("Can't find file at location: " + musicLocation);
+				try {
+					log.writeToLog("Didn't find the audio files");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		}
 		
 		catch(Exception e)
 		{
+			try {
+				log.writeToLog("Didn't find audio files");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 	}
@@ -200,5 +244,10 @@ public class SimulationListener implements ActionListener{
 		int numberOnly= Integer.parseInt(command_num);
 		playMusic(audio_array[numberOnly]);		
 		
+		try {
+			log.writeToLog("Playes the audio for specific button");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 }

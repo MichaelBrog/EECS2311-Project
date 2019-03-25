@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class MainConfiguration {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		String homeDirectory = System.getProperty("user.dir");
 		
 		String decodedPath = "";
@@ -138,6 +138,7 @@ public class MainConfiguration {
 			e.printStackTrace();
 		}
 		*/
+		
 		ConfigurationListener conf = new ConfigurationListener();
 		conf.confFrame.setVisible(true);
 		conf.confFrame.pack();
