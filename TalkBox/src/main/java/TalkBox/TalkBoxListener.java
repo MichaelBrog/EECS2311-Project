@@ -2,9 +2,13 @@ package main.java.TalkBox;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 
-public class TalkBoxListener implements ActionListener {
+import javax.swing.JComboBox;
+
+public class TalkBoxListener implements ActionListener, ItemListener {
 
 	// --- Fields ---
 	TalkBoxFrame tb;
@@ -12,6 +16,7 @@ public class TalkBoxListener implements ActionListener {
 	Thread thread;
 	ConfigurationListener conf;
 	LogFile log;
+	String profile;	// the profile the user chooses 
 	
 	/**
 	 * Constructor. 
@@ -19,7 +24,7 @@ public class TalkBoxListener implements ActionListener {
 	 * @throws IOException 
 	 */
 	public TalkBoxListener () throws IOException {
-		tb = new TalkBoxFrame(this);
+		tb = new TalkBoxFrame(this, this);
 		tb.setVisible(true);
 		tb.pack();
 		log = new LogFile();
@@ -61,34 +66,8 @@ public class TalkBoxListener implements ActionListener {
 			
 			
 		}
-		else if (e.getActionCommand() == "Choose Configuration") {
-			/*
-			 * Go to additional page so the user could choose which 
-			 * configuration he wants to use
-			 * 
-			 * */
-			// In the meantime
-			
-			try {
-				log.writeToLog("Pressed: 'Choose Configuration' in the 'Talk Box App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			
-			thread = new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-					try {
-						sim = new SimulationListener(log);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			});
-			thread.start();
-			
-			
+		else if (e.getActionCommand() == "Choose Simulator") {
+			tb.chooseProfile(this);
 			
 		}
 		else if (e.getActionCommand() == "Exit") {
@@ -111,6 +90,42 @@ public class TalkBoxListener implements ActionListener {
 			}
 			
 			System.exit(0);
+		} // exit
+		
+		else if (e.getActionCommand() == "Previous") {
+			tb.setPanel();	// Go to the menu	
+		} // previous
+		
+		else if (e.getActionCommand() == "Simulate") {
+			try {
+					log.writeToLog("Pressed: 'Choose Configuration' in the 'Talk Box App'");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+
+			thread = new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							sim = new SimulationListener(log, profile);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			thread.start();
+		
+		
 		}
+		
+	}
+
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		
+		JComboBox<String> combo = (JComboBox<String>) e.getSource();
+		this.profile = (String) combo.getSelectedItem();
 	}
 }

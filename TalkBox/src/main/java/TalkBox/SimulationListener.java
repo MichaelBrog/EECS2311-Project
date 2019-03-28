@@ -24,6 +24,7 @@ public class SimulationListener implements ActionListener{
 	static File[] audio_array;
 	int number_of_buttons = 0;
 	LogFile log;
+	String profile;
 	//----------------------------------------------------
 	
 	/**
@@ -44,11 +45,30 @@ public class SimulationListener implements ActionListener{
 	 * 				the number of buttons in the simulation app
 	 * 
 	 * @throws IOException
-	 */
-	public SimulationListener (int num, LogFile log) throws IOException {
+	 *//*
+	public SimulationListener (int num, LogFile log, String profile) throws IOException {
 		
 		simFrame = new SimulatorFrame(this, num);
 		this.log = log;
+	}*/
+	
+	/**
+	 * 
+	 * @param numButtons 
+	 * 				the number of buttons in the simulation app
+	 * @param log
+	 * 				the log it outputs messages to
+	 * @param profile
+	 * 				the profile the user chooses
+	 * 
+	 * @throws IOException
+	 */
+	public SimulationListener (int num, LogFile log, String profile) throws IOException {
+		
+		simFrame = new SimulatorFrame(this, num, profile);
+		number_of_buttons = num;
+		this.log = log;
+		//this.profile = profile;
 	}
 	
 	/**
@@ -56,8 +76,9 @@ public class SimulationListener implements ActionListener{
 	 * 			The log instance to write to
 	 * @throws IOException
 	 */
-	public SimulationListener (LogFile log) throws IOException {
+	public SimulationListener (LogFile log, String profile) throws IOException {
 		
+		this.profile = profile;
 		this.log = log;
 		String saved_image_path = "";
 		String homeDirectory = System.getProperty("user.dir");
@@ -66,9 +87,9 @@ public class SimulationListener implements ActionListener{
 		String protocol = SimulatorFrame.class.getResource("").getProtocol();
 	
 		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path =   ".\\imageReasource\\TalkBoxData\\"; // mac/ linux/ unix
+			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
 		else
-			saved_image_path =   "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
+			saved_image_path =   "./imageReasource/TalkBoxData/" + profile + "/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 		if (new File(saved_image_path).exists()) {
@@ -76,11 +97,12 @@ public class SimulationListener implements ActionListener{
 			current_file = null;
 			
 			//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method
-			for (File file : files) {
-				if (file.getName().endsWith("Buttons" + ".txt")) {
+		/*	for (File file : files) {
+				if (file.getName().endsWith(saved_image_path + "numberOfButtons.txt")) {
 					current_file = file;
 				}
-			}		
+			}	*/	
+			current_file = new File(saved_image_path + "numberOfButtons.txt");
 			
 			//scanner to scan the file and get an int value for the number of buttons
 				scan = null;
@@ -99,7 +121,7 @@ public class SimulationListener implements ActionListener{
 				number_of_buttons = Integer.parseInt(scan.next());
 		}// if
 		
-		simFrame = new SimulatorFrame(this, number_of_buttons);
+		simFrame = new SimulatorFrame(this, number_of_buttons, profile);
 		
 		try {
 			log.writeToLog("Opened 'Simulation app'");
@@ -108,10 +130,10 @@ public class SimulationListener implements ActionListener{
 		}
 	}
 	
-	/**
+/*	*//**
 	 * No argument constructor
 	 * @throws IOException
-	 */
+	 *//*
 	public SimulationListener () throws IOException {
 		this.log = new LogFile();
 		String saved_image_path = "";
@@ -155,14 +177,14 @@ public class SimulationListener implements ActionListener{
 				number_of_buttons = Integer.parseInt(scan.next());
 		}// if
 	
-		simFrame = new SimulatorFrame(this, number_of_buttons);
+		simFrame = new SimulatorFrame(this, number_of_buttons, profile);
 		
 		try {
 			log.writeToLog("Opened 'Simulation app'");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-	}
+	}*/
 	
 	//public static void playMusic(String musicLocation)
 	public  void playMusic(File musicLocation)
@@ -211,13 +233,7 @@ public class SimulationListener implements ActionListener{
 	
 
 	@Override
-	
-	
-
 	public void actionPerformed(ActionEvent e) {
-
-		
-
 //		if (e.getSource() == "Hi")
 //
 //		{
@@ -241,6 +257,7 @@ public class SimulationListener implements ActionListener{
 		//determines the number of the button by taking the actioncommand which is the image name
 		//Then using regex to take the number out of it, ideally we find a better way to do this
 		String command_num = e.getActionCommand();
+		
 		int numberOnly= Integer.parseInt(command_num);
 		playMusic(audio_array[numberOnly]);		
 		

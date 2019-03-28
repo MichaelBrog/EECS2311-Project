@@ -1,40 +1,22 @@
-Mon Mar 25 12:14:31 EDT 2019, Opened new TalkBox App
-Mon Mar 25 12:14:32 EDT 2019, Pressed: 'Set Configuration' in the 'Talk Box App'
-Mon Mar 25 12:14:32 EDT 2019, Opened new thread of 'Configuration app'
-Mon Mar 25 12:14:32 EDT 2019, Opened 'Configuration app'
-Mon Mar 25 12:14:35 EDT 2019, Pressed: 'Next' in the 'Configuration App'
-Mon Mar 25 12:14:35 EDT 2019, It is the first time next is pressed
-Mon Mar 25 12:14:35 EDT 2019, Record the number of buttons the user wants
-Mon Mar 25 12:14:35 EDT 2019, Gets the name of the profile
-Mon Mar 25 12:14:35 EDT 2019, Goes to the next page in the configuration app
-Mon Mar 25 12:14:36 EDT 2019, Pressed: 'Pick Image' in the 'Configuration App'
-Mon Mar 25 12:14:37 EDT 2019, It serializes the selected image file and saves it in TalkBoxData
-Mon Mar 25 12:14:37 EDT 2019, Pressed: 'Pick Sound' in the 'Configuration App'
-Mon Mar 25 12:14:38 EDT 2019, It serializes the selected audio file and saves it in TalkBoxData
-Mon Mar 25 12:14:43 EDT 2019, Pressed: 'Next' in the 'Configuration App'
-Mon Mar 25 12:14:43 EDT 2019, Goes to the next page in the configuration app
-Mon Mar 25 12:14:44 EDT 2019, Pressed: 'Pick Image' in the 'Configuration App'
-Mon Mar 25 12:14:45 EDT 2019, It serializes the selected image file and saves it in TalkBoxData
-Mon Mar 25 12:14:45 EDT 2019, Pressed: 'Pick Sound' in the 'Configuration App'
-Mon Mar 25 12:14:46 EDT 2019, It serializes the selected audio file and saves it in TalkBoxData
-Mon Mar 25 12:14:52 EDT 2019, Pressed: 'Next' in the 'Configuration App'
-Mon Mar 25 12:14:52 EDT 2019, Goes to the next page in the configuration app
-Mon Mar 25 12:14:53 EDT 2019, Pressed: 'Demo' in the 'Configuration App'
-Mon Mar 25 12:14:53 EDT 2019, Opens a demo of the selected configuration in a new thread
-Mon Mar 25 12:14:54 EDT 2019, Found the audio files
-Mon Mar 25 12:14:54 EDT 2019, Playes the audio for specific button
-Mon Mar 25 12:14:54 EDT 2019, Found the audio files
-Mon Mar 25 12:14:54 EDT 2019, Playes the audio for specific button
-Mon Mar 25 12:14:56 EDT 2019, Pressed: 'Exit' in the 'Configuration App'
-Mon Mar 25 12:14:56 EDT 2019, Write the number of buttons 2 to numberOfButtons.txt
-Mon Mar 25 12:14:56 EDT 2019, Close 'Configuration app'
-Mon Mar 25 12:14:57 EDT 2019, Pressed: 'Choose Configuration' in the 'Talk Box App'
-Mon Mar 25 12:14:57 EDT 2019, Finds the number of buttons the simulation has
-Mon Mar 25 12:14:57 EDT 2019, Opened 'Simulation app'
-Mon Mar 25 12:14:58 EDT 2019, Found the audio files
-Mon Mar 25 12:14:58 EDT 2019, Playes the audio for specific button
-Mon Mar 25 12:14:58 EDT 2019, Found the audio files
-Mon Mar 25 12:14:58 EDT 2019, Playes the audio for specific button
-Mon Mar 25 12:15:00 EDT 2019, Pressed: 'Exit' in the 'Talk Box App'
-Mon Mar 25 12:15:00 EDT 2019, TalkBox app is terminating
-Mon Mar 25 12:15:00 EDT 2019, TalkBoxApp has terminated
+Thu Mar 28 14:00:54 EDT 2019, Opened new TalkBox App
+Thu Mar 28 14:00:56 EDT 2019, Pressed: 'Choose Configuration' in the 'Talk Box App'
+Thu Mar 28 14:06:55 EDT 2019, Pressed: 'Exit' in the 'Talk Box App'
+Thu Mar 28 14:06:55 EDT 2019, TalkBox app is terminating
+Thu Mar 28 14:06:55 EDT 2019, TalkBoxApp has terminated
+s
+Thu Mar 28 14:06:20 EDT 2019, Playes the audio for specific button
+Thu Mar 28 14:06:24 EDT 2019, Pressed: 'Choose Configuration' in the 'Talk Box App'
+Thu Mar 28 14:06:24 EDT 2019, Finds the number of buttons the simulation has
+Thu Mar 28 14:06:25 EDT 2019, Opened 'Simulation app'
+Thu Mar 28 14:06:25 EDT 2019, Found the audio files
+Thu Mar 28 14:06:25 EDT 2019, Playes the audio for specific button
+Thu Mar 28 14:06:26 EDT 2019, Found the audio files
+Thu Mar 28 14:06:26 EDT 2019, Playes the audio for specific button
+Thu Mar 28 14:06:30 EDT 2019, Pressed: 'Choose Configuration' in the 'Talk Box App'
+Thu Mar 28 14:06:30 EDT 2019, Finds the number of buttons the simulation has
+Thu Mar 28 14:06:30 EDT 2019, Opened 'Simulation app'
+Thu Mar 28 14:06:30 EDT 2019, Found the audio files
+Thu Mar 28 14:06:30 EDT 2019, Playes the audio for specific button
+Thu Mar 28 14:06:33 EDT 2019, Pressed: 'Exit' in the 'Talk Box App'
+Thu Mar 28 14:06:33 EDT 2019, TalkBox app is terminating
+Thu Mar 28 14:06:33 EDT 2019, TalkBoxApp has terminated

@@ -37,10 +37,8 @@ public class LogFile {
 	 */
 	public  void writeToLog (String str) throws IOException {
 	
-		System.out.println(str);
 		date = new Date();
 		pw.write(date.toString() + ", " + str + "\n");
-	//	pw.close();
 	}
 	
 	public void stopWriting () {

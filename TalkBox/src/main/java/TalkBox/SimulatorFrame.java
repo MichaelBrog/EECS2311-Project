@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.JOptionPane;
 
 import java.io.BufferedReader;
 
@@ -21,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -28,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -50,44 +51,42 @@ public class SimulatorFrame extends JFrame {
 	JButton[] pics; // An array of buttons. Size initialized by the desired amount of buttons
 
 	JPanel panel; // The used panel
-	SimulatorFrame sim;
 	int number_of_buttons = 0;	// the number of buttons the user picked
-
+	String profile;
 	// -----------------------------------------
 
-	public SimulatorFrame(ActionListener l, int n) throws IOException {
+	public SimulatorFrame(ActionListener l, int n, String profile) throws IOException {
 		super("FrameDemo");
-
+		this.profile = profile;
 		initializePanel(l, n);
 
-		// frame.getContentPane().setBackground(Color.cyan);
-
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 		setPreferredSize(new Dimension(1100, 300));
-
 		pack();
-
 		setLocationRelativeTo(null);
-
 		setVisible(true);
 
 		number_of_buttons = n;
+		initializing();
+	}
+	
+	private void initializing () throws IOException {
+		
+		
+		
 		String saved_image_path = "";
-		String homeDirectory = System.getProperty("user.dir");
 		File current_image_file;
 		File current_sound_file;
 		//ImageIcon[] image_array = new ImageIcon[n];
-		File[] audio_array = new File[n];
+		File[] audio_array = new File[number_of_buttons];
 		ImageIcon image_file;
 		File audio_file = null;
 
 		//changes the location depending on the operating system
 		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path =   ".\\imageReasource\\TalkBoxData\\"; // mac/ linux/ unix
-			//saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
+			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
 		else
-			saved_image_path = "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
+			saved_image_path = "./imageReasource/TalkBoxData/" + profile + "/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 		
@@ -100,9 +99,10 @@ public class SimulatorFrame extends JFrame {
 		File namesReader;
 		
 		if (System.getProperty("os.name").startsWith("Windows"))
-			namesReader = new File (".\\imageReasource\\TalkBoxData\\names.txt");
+			namesReader = new File (".\\imageReasource\\TalkBoxData\\" + profile + "\\names.txt");
 		else
-			namesReader = new File ("./imageReasource/TalkBoxData/names.txt");
+			namesReader = new File ("./imageReasource/TalkBoxData/" + profile + "/names.txt");
+		
 		
 		if (!namesReader.exists()) {
 			JOptionPane.showMessageDialog(null, "There isn't any available configuration yet");
@@ -167,24 +167,20 @@ public class SimulatorFrame extends JFrame {
 						return;
 					}
 				}
+
 				//adding both the image and audio files to an array
 				//The image array might not be needed 
 				audio_array[k] = audio_file;
 				//image_array[k] = image_file;
-
 				
 				name[k] = br.readLine();
-				
-				
-				
+
 				//this.SetButton(name, image_array[k], audio_array, k);
 				this.SetButton(name[k], image_file, audio_array, k);
 			}	
 		}
-		
 		br.close();
 		fr.close();
-
 	}
 
 	/**
@@ -193,22 +189,11 @@ public class SimulatorFrame extends JFrame {
 	 * 
 	 * @param n
 	 * 
-	 * 
-	 * 
 	 *          The number of buttons to be declared
-	 * 
-	 * 
 	 * 
 	 * @param l
 	 * 
-	 * 
-	 * 
 	 *          The action listener
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 * 
 	 * 
 	 *          A method that initialized the panel and provide the first view for
@@ -240,32 +225,23 @@ public class SimulatorFrame extends JFrame {
 		int row_num = 1;
 		pics = new JButton[n];
 
-		
 		if(n > 5) {
 			row_num = (int) ( Math.floor(n / 5));
 		}
+		
+		
 		panel = new JPanel(new GridLayout(row_num, n, 5, 5));
 
 		for (int i = 0; i < pics.length; i++) {
-
 			pics[i] = new JButton("");
-
-//			pics[i].setBackground(Color.BLUE);
-
 			pics[i].setVerticalTextPosition(SwingConstants.TOP);
-
 			pics[i].setHorizontalTextPosition(SwingConstants.CENTER);
-
 			pics[i].setVisible(true);
-
 			pics[i].addActionListener(l);
-
 			panel.add(pics[i]);
-
 		}
 
 		this.add(panel);
-
 	}
 
 	/**
@@ -309,29 +285,18 @@ public class SimulatorFrame extends JFrame {
 	public void SetButton(String buttonName, ImageIcon icon, File[] audio, int indexOfButton) throws IndexOutOfBoundsException, IOException {
 		try {
 			//ImageIcon icon = new ImageIcon(image);
-
-
 			pics[indexOfButton].setText(buttonName);
 			pics[indexOfButton].setIcon(icon);
 			pics[indexOfButton].setActionCommand(indexOfButton + "");
 			pics[indexOfButton].addActionListener(new SimulationListener(audio));
-			
-			
 		} catch (IndexOutOfBoundsException e) {
-
 			System.out.println("The index you have entered is invalid");
-
 		}
-
 	}
 
 	/**
 	 * 
-	 * 
-	 * 
 	 * play the sound based on the pressed button
-	 * 
-	 * 
 	 * 
 	 */
 

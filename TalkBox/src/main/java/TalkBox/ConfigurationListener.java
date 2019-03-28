@@ -50,10 +50,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	private boolean pickedName = false;
 	Thread thread;
 	String homeDirectory = System.getProperty("user.dir" );
-	String new_audio_path_M =  "./imageReasource/TalkBoxData/Audio_";	// mac/ linux/ unix
-	String new_audio_path_W =   ".\\imageReasource\\TalkBoxData\\Audio_"; // windows
-	String new_image_path_M =   "./imageReasource/TalkBoxData/Image_";	// mac/ linux/ unix
-	String new_image_path_W =   ".\\imageReasource\\TalkBoxData\\Image_"; // windows
+	String new_audio_path_M =  "./imageReasource/TalkBoxData/";	// mac/ linux/ unix
+	String new_audio_path_W =   ".\\imageReasource\\TalkBoxData\\"; // windows
+	String new_image_path_M =   "./imageReasource/TalkBoxData/";	// mac/ linux/ unix
+	String new_image_path_W =   ".\\imageReasource\\TalkBoxData\\"; // windows
 	String profileName;
 	LogFile log;
 	//----------------------------------------------------
@@ -125,9 +125,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 				File file;
 				if (System.getProperty("os.name").startsWith("Windows"))
-					file = new File(".\\imageReasource\\TalkBoxData\\numberOfButtons.txt");
+					file = new File(".\\imageReasource\\TalkBoxData\\" + profileName + "\\numberOfButtons.txt");
 				else
-					file = new File("./imageReasource/TalkBoxData/numberOfButtons.txt");
+					file = new File("./imageReasource/TalkBoxData/" + profileName + "/numberOfButtons.txt");
+				
 				
 				try {
 					
@@ -194,7 +195,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				
 				size = confFrame.getSizeButtons();
 				profileName = confFrame.getProfileName();
-				
+				makeDir(profileName);	// creates a directory for this profile
 				
 				
 				this.complete = new boolean[size+1];
@@ -241,7 +242,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			}
 			pickedName = false;
 			
-		}
+		} // next
 		else if (e.getActionCommand() == "Pick Sound") {
 			try {
 				log.writeToLog("Pressed: 'Pick Sound' in the 'Configuration App'");
@@ -256,9 +257,9 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 			try {
 				if (System.getProperty("os.name").startsWith("Windows")) 
-					output = new FileOutputStream(new_audio_path_W + page_counter + ".ser");
+					output = new FileOutputStream(new_audio_path_W + this.profileName + "\\Audio_" +page_counter + ".ser");
 				else 
-					output = new FileOutputStream(new_audio_path_M + page_counter + ".ser");
+					output = new FileOutputStream(new_audio_path_M + this.profileName + "/Audio_" + page_counter + ".ser");
 				
 				ObjectOutputStream objOutput = new ObjectOutputStream(output);
 				objOutput.writeObject(audioFile);
@@ -291,11 +292,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 			try {
 				
-				
 				if (System.getProperty("os.name").startsWith("Windows")) 
-					output = new FileOutputStream(new_image_path_W + page_counter + ".ser");
+					output = new FileOutputStream(new_image_path_W + this.profileName + "\\Image_" + page_counter + ".ser");
 				else 
-					output = new FileOutputStream(new_image_path_M + page_counter + ".ser");
+					output = new FileOutputStream(new_image_path_M + this.profileName + "/Image_" + page_counter + ".ser");
 				
 				ObjectOutputStream objOutput = new ObjectOutputStream(output);
 				objOutput.writeObject(imageFile);
@@ -345,7 +345,8 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			pickedSound = true;
 			pickedImage = true;
 			complete[page_counter] = true;
-		}
+		}// previous
+		
 		else if (e.getActionCommand() == "Upload Image") {
 			try {
 				log.writeToLog("Pressed: 'Upload Image' in the 'Configuration App'");
@@ -361,9 +362,9 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 			try {
 				if (System.getProperty("os.name").startsWith("Windows")) 
-					output = new FileOutputStream(new_image_path_W + page_counter + ".ser");
+					output = new FileOutputStream(new_image_path_W + this.profileName + "\\Image_" + page_counter + ".ser");
 				else 
-					output = new FileOutputStream(new_image_path_M + page_counter + ".ser");
+					output = new FileOutputStream(new_image_path_M + this.profileName + "/Image_" + page_counter + ".ser");
 				
 				ObjectOutputStream objOutput = new ObjectOutputStream(output);
 				objOutput.writeObject(imageFile);
@@ -385,8 +386,8 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				
 				e1.printStackTrace();
 			}
-			
-		}
+		} // upload image
+		
 		else if (e.getActionCommand() == "Upload Sound") {
 			try {
 				log.writeToLog("Pressed: 'Upload Sound' in the 'Configuration App'");
@@ -401,9 +402,9 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 			try {
 				if (System.getProperty("os.name").startsWith("Windows")) 
-					output = new FileOutputStream(new_audio_path_W + page_counter + ".ser");
+					output = new FileOutputStream(new_audio_path_W + this.profileName + "\\Audio_" +page_counter + ".ser");
 				else 
-					output = new FileOutputStream(new_audio_path_M + page_counter + ".ser");
+					output = new FileOutputStream(new_audio_path_M + this.profileName + "/Audio_" + page_counter + ".ser");
 				
 				ObjectOutputStream objOutput = new ObjectOutputStream(output);
 				objOutput.writeObject(soundFile);
@@ -477,9 +478,9 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 			try {
 				if (System.getProperty("os.name").startsWith("Windows")) 
-					output = new FileOutputStream(new_audio_path_W + page_counter + ".ser");
+					output = new FileOutputStream(new_audio_path_W + this.profileName + "\\Audio_" +page_counter + ".ser");
 				else 
-					output = new FileOutputStream(new_audio_path_M + page_counter + ".ser");
+					output = new FileOutputStream(new_audio_path_M + this.profileName + "/Audio_" + page_counter + ".ser");
 				
 				ObjectOutputStream objOutput = new ObjectOutputStream(output);
 				objOutput.writeObject(soundFile);
@@ -511,9 +512,9 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				FileInputStream fileIn;
 				try {
 					if (System.getProperty("os.name").startsWith("Windows"))
-						fileIn = new FileInputStream(new_audio_path_W + page_counter + ".ser");
+						fileIn = new FileInputStream(new_audio_path_W + this.profileName + "\\Audio_" + page_counter + ".ser");
 					else
-						fileIn = new FileInputStream(new_audio_path_M + page_counter + ".ser");
+						fileIn = new FileInputStream(new_audio_path_M + this.profileName + "/Audio_" + page_counter + ".ser");
 					
 					 ObjectInputStream in = new ObjectInputStream(fileIn);
 				     File input = (File) in.readObject();
@@ -556,9 +557,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				FileInputStream fileIn;
 				try {
 					if (System.getProperty("os.name").startsWith("Windows"))
-						fileIn = new FileInputStream(new_image_path_W + page_counter + ".ser");
+						fileIn = new FileInputStream(new_image_path_W + this.profileName + "\\Image_" + page_counter + ".ser");
 					else
-						fileIn = new FileInputStream(new_image_path_M + page_counter + ".ser");
+						fileIn = new FileInputStream(new_image_path_M + this.profileName + "/Image_" + page_counter + ".ser");
+					
 					
 					 ObjectInputStream in = new ObjectInputStream(fileIn);
 				     File input = (File) in.readObject();
@@ -595,10 +597,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 					try {
 						log.writeToLog("Serialization of the file has FAILED");
 					} catch (IOException e2) {
-						e2.printStackTrace();
+						this.confFrame.popupError("Invalid input");
 					}
 					
-					e1.printStackTrace();
+					this.confFrame.popupError("Invalid input");
 				} 
 		       
 			}
@@ -612,9 +614,9 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 			File file;
 			if (System.getProperty("os.name").startsWith("Windows"))
-				file = new File(".\\imageReasource\\TalkBoxData\\numberOfButtons.txt");
+				file = new File(".\\imageReasource\\TalkBoxData\\" + profileName + "\\numberOfButtons.txt");
 			else
-				file = new File("./imageReasource/TalkBoxData/numberOfButtons.txt");
+				file = new File("./imageReasource/TalkBoxData/" + profileName + "/numberOfButtons.txt");
 			
 			try {
 				
@@ -639,7 +641,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			this.thread = new Thread(new Runnable() {
 				public void run() {
 				try {
-					SimulationListener sim = new SimulationListener(size, log);
+					SimulationListener sim = new SimulationListener(size, log, profileName);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -654,7 +656,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		
-		JComboBox combo = (JComboBox) e.getSource();
+		JComboBox<String> combo = (JComboBox<String>) e.getSource();
 		
 		if (combo.getSelectedItem() == "Pick Image" ) {
 			try {
@@ -709,7 +711,19 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			}
 			
 			confFrame.resetDropMenu();
-		}
-			
+		}	
+	}
+	
+	/**
+	 * Creates  a directory for the new profile
+	 * 
+	 * @param profile
+	 * 			The new directory name (the name of the profile)
+	 */
+	public void makeDir (String profile) {
+		if (System.getProperty("os.name").startsWith("Windows")) 
+			new File(".\\imageReasource\\TalkBoxData\\" + profile).mkdir();
+		else
+			new File("./imageReasource/TalkBoxData/" + profile).mkdir();
 	}
 }

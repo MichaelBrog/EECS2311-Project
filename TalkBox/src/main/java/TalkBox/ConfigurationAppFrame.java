@@ -289,7 +289,6 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		else {
 			
 			//uncheck();
-			System.out.println(page);
 			buttonNames[page-1] = buttonName.getText();
 			
 			buttonName.setText(buttonNames[page]);
@@ -480,9 +479,9 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	public void printNamesToFile () throws IOException {
 		File names;
 		if (System.getProperty("os.name").startsWith("Windows"))
-			names = new File (".\\imageReasource\\TalkBoxData\\names.txt");
+			names = new File (".\\imageReasource\\TalkBoxData\\" + this.textConfName.getText() + "\\names.txt");
 		else
-			names = new File ("./imageReasource/TalkBoxData/names.txt");
+			names = new File ("./imageReasource/TalkBoxData/" + this.textConfName.getText() + "/names.txt");
 		
 		if (!names.exists()) 
 			names.createNewFile();

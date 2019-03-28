@@ -4,9 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Arrays;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,19 +27,25 @@ public class TalkBoxFrame extends JFrame {
 	GroupLayout layout;
 	JPanel panel;
 	
+	// ---- choose simulation -----
+	JButton simulate;	// A button that will be directed to the simulation app
+	JButton previous;	// A button that will go back to the main Talk 	box 
+	JComboBox<String> combo;	// A drop down menu that holds all the profiles
+	JLabel titleInSim;	// The title label in the choose simulation page
+	
 	/**
 	 * Constructor
 	 * 
 	 * @param l
 	 * 		The action listener
 	 */
-	public TalkBoxFrame (ActionListener l) {
+	public TalkBoxFrame (ActionListener l, ItemListener i) {
 		super("Talk Box App");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		JFrame.setDefaultLookAndFeelDecorated(true);							
 	
 		this.setResizable(false);
-		initializeComponents(l);	
+		initializeComponents(l, i);	
 		setPanel();
 		
 	}
@@ -45,13 +56,13 @@ public class TalkBoxFrame extends JFrame {
 	 * @param l
 	 * 		The action listener
 	 */
-	private void initializeComponents(ActionListener l) {
+	private void initializeComponents(ActionListener l, ItemListener i) {
 		setConfiguration = new JButton("Set Configuration");
 		setConfiguration.addActionListener(l);
 		setConfiguration.setPreferredSize(new Dimension(400, 100));
 		setConfiguration.setFont(new Font("Arial", Font.PLAIN, 18));
 		
-		chooseConfiguration = new JButton("Choose Configuration");
+		chooseConfiguration = new JButton("Choose Simulator");
 		chooseConfiguration.addActionListener(l);
 		chooseConfiguration.setPreferredSize(new Dimension(400, 100));
 		chooseConfiguration.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -68,18 +79,46 @@ public class TalkBoxFrame extends JFrame {
 		panel = new JPanel();
 		layout = new GroupLayout(panel);
 		panel.setLayout(layout);
+		
+		// ---- initialize fields for the choose profile page ---
+		simulate = new JButton("Simulate");
+		simulate.addActionListener(l);
+		previous = new JButton("Previous");
+		previous.addActionListener(l);
+		titleInSim = new JLabel("Please choose a profile:");
+		
+		File files;
+		if (System.getProperty("os.name").startsWith("Windows"))
+			files = new File(".\\imageReasource\\TalkBoxData");
+		else
+			files = new File("./imageReasource/TalkBoxData");
+		
+		String[] dirs = files.list(new FilenameFilter() {
+			  @Override
+			  public boolean accept(File current, String name) {
+			    return new File(current, name).isDirectory();
+			  }
+			});
+
+		combo = new JComboBox<String>(dirs);
+		combo.addItemListener(i);
 	}
 	
 	/**
 	 * Created and designs the panel
 	 */
-	private void setPanel() {
+	public void setPanel() {
+		
+		panel.removeAll();
+		panel.revalidate();
+		panel.repaint();
+		layout = new GroupLayout(panel);
+		panel.setLayout(layout);
+		JFrame.setDefaultLookAndFeelDecorated(true);
 		
 		// Automatic gap insertion
 		layout.setAutoCreateContainerGaps(true);
 		layout.setAutoCreateGaps(true);
-		
-		
 		
 		layout.setHorizontalGroup(layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup()
@@ -103,9 +142,69 @@ public class TalkBoxFrame extends JFrame {
 		);
 		
 		this.add(panel);
-		
-		
 	}
+	
+	/**
+	 * 
+	 * Changes the page so the user can pick a profile and simulate it
+	 * 
+	 */
+	public void chooseProfile (ItemListener i) {
+		
+		File files;
+		if (System.getProperty("os.name").startsWith("Windows"))
+			files = new File(".\\imageReasource\\TalkBoxData");
+		else
+			files = new File("./imageReasource/TalkBoxData");
+		
+		String[] dirs = files.list(new FilenameFilter() {
+			  @Override
+			  public boolean accept(File current, String name) {
+			    return new File(current, name).isDirectory();
+			  }
+			});
+
+		combo = new JComboBox<String>(dirs);
+		combo.insertItemAt("", 0);
+		combo.setSelectedIndex(0);
+		combo.addItemListener(i);
+		
+		panel.removeAll();
+		panel.revalidate();
+		panel.repaint();
+		layout = new GroupLayout(panel);
+		panel.setLayout(layout);
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		
+		// Automatic gap insertion
+		layout.setAutoCreateContainerGaps(true);
+		layout.setAutoCreateGaps(true);
+		
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+				.addGroup(layout.createParallelGroup()
+						.addComponent(titleInSim)
+						.addComponent(combo)
+						.addGroup(layout.createSequentialGroup()
+								.addComponent(previous)
+								.addComponent(simulate)))
+		);
+		
+		layout.linkSize(SwingConstants.HORIZONTAL, previous, simulate);
+		 
+		layout.setVerticalGroup(layout.createSequentialGroup()
+				.addGroup(layout.createParallelGroup()
+						.addComponent(titleInSim))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(combo))
+				.addGroup(layout.createParallelGroup()
+					//	.addGroup(layout.createParallelGroup()
+						.addComponent(previous)
+						.addComponent(simulate))
+		);
+		
+		this.add(panel);
+	} // chooseProfile
+	
 	
 	
 	
