@@ -100,7 +100,11 @@ public class TalkBoxFrame extends JFrame {
 			  }
 			});
 
-		combo = new JComboBox<String>(dirs);
+		if (dirs != null)
+			combo = new JComboBox<String>(dirs);
+		else
+			combo = new JComboBox<String>();
+	
 		combo.addItemListener(i);
 	}
 	
