@@ -85,8 +85,10 @@ public class SimulatorFrame extends JFrame {
 		//changes the location depending on the operating system
 		if (System.getProperty("os.name").startsWith("Windows"))
 			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
+//			saved_image_path =   "..\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
 		else
 			saved_image_path = "./imageReasource/TalkBoxData/" + profile + "/"; // mac/ linux/ unix
+//			saved_image_path = "../TalkBoxData/" + profile + "/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 		
@@ -100,8 +102,10 @@ public class SimulatorFrame extends JFrame {
 		
 		if (System.getProperty("os.name").startsWith("Windows"))
 			namesReader = new File (".\\imageReasource\\TalkBoxData\\" + profile + "\\names.txt");
+//			namesReader = new File ("..\\TalkBoxData\\" + profile + "\\names.txt");
 		else
 			namesReader = new File ("./imageReasource/TalkBoxData/" + profile + "/names.txt");
+//			namesReader = new File ("../TalkBoxData/" + profile + "/names.txt");
 		
 		
 		if (!namesReader.exists()) {

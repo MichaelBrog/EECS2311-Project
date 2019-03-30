@@ -54,6 +54,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	String new_audio_path_W =   ".\\imageReasource\\TalkBoxData\\"; // windows
 	String new_image_path_M =   "./imageReasource/TalkBoxData/";	// mac/ linux/ unix
 	String new_image_path_W =   ".\\imageReasource\\TalkBoxData\\"; // windows
+//	String new_audio_path_M =  "../TalkBoxData/";	// mac/ linux/ unix
+//	String new_audio_path_W =   "..\\TalkBoxData\\"; // windows
+//	String new_image_path_M =   "../TalkBoxData/";	// mac/ linux/ unix
+//	String new_image_path_W =   "..\\TalkBoxData\\"; // windows
 	String profileName;
 	LogFile log;
 	//----------------------------------------------------
@@ -126,8 +130,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				File file;
 				if (System.getProperty("os.name").startsWith("Windows"))
 					file = new File(".\\imageReasource\\TalkBoxData\\" + profileName + "\\numberOfButtons.txt");
+//					file = new File(".\\TalkBoxData\\" + profileName + "\\numberOfButtons.txt");
 				else
 					file = new File("./imageReasource/TalkBoxData/" + profileName + "/numberOfButtons.txt");
+//					file = new File("./TalkBoxData/" + profileName + "/numberOfButtons.txt");
 				
 				
 				try {
@@ -184,12 +190,18 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				File dir;
 				if (System.getProperty("os.name").startsWith("Windows"))
 					dir = new File (".\\imageReasource\\TalkBoxData");
+//					dir = new File ("..\\TalkBoxData");
 				else
 					dir = new File ("./imageReasource/TalkBoxData");
+//					dir = new File ("../TalkBoxData");
+//				
+//				if (dir != null)
+//				{
+//					for(File file: dir.listFiles()) 
+//					    if (!file.isDirectory()) 
+//					        file.delete();
+//				}
 				
-				for(File file: dir.listFiles()) 
-				    if (!file.isDirectory()) 
-				        file.delete();
 				
 				
 				
@@ -470,8 +482,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 			if (System.getProperty("os.name").startsWith("Windows"))
 				audio_path = ".\\imageReasource\\TalkBoxData\\RecordAudio" + page_counter + ".wav";
+//				audio_path = "..\\TalkBoxData\\RecordAudio" + page_counter + ".wav";
 			else
 				audio_path = "./imageReasource/TalkBoxData/RecordAudio_"+ page_counter + ".wav";
+//				audio_path = "../TalkBoxData/RecordAudio_"+ page_counter + ".wav";
 			
 			File soundFile = new File (audio_path);			
 			FileOutputStream output;
@@ -615,8 +629,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			File file;
 			if (System.getProperty("os.name").startsWith("Windows"))
 				file = new File(".\\imageReasource\\TalkBoxData\\" + profileName + "\\numberOfButtons.txt");
+//				file = new File("..\\TalkBoxData\\" + profileName + "\\numberOfButtons.txt");
 			else
 				file = new File("./imageReasource/TalkBoxData/" + profileName + "/numberOfButtons.txt");
+//				file = new File("../TalkBoxData/" + profileName + "/numberOfButtons.txt");
 			
 			try {
 				
@@ -723,7 +739,9 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	public void makeDir (String profile) {
 		if (System.getProperty("os.name").startsWith("Windows")) 
 			new File(".\\imageReasource\\TalkBoxData\\" + profile).mkdir();
+//			new File("..\\TalkBoxData\\" + profile).mkdir();
 		else
 			new File("./imageReasource/TalkBoxData/" + profile).mkdir();
+//			new File("../TalkBoxData/" + profile).mkdir();
 	}
 }

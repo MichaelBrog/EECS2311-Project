@@ -35,10 +35,44 @@ test {
 // create a task that will move resource files automatically to the created resource folder
 
 jar {
-	manifest{
-		attributes 'Main-Class' : 'main.java.TalkBox.MainConfiguration'
+	
+	//task ensureDirectory {
+    	//doLast {
+        	//mkdir "imageReasource"
+    	//}
+	//}
+		//mkdir "imageReasource"
+		
+		
+	from ("src"){
+		include "*/*"
+		include "*/TalkBoxData.hi/*"
+		include "*/TalkBoxData.test1/*"
+		include "*/TalkBoxData.test2/*"
 	}
+	
+	
+	//doLast {
+      //  ant.move file: "./imageRepository/Angry.jpg",
+      //           todir: "./imageReasource"
+    //}
+    
+ //   copy {
+   //         from ''
+     //       fileMode 0777
+       //     into "Executables"
+        //}
+    
+		
+	
+	manifest{
+		attributes 'Main-Class' : 'main.java.TalkBox.TalkBoxMain'
+	}
+	
+	doLast {
+        mkdir "imageReasource"
+    }
 }
 
 // Define the main class for the application
-mainClassName = 'TalkBox.MainConfiguration'
+mainClassName = 'TalkBox.TalkBoxMain'

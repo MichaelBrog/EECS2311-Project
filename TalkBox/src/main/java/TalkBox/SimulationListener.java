@@ -88,8 +88,10 @@ public class SimulationListener implements ActionListener{
 	
 		if (System.getProperty("os.name").startsWith("Windows"))
 			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
+//			saved_image_path =   "..\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
 		else
 			saved_image_path =   "./imageReasource/TalkBoxData/" + profile + "/"; // mac/ linux/ unix
+//			saved_image_path =   "../TalkBoxData/" + profile + "/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 		if (new File(saved_image_path).exists()) {

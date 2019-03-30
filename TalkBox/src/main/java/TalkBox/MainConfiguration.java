@@ -29,6 +29,12 @@ public class MainConfiguration {
 		String saved_audio_path_M = "/imageReasource/soundRepository";	// mac/ linux/ unix
 		String serialized_data_folder_W = "\\imageReasource\\TalkBoxData";
 		String serialized_data_folder_M = "/imageReasource/TalkBoxData";
+//		String saved_image_path_W = "..\\imageRepository"; // windows
+//		String saved_image_path_M = "../imageRepository";	// mac/ linux/ unix
+//		String saved_audio_path_W = "..\\soundRepository"; // windows
+//		String saved_audio_path_M = "../soundRepository";	// mac/ linux/ unix
+//		String serialized_data_folder_W = "..\\TalkBoxData";
+//		String serialized_data_folder_M = "../TalkBoxData";
 		CodeSource codeSource = MainConfiguration.class.getProtectionDomain().getCodeSource();
 		File jarFile = null;
 		Path index = null;

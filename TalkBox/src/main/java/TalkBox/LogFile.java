@@ -16,11 +16,30 @@ public class LogFile {
 	// ------ Constructors --------
 	public LogFile() throws IOException {
 		
+		File dir = new File("imageReasource");
+		dir.mkdir();
+		
+		if (System.getProperty("os.name").startsWith("Windows"))
+		{
+			File dirData = new File("imageReasource\\TalkBoxData");
+			dirData.mkdir();
+		}
+			
+		else
+		{
+			File dirData = new File("imageReasource/TalkBoxData");
+			dirData.mkdir();
+		}
+			
+		
+		
 		if (System.getProperty("os.name").startsWith("Windows"))
 			log =  new File (".\\imageReasource\\log.txt"); // mac/ linux/ unix
+			//log =  new File (".\\log.txt"); // mac/ linux/ unix
 			//saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
 		else
 			log = new File ("./imageReasource/log.txt"); // mac/ linux/ unix
+			//log = new File ("./log.txt"); // mac/ linux/ unix
 		
 		if (!log.exists())
 			log.createNewFile();

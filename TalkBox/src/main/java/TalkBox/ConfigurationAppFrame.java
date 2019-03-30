@@ -7,12 +7,16 @@ package main.java.TalkBox;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Scanner;
 
@@ -84,10 +88,17 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	FileNameExtensionFilter filterSound;	// A filter that the client will see so he chooses the correct file format
 	
 	String homeDirectory = System.getProperty("user.dir");
-	String saved_audio_path_M = "./imageReasource/soundRepository";	// mac/ linux/ unix
-	String saved_audio_path_W = ".\\imageReasource\\soundRepository"; // windows
-	String saved_image_path_M = "./imageReasource/imageRepository";	// mac/ linux/ unix
-	String saved_image_path_W = ".\\imageReasource\\imageRepository"; // windows
+//	String saved_audio_path_M = "./imageReasource/soundRepository";	// mac/ linux/ unix
+//	String saved_audio_path_W = ".\\imageReasource\\soundRepository"; // windows
+//	String saved_image_path_M = "./imageReasource/imageRepository";	// mac/ linux/ unix
+//	String saved_image_path_W = ".\\imageReasource\\imageRepository"; // windows
+	String saved_audio_path_M = "/soundRepository";	// mac/ linux/ unix
+	String saved_audio_path_W = "\\soundRepository"; // windows
+	String saved_image_path_M = "/imageRepository";	// mac/ linux/ unix
+	String saved_image_path_W = "\\imageRepository"; // windows
+
+
+	
 	
 	JTextField buttonName;		// The text field the user will use to write the name of the button
 	String[] buttonNames;
@@ -480,8 +491,10 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		File names;
 		if (System.getProperty("os.name").startsWith("Windows"))
 			names = new File (".\\imageReasource\\TalkBoxData\\" + this.textConfName.getText() + "\\names.txt");
+//			names = new File ("..\\TalkBoxData\\" + this.textConfName.getText() + "\\names.txt");
 		else
 			names = new File ("./imageReasource/TalkBoxData/" + this.textConfName.getText() + "/names.txt");
+//			names = new File ("../TalkBoxData/" + this.textConfName.getText() + "/names.txt");
 		
 		if (!names.exists()) 
 			names.createNewFile();

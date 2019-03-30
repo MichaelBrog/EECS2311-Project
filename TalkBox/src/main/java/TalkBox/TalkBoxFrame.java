@@ -90,8 +90,10 @@ public class TalkBoxFrame extends JFrame {
 		File files;
 		if (System.getProperty("os.name").startsWith("Windows"))
 			files = new File(".\\imageReasource\\TalkBoxData");
+//			files = new File("..\\TalkBoxData");
 		else
 			files = new File("./imageReasource/TalkBoxData");
+//			files = new File("../TalkBoxData");
 		
 		String[] dirs = files.list(new FilenameFilter() {
 			  @Override
@@ -99,8 +101,11 @@ public class TalkBoxFrame extends JFrame {
 			    return new File(current, name).isDirectory();
 			  }
 			});
-
-		combo = new JComboBox<String>(dirs);
+		
+		if (dirs != null)
+			combo = new JComboBox<String>(dirs);
+		else
+			combo = new JComboBox<String>();
 		combo.addItemListener(i);
 	}
 	
@@ -154,8 +159,10 @@ public class TalkBoxFrame extends JFrame {
 		File files;
 		if (System.getProperty("os.name").startsWith("Windows"))
 			files = new File(".\\imageReasource\\TalkBoxData");
+//			files = new File("..\\TalkBoxData");
 		else
 			files = new File("./imageReasource/TalkBoxData");
+//			files = new File("../TalkBoxData");
 		
 		String[] dirs = files.list(new FilenameFilter() {
 			  @Override
@@ -163,8 +170,11 @@ public class TalkBoxFrame extends JFrame {
 			    return new File(current, name).isDirectory();
 			  }
 			});
-
-		combo = new JComboBox<String>(dirs);
+		
+		if (dirs != null)
+			combo = new JComboBox<String>(dirs);
+		else
+			combo = new JComboBox<String>();
 		combo.insertItemAt("", 0);
 		combo.setSelectedIndex(0);
 		combo.addItemListener(i);
