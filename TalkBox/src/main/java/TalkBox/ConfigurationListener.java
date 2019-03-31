@@ -21,6 +21,9 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
@@ -35,6 +38,11 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities; 
 
 public class ConfigurationListener implements ActionListener, ItemListener{
+	
+	
+	public static final Logger logger = Logger.getLogger("TalkBox");
+	
+	
 	/**
 	 * Implement the Action listener of the pressed buttons/ check box in the configuration app
 	 * */
@@ -82,11 +90,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		record = new RecordAudio();
 		this.log = log;
 		
-		try {
-			log.writeToLog("Opened 'Configuration app'");
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		logger.info("Opened 'Configuration app'");
 	}
 	
 	/**
@@ -102,10 +106,16 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		log = new LogFile();
 		
 		try {
-			log.writeToLog("Opened 'Configuration app'");
-		} catch (IOException e1) {
-			e1.printStackTrace();
+			FileHandler fileh = new FileHandler("log.txt");
+			logger.addHandler(fileh);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fileh.setFormatter(formatter);
+			
+		} catch (IOException e) {
+			// TODO: handle exception
 		}
+		
+		logger.info("the App Frame is being initialized ");
 	}
 	
 	/**
@@ -119,11 +129,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getActionCommand() == "Exit") {
-			try {
-				log.writeToLog("Pressed: 'Exit' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Exit' in the 'Configuration App'");
 
 			if (page_counter != 0) {
 			
@@ -140,15 +146,11 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 					
 					if (!file.exists()) {
 						file.createNewFile();
-						log.writeToLog("Creates a new file for the numberOfButtons.txt");
+						logger.info("Creates a new file for the numberOfButtons.txt");
 						
 					}
 					
-					try {
-						log.writeToLog("Write the number of buttons " + size + " to numberOfButtons.txt");
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+					logger.info("Write the number of buttons " + size + " to numberOfButtons.txt");
 					
 					PrintWriter pt = new PrintWriter(file);
 					pt.println(size);
@@ -160,32 +162,22 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 					e1.printStackTrace();
 				}
 			}
+			logger.info("Close 'Configuration app'");
+			LoggingFrame logpop = new LoggingFrame("log.txt");
 			confFrame.setVisible(false);
 			confFrame.dispose();
 		
-			try {
-				log.writeToLog("Close 'Configuration app'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			
 		}
 
 		else if (e.getActionCommand() == "Next") {
-			try {
-				log.writeToLog("Pressed: 'Next' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Next' in the 'Configuration App'");
 			
 			if (first) {
 				
-				try {
-					log.writeToLog("It is the first time next is pressed");
-					log.writeToLog("Record the number of buttons the user wants");
-					log.writeToLog("Gets the name of the profile");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				logger.info("It is the first time next is pressed");
+				logger.info("Record the number of buttons the user wants");
+				logger.info("Gets the name of the profile");
 
 				File dir;
 				if (System.getProperty("os.name").startsWith("Windows"))
@@ -231,11 +223,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 					confFrame.dropDownImage.setSelectedIndex(0);
 					confFrame.dropDownSound.setSelectedIndex(0);
 					
-					try {
-						log.writeToLog("Goes to the next page in the configuration app");
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+					logger.info("Goes to the next page in the configuration app");
 				}
 				complete[page_counter] = true;
 				page_counter ++;
@@ -244,11 +232,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				
 			}
 			else {
-				try {
-					log.writeToLog("Not enough information is provided. Output an error message and doesn't go next");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				logger.info("Not enough information is provided. Output an error message and doesn't go next");
 				
 				confFrame.popupError("You need to choose an audio, an image and name it");
 			}
@@ -256,11 +240,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 		} // next
 		else if (e.getActionCommand() == "Pick Sound") {
-			try {
-				log.writeToLog("Pressed: 'Pick Sound' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Pick Sound' in the 'Configuration App'");
 			
 			String audio_path = confFrame.pressedPickSound();
 			
@@ -278,25 +258,17 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				objOutput.close();
 				
 				pickedSound = true;
-				log.writeToLog("It serializes the selected audio file and saves it in TalkBoxData");
+				logger.info("It serializes the selected audio file and saves it in TalkBoxData");
 				
 				
 			} catch (IOException e1) {
-				try {
-					log.writeToLog("Serialization of the file has FAILED");
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
+				logger.info("Serialization of the file has FAILED");
 				e1.printStackTrace();
 			}	
 		}// pick sound 
 		
 		else if (e.getActionCommand() == "Pick Image") {
-			try {
-				log.writeToLog("Pressed: 'Pick Image' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Pick Image' in the 'Configuration App'");
 			
 			String image_path = confFrame.pressedPickImage();
 			File imageFile = new File (image_path);			
@@ -313,42 +285,26 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				objOutput.writeObject(imageFile);
 				objOutput.close();
 				pickedImage = true;
-				log.writeToLog("It serializes the selected image file and saves it in TalkBoxData");
+				logger.info("It serializes the selected image file and saves it in TalkBoxData");
 				
 				
 			} catch (IOException e1) {
 				
-				try {
-					log.writeToLog("Serialization of the file has FAILED");
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
+				logger.info("Serialization of the file has FAILED");
 				e1.printStackTrace();
 			}	
 		}// pick Image
 		
 		else if (e.getActionCommand() == "Previous") {
-			try {
-				log.writeToLog("Pressed: 'Previous' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Previous' in the 'Configuration App'");
 			
 			page_counter --;
 			if (confFrame.page == 1) {
-				try {
-					log.writeToLog("Got to the first page of the configuration app");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				logger.info("Got to the first page of the configuration app");
 				
 				first = true;
 			}
-			try {
-				log.writeToLog("Gone to the previous page");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Gone to the previous page");
 			
 			confFrame.pressedPrevious(size);
 			confFrame.dropDownImage.setSelectedIndex(0);
@@ -360,11 +316,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		}// previous
 		
 		else if (e.getActionCommand() == "Upload Image") {
-			try {
-				log.writeToLog("Pressed: 'Upload Image' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Upload Image' in the 'Configuration App'");
 			
 			
 			String image_path = confFrame.pressedUploadImage();
@@ -387,25 +339,17 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 					complete[page_counter] = true;
 				
 				
-				log.writeToLog("Serializes the image file");
+				logger.info("Serializes the image file");
 				
 			} catch (IOException e1) {
-				try {
-					log.writeToLog("Serialization of the file has FAILED");
-				} catch (IOException e2) {
-					e1.printStackTrace();
-				}
+				logger.info("Serialization of the file has FAILED");
 				
 				e1.printStackTrace();
 			}
 		} // upload image
 		
 		else if (e.getActionCommand() == "Upload Sound") {
-			try {
-				log.writeToLog("Pressed: 'Upload Sound' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Upload Sound' in the 'Configuration App'");
 			
 			String audio_path = confFrame.pressedUploadSound();
 			
@@ -426,25 +370,17 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				if (pickedSound && pickedImage)
 					complete[page_counter] = true;
 				
-				log.writeToLog("Serializes the sound file");
+				logger.info("Serializes the sound file");
 				
 			} catch (IOException e1) {
-				try {
-					log.writeToLog("Serialization of the file has FAILED");
-				} catch (IOException e2) {
-					e1.printStackTrace();
-				}
+				logger.info("Serialization of the file has FAILED");
 				
 				e1.printStackTrace();
 			}
 		}// upload sound
 		
 		else if (e.getActionCommand() == "Start Recording") {
-			try {
-				log.writeToLog("Pressed: 'Start Recording' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Start Recording' in the 'Configuration App'");
 			
 			
 			thread = new Thread(new Runnable() {
@@ -455,28 +391,16 @@ public class ConfigurationListener implements ActionListener, ItemListener{
         });
 		thread.start();
 		
-		try {
-			log.writeToLog("Opened new thread of 'Record Audio'");
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		logger.info("Opened new thread of 'Record Audio'");
 		
 		}
 		else if (e.getActionCommand() == "Stop Recording") {
-			try {
-				log.writeToLog("Pressed: 'Stop Recording' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Stop Recording' in the 'Configuration App'");
 			
 			record.finish();
 			thread.interrupt();
 			
-			try {
-				log.writeToLog("Closes the thread of Record Audio");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Closes the thread of Record Audio");
 			 
 			String audio_path;
 			
@@ -501,25 +425,17 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				objOutput.close();
 				pickedSound = true;
 				
-				log.writeToLog("Serializes the record file");
+				logger.info("Serializes the record file");
 			}
 			catch (IOException e1) {
-				try {
-					log.writeToLog("Serialization of the file has FAILED");
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
+				logger.info("Serialization of the file has FAILED");
 				
 				e1.printStackTrace();
 			}
 		}// record sound
 		
 		else if (e.getActionCommand() == "Preview Sound") {
-			try {
-				log.writeToLog("Pressed: 'Preview Sound' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Preview Sound' in the 'Configuration App'");
 			
 			if (this.pickedSound || this.complete[page_counter]) {
 				
@@ -545,13 +461,9 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			        in.close();
 			        fileIn.close();
 				        
-			        log.writeToLog("Play the selected sound");
+			        logger.info("Play the selected sound");
 				} catch (Exception e1) {
-					try {
-						log.writeToLog("Serialization of the audio file has FAILED");
-					} catch (IOException e2) {
-						e2.printStackTrace();
-					}
+					logger.info("Serialization of the audio file has FAILED");
 					
 					e1.printStackTrace();
 				}
@@ -560,11 +472,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		}// preview sound
 		
 		else if (e.getActionCommand() == "Preview Image") {
-			try {
-				log.writeToLog("Pressed: 'Preview Image' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Preview Image' in the 'Configuration App'");
 			
 			if (this.pickedImage || this.complete[page_counter]) {
 				
@@ -605,14 +513,10 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				     });
 			        in.close();
 			        fileIn.close();
-			        log.writeToLog("Opens the selected image in a new window");
+			        logger.info("Opens the selected image in a new window");
 				        
 				} catch (Exception e1) {
-					try {
-						log.writeToLog("Serialization of the file has FAILED");
-					} catch (IOException e2) {
-						this.confFrame.popupError("Invalid input");
-					}
+					logger.info("Serialization of the file has FAILED");
 					
 					this.confFrame.popupError("Invalid input");
 				} 
@@ -620,11 +524,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			}
 		}// preview image
 		else if (e.getActionCommand() == "Demo") {
-			try {
-				log.writeToLog("Pressed: 'Demo' in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Demo' in the 'Configuration App'");
 			
 			File file;
 			if (System.getProperty("os.name").startsWith("Windows"))
@@ -648,11 +548,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				e1.printStackTrace();
 			} 
 			
-			try {
-				log.writeToLog("Opens a demo of the selected configuration in a new thread");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Opens a demo of the selected configuration in a new thread");
 			
 			this.thread = new Thread(new Runnable() {
 				public void run() {
@@ -675,56 +571,32 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		JComboBox<String> combo = (JComboBox<String>) e.getSource();
 		
 		if (combo.getSelectedItem() == "Pick Image" ) {
-			try {
-				log.writeToLog("Chose: 'Pick Image' in the 'Configuration App' -> set button to 'Pick Image'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Chose: 'Pick Image' in the 'Configuration App' -> set button to 'Pick Image'");
 			
 			confFrame.uploadImageDropMenu("Pick Image");
 		}
 		else if (combo.getSelectedItem() == "Upload Image") {
-			try {
-				log.writeToLog("Chose: 'Upload Image' in the 'Configuration App' -> set button to 'Upload Image'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Chose: 'Upload Image' in the 'Configuration App' -> set button to 'Upload Image'");
 			
 			confFrame.uploadImageDropMenu("Upload Image");
 		}
 		else if (combo.getSelectedItem() == "Upload Sound" ) {
-			try {
-				log.writeToLog("Chose: 'Upload Sound' in the 'Configuration App' -> set button to 'Upload Sound'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Chose: 'Upload Sound' in the 'Configuration App' -> set button to 'Upload Sound'");
 			
 			confFrame.uploadSoundDropMenu("Upload Sound");
 		}
 		else if (combo.getSelectedItem() == "Pick Sound") {
-			try {
-				log.writeToLog("Chose: 'Pick Sound' in the 'Configuration App' -> set button to 'Pick Sound'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Chose: 'Pick Sound' in the 'Configuration App' -> set button to 'Pick Sound'");
 			
 			confFrame.uploadSoundDropMenu("Pick Sound");
 		}
 		else if (combo.getSelectedItem() == "Record Sound") {
-			try {
-				log.writeToLog("Chose: 'Record Sound' in the 'Configuration App' -> set button to 'Record Sound'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Chose: 'Record Sound' in the 'Configuration App' -> set button to 'Record Sound'");
 			
 			confFrame.uploadSoundDropMenu("Record Sound");
 		}
 		else if (combo.getSelectedItem() == "") {
-			try {
-				log.writeToLog("Reset the drop down menu in the 'Configuration App'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Reset the drop down menu in the 'Configuration App'");
 			
 			confFrame.resetDropMenu();
 		}	
