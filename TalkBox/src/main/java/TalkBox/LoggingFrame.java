@@ -44,7 +44,7 @@ public class LoggingFrame extends JFrame {
 		
 		JPanel panel = new JPanel();
 		JTextArea logs = new JTextArea();
-		
+		JTextArea logs2 = new JTextArea();
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		JFrame.setDefaultLookAndFeelDecorated(true);							
 		
@@ -56,12 +56,20 @@ public class LoggingFrame extends JFrame {
 
 		
 		panel.add(logs);
-		
-		while(file.hasNextLine()) {
+		panel.add(logs2);
+		int i = 0;
+		while(file.hasNextLine() && i<45) {
 			String currentlog = file.nextLine();
 			logs.append(currentlog);
 			logs.append(System.lineSeparator());
+			i++;
 		}
+		while(file.hasNextLine()) {
+			String currentlog = file.nextLine();
+			logs2.append(currentlog);
+			logs2.append(System.lineSeparator());
+		}
+		
 		this.pack();
 		setVisible(true);
 		
