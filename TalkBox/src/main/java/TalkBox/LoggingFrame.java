@@ -27,10 +27,10 @@ public class LoggingFrame extends JFrame {
 	GroupLayout layout;
 	
 	
-	public LoggingFrame(String filename) {
+	public LoggingFrame(String windowname,String filename) {
 
 		
-		super("Configuration App Logs");
+		super(windowname);
 		
 		
 		
