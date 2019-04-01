@@ -106,6 +106,8 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		log = new LogFile();
 		
 		try {
+			
+			
 			FileHandler fileh = new FileHandler("ConfigurationLog.log");
 			logger.addHandler(fileh);
 			SimpleFormatter formatter = new SimpleFormatter();
@@ -163,7 +165,8 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				}
 			}
 			logger.info("Close 'Configuration app'");
-			LoggingFrame logpop = new LoggingFrame("Configuration App Logs","ConfigurationLog.log");
+			
+			
 			confFrame.setVisible(false);
 			confFrame.dispose();
 		

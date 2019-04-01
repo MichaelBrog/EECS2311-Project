@@ -4,12 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.swing.JComboBox;
 
 public class TalkBoxListener implements ActionListener, ItemListener {
 
+	public static final Logger logger = Logger.getLogger("TalkBox");
+	
+	
 	// --- Fields ---
 	TalkBoxFrame tb;
 	SimulationListener sim;
@@ -29,11 +36,22 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		tb.pack();
 		log = new LogFile();
 		
+		File file1 = new File("SimulatorLog.log");
+		
 		try {
-			log.writeToLog("Opened new TalkBox App");
-		} catch (IOException e1) {
-			e1.printStackTrace();
+			
+			File file2 = new File("ConfigurationLog.log");
+			FileHandler fileh = new FileHandler("ConfigurationLog.log");
+			logger.addHandler(fileh);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fileh.setFormatter(formatter);
+			
+		} catch (IOException e) {
+			// TODO: handle exception
 		}
+		
+		logger.info("Opened new TalkBox App");
+		
 	}
 
 
@@ -42,11 +60,7 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 	
 		if (e.getActionCommand() == "Set Configuration") {
 			
-				try {
-					log.writeToLog("Pressed: 'Set Configuration' in the 'Talk Box App'");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				logger.info("Pressed: 'Set Configuration' in the 'Talk Box App'");
 			
 			
 			thread = new Thread(new Runnable() {
@@ -58,11 +72,7 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 			});
 			thread.start();
 			
-			try {
-				log.writeToLog("Opened new thread of 'Configuration app'");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Opened new thread of 'Configuration app'");
 			
 			
 		}
@@ -72,22 +82,19 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		}
 		else if (e.getActionCommand() == "Exit") {
 			
-			try {
-				log.writeToLog("Pressed: 'Exit' in the 'Talk Box App'");
-				log.writeToLog("TalkBox app is terminating");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			logger.info("Pressed: 'Exit' in the 'Talk Box App'");
+			logger.info("TalkBox app is terminating");
+			logger.info("TalkBoxApp has terminated");
+			//LoggingFrame logpop = new LoggingFrame("Configuration App Logs","ConfigurationLog.log");
+			//LoggingFrame logpop1 = new LoggingFrame("Simulator Logs","SimulatorLog.log");
 			
 			tb.setVisible(false);
 			tb.dispose();
 			
-			try {
-				log.writeToLog("TalkBoxApp has terminated");
-				log.stopWriting();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			
+			
+			log.stopWriting();
+			
 			
 			System.exit(0);
 		} // exit
@@ -97,11 +104,7 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		} // previous
 		
 		else if (e.getActionCommand() == "Simulate") {
-			try {
-					log.writeToLog("Pressed: 'Choose Configuration' in the 'Talk Box App'");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+			logger.info("Pressed: 'Choose Configuration' in the 'Talk Box App'");
 
 			thread = new Thread(new Runnable() {
 					

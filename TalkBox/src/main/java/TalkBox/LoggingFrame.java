@@ -62,7 +62,6 @@ public class LoggingFrame extends JFrame {
 			String currentlog = file.nextLine();
 			logs.append(currentlog);
 			logs.append(System.lineSeparator());
-			i++;
 		}
 		while(file.hasNextLine()) {
 			String currentlog = file.nextLine();

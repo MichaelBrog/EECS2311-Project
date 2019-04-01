@@ -21,7 +21,7 @@ import javafx.scene.media.MediaPlayer;*/
 public class SimulationListener implements ActionListener{
 	
 	
-	public static final Logger logger = Logger.getLogger("TalkBox");
+	public static final Logger logger1 = Logger.getLogger("TalkBox");
 	/**
 	 * Implement the Action listener of the pressed buttons/ check box in the configuration app
 	 * */
@@ -42,8 +42,9 @@ public class SimulationListener implements ActionListener{
 	 * */
 	public SimulationListener (File[] audio) throws IOException {
 		try {
+			
 			FileHandler fileh = new FileHandler("SimulatorLog.log");
-			logger.addHandler(fileh);
+			logger1.addHandler(fileh);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fileh.setFormatter(formatter);
 			
@@ -129,10 +130,10 @@ public class SimulationListener implements ActionListener{
 				scan = null;
 				try {
 					scan = new Scanner(current_file);
-					logger.info("Finds the number of buttons the simulation has");
+					logger1.info("Finds the number of buttons the simulation has");
 					
 				} catch (FileNotFoundException e) {
-					logger.info("Counld not find the number of buttons the simulation app has");
+					logger1.info("Counld not find the number of buttons the simulation app has");
 					e.printStackTrace();
 				}
 				number_of_buttons = Integer.parseInt(scan.next());
@@ -140,7 +141,7 @@ public class SimulationListener implements ActionListener{
 		
 		simFrame = new SimulatorFrame(this, number_of_buttons, profile);
 		
-		logger.info("Opened 'Simulation app'");
+		logger1.info("Opened 'Simulation app'");
 	}
 	
 /*	*//**
@@ -215,17 +216,17 @@ public class SimulationListener implements ActionListener{
 				clip.open(audioInput);
 				clip.start();
 				
-				logger.info("Found the audio files");
+				logger1.info("Found the audio files");
 			}
 			else
 			{
-				logger.info("Didn't find the audio files");
+				logger1.info("Didn't find the audio files");
 			}
 		}
 		
 		catch(Exception e)
 		{
-			logger.info("Didn't find audio files");
+			logger1.info("Didn't find audio files");
 			e.printStackTrace();
 		}
 	}
@@ -260,6 +261,6 @@ public class SimulationListener implements ActionListener{
 		int numberOnly= Integer.parseInt(command_num);
 		playMusic(audio_array[numberOnly]);		
 		
-		logger.info("Playes the audio for specific button");
+		logger1.info("Playes the audio for specific button");
 	}
 }
