@@ -18,16 +18,13 @@ public class FileLoader {
 	
 
 	public static void loadfiles() {
-		String homeDirectory = System.getProperty("user.dir");
-		
-		String decodedPath = "";
+
 		String saved_image_path_W = "\\imageReasource\\imageRepository"; // windows
 		String saved_image_path_M = "/imageReasource/imageRepository";	// mac/ linux/ unix
 		String saved_audio_path_W = "\\imageReasource\\soundRepository"; // windows
 		String saved_audio_path_M = "/imageReasource/soundRepository";	// mac/ linux/ unix
 		CodeSource codeSource = MainConfiguration.class.getProtectionDomain().getCodeSource();
 		File jarFile = null;
-		Path index = null;
 		
 		try {
 			jarFile = new File(codeSource.getLocation().toURI().getPath());
