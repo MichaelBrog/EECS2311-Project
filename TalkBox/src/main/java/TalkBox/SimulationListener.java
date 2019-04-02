@@ -58,7 +58,6 @@ public class SimulationListener implements ActionListener{
 		
 		log = new LogFile();
 		audio_array = audio;
-		System.out.println("Constructor");
 	}
 	
 	/**
@@ -90,7 +89,8 @@ public class SimulationListener implements ActionListener{
 		simFrame = new SimulatorFrame(this, num, profile);
 		number_of_buttons = num;
 		this.log = log;
-		//this.profile = profile;
+		this.profile = profile;
+		audio_array = simFrame.audio_array;
 	}
 	
 	/**

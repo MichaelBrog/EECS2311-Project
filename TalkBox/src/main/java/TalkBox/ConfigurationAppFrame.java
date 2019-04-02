@@ -88,14 +88,14 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	FileNameExtensionFilter filterSound;	// A filter that the client will see so he chooses the correct file format
 	
 	String homeDirectory = System.getProperty("user.dir");
-//	String saved_audio_path_M = "./imageReasource/soundRepository";	// mac/ linux/ unix
-//	String saved_audio_path_W = ".\\imageReasource\\soundRepository"; // windows
-//	String saved_image_path_M = "./imageReasource/imageRepository";	// mac/ linux/ unix
-//	String saved_image_path_W = ".\\imageReasource\\imageRepository"; // windows
-	String saved_audio_path_M = "/soundRepository";	// mac/ linux/ unix
-	String saved_audio_path_W = "\\soundRepository"; // windows
-	String saved_image_path_M = "/imageRepository";	// mac/ linux/ unix
-	String saved_image_path_W = "\\imageRepository"; // windows
+	String saved_audio_path_M = "./imageReasource/soundRepository";	// mac/ linux/ unix
+	String saved_audio_path_W = ".\\imageReasource\\soundRepository"; // windows
+	String saved_image_path_M = "./imageReasource/imageRepository";	// mac/ linux/ unix
+	String saved_image_path_W = ".\\imageReasource\\imageRepository"; // windows
+//	String saved_audio_path_M = "/soundRepository";	// mac/ linux/ unix
+//	String saved_audio_path_W = "\\soundRepository"; // windows
+//	String saved_image_path_M = "/imageRepository";	// mac/ linux/ unix
+//	String saved_image_path_W = "\\imageRepository"; // windows
 
 
 	
