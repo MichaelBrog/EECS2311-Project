@@ -58,7 +58,6 @@ public class SimulationListener implements ActionListener{
 		
 		log = new LogFile();
 		audio_array = audio;
-		System.out.println("Constructor");
 	}
 	
 	/**
@@ -90,7 +89,8 @@ public class SimulationListener implements ActionListener{
 		simFrame = new SimulatorFrame(this, num, profile);
 		number_of_buttons = num;
 		this.log = log;
-		//this.profile = profile;
+		this.profile = profile;
+		audio_array = simFrame.audio_array;
 	}
 	
 	/**
@@ -160,10 +160,8 @@ public class SimulationListener implements ActionListener{
 			saved_image_path =   ".\\imageReasource\\TalkBoxData\\"; // mac/ linux/ unix
 		else
 			saved_image_path =   "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
-
 		File[] files = new File(saved_image_path).listFiles();
 		if (new File(saved_image_path).exists()) {
-
 			current_file = null;
 			
 			//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method

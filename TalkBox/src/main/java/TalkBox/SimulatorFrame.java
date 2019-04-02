@@ -4,13 +4,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import java.awt.event.ActionListener;
-import java.awt.image.RenderedImage;
 
 import javax.swing.*;
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 import java.io.BufferedReader;
 
@@ -18,19 +14,9 @@ import java.io.BufferedReader;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class SimulatorFrame extends JFrame {
 
@@ -331,7 +317,6 @@ public class SimulatorFrame extends JFrame {
 		File current_file = null;
 		Scanner scan;
 		String protocol = SimulatorFrame.class.getResource("").getProtocol();
-
 		
 		String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		String decodedPath = "";
@@ -350,10 +335,8 @@ public class SimulatorFrame extends JFrame {
 		else
 			saved_image_path =   "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
 			//saved_image_path = homeDirectory + "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
-
 		File[] files = new File(saved_image_path).listFiles();
 		if (new File(saved_image_path).exists()) {
-
 			current_file = null;
 			//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method
 			for (File file : files) {
@@ -372,17 +355,9 @@ public class SimulatorFrame extends JFrame {
 				number_of_buttons = Integer.parseInt(scan.next());
 			}
 	//	}
-
-
 		//	1);
-
 		//s.SetButton("Angry","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Angry.jpg", 2);
-
-
 		//s.SetButton("Perplexed","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Perplexed.jpg", 3);
-
-
-
 		if(number_of_buttons != 0)
 			new SimulatorFrame(null, number_of_buttons);
 		else 

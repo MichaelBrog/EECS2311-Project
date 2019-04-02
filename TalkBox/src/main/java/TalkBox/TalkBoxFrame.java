@@ -1,13 +1,11 @@
 package main.java.TalkBox;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Arrays;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
