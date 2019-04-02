@@ -12,6 +12,8 @@ public class RecordAudio implements Runnable{
     String homeDirectory = System.getProperty("user.dir" );
     String wavStrM = "./imageReasource/TalkBoxData/RecordAudio_";
     String wavStrW = ".\\imageReasource\\TalkBoxData\\RecordAudio_";
+//    String wavStrM = "../TalkBoxData/RecordAudio_";
+//    String wavStrW = "..\\TalkBoxData\\RecordAudio_";
    // File wavFileM = new File( "./imageReasource/TalkBoxData/RecordAudio_");	// mac / linux
     //File wavFileW = new File( ".\\imageReasource\\TalkBoxData\\RecordAudio.wav");	// windows
  

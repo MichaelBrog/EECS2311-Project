@@ -53,6 +53,7 @@ public class SimulatorFrame extends JFrame {
 	JPanel panel; // The used panel
 	int number_of_buttons = 0;	// the number of buttons the user picked
 	String profile;
+	File[] audio_array;
 	// -----------------------------------------
 
 	public SimulatorFrame(ActionListener l, int n, String profile) throws IOException {
@@ -78,15 +79,18 @@ public class SimulatorFrame extends JFrame {
 		File current_image_file;
 		File current_sound_file;
 		//ImageIcon[] image_array = new ImageIcon[n];
-		File[] audio_array = new File[number_of_buttons];
+	//	File[] audio_array = new File[number_of_buttons];
+		audio_array = new File[number_of_buttons];
 		ImageIcon image_file;
 		File audio_file = null;
 
 		//changes the location depending on the operating system
 		if (System.getProperty("os.name").startsWith("Windows"))
 			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
+//			saved_image_path =   "..\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
 		else
 			saved_image_path = "./imageReasource/TalkBoxData/" + profile + "/"; // mac/ linux/ unix
+//			saved_image_path = "../TalkBoxData/" + profile + "/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 		
@@ -100,8 +104,10 @@ public class SimulatorFrame extends JFrame {
 		
 		if (System.getProperty("os.name").startsWith("Windows"))
 			namesReader = new File (".\\imageReasource\\TalkBoxData\\" + profile + "\\names.txt");
+//			namesReader = new File ("..\\TalkBoxData\\" + profile + "\\names.txt");
 		else
 			namesReader = new File ("./imageReasource/TalkBoxData/" + profile + "/names.txt");
+//			namesReader = new File ("../TalkBoxData/" + profile + "/names.txt");
 		
 		
 		if (!namesReader.exists()) {
@@ -176,7 +182,8 @@ public class SimulatorFrame extends JFrame {
 				name[k] = br.readLine();
 
 				//this.SetButton(name, image_array[k], audio_array, k);
-				this.SetButton(name[k], image_file, audio_array, k);
+				//this.SetButton(name[k], image_file, audio_array, k);
+				this.SetButton(name[k], image_file, k);
 			}	
 		}
 		br.close();
@@ -282,13 +289,12 @@ public class SimulatorFrame extends JFrame {
 	 */
 
 	//public void SetButton(String buttonName, String image, int indexOfButton) throws IndexOutOfBoundsException {
-	public void SetButton(String buttonName, ImageIcon icon, File[] audio, int indexOfButton) throws IndexOutOfBoundsException, IOException {
+	public void SetButton(String buttonName, ImageIcon icon, int indexOfButton) throws IndexOutOfBoundsException, IOException {
 		try {
 			//ImageIcon icon = new ImageIcon(image);
 			pics[indexOfButton].setText(buttonName);
 			pics[indexOfButton].setIcon(icon);
 			pics[indexOfButton].setActionCommand(indexOfButton + "");
-			pics[indexOfButton].addActionListener(new SimulationListener(audio));
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("The index you have entered is invalid");
 		}
