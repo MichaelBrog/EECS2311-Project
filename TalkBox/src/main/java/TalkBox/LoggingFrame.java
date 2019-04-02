@@ -11,13 +11,17 @@ import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 public class LoggingFrame extends JFrame {
@@ -43,34 +47,46 @@ public class LoggingFrame extends JFrame {
 		}
 		
 		JPanel panel = new JPanel();
+		this.add(panel);
 		JTextArea logs = new JTextArea();
-		JTextArea logs2 = new JTextArea();
+		
+		
+		logs.setLineWrap(true);
+		logs.setWrapStyleWord(true);
+		logs.setSize(400, 400);
+		logs.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
+
+		JScrollPane scroller = new JScrollPane(logs);
+		scroller.setBounds(3, 3, 300, 200);
+		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scroller.setPreferredSize(new Dimension(700,310));
+		this.getContentPane().add(scroller);
+		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		JFrame.setDefaultLookAndFeelDecorated(true);							
 		
-		this.setSize(1000, 1000);
 		
-		this.setResizable(true);
 		
-		this.add(panel);
-
+		this.setResizable(false);
 		
-		panel.add(logs);
-		panel.add(logs2);
-		int i = 0;
-		while(file.hasNextLine() && i<45) {
+		
+		
+		
+		
+		
+	
+		while(file.hasNextLine()) {
 			String currentlog = file.nextLine();
 			logs.append(currentlog);
 			logs.append(System.lineSeparator());
 		}
-		while(file.hasNextLine()) {
-			String currentlog = file.nextLine();
-			logs2.append(currentlog);
-			logs2.append(System.lineSeparator());
-		}
 		
+		
+		
+		logs.setEditable(false);
 		this.pack();
 		setVisible(true);
+		
 		
 	}
 

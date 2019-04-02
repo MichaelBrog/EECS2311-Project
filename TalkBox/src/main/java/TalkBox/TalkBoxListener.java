@@ -36,12 +36,20 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		tb.pack();
 		log = new LogFile();
 		
-		File file1 = new File("SimulatorLog.log");
+		
 		
 		try {
+			File file1 = new File("SimulatorLog.log");
+			if (!file1.exists())
+				file1.createNewFile();
 			
 			File file2 = new File("ConfigurationLog.log");
+			if (!file2.exists())
+				file2.createNewFile();
+			
+			
 			FileHandler fileh = new FileHandler("ConfigurationLog.log");
+
 			logger.addHandler(fileh);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fileh.setFormatter(formatter);
