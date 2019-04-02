@@ -9,11 +9,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-//import javax.sound.*;
 import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.JOptionPane;
+
 
 /*import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;*/
@@ -31,6 +29,12 @@ public class SimulationListener implements ActionListener{
 	int number_of_buttons = 0;
 	LogFile log;
 	String profile;
+	Clip clip;
+	AudioInputStream audioInputStream;
+	Thread thread = new Thread();
+	PlaySound play = new PlaySound();
+	boolean played = false;
+	AudioInputStream audioInput;
 	//----------------------------------------------------
 	
 	/**
@@ -54,7 +58,7 @@ public class SimulationListener implements ActionListener{
 		
 		log = new LogFile();
 		audio_array = audio;
-		
+		System.out.println("Constructor");
 	}
 	
 	/**
@@ -96,8 +100,6 @@ public class SimulationListener implements ActionListener{
 	 */
 	public SimulationListener (LogFile log, String profile) throws IOException {
 		
-		
-		
 		this.profile = profile;
 		this.log = log;
 		String saved_image_path = "";
@@ -107,11 +109,9 @@ public class SimulationListener implements ActionListener{
 		String protocol = SimulatorFrame.class.getResource("").getProtocol();
 	
 		if (System.getProperty("os.name").startsWith("Windows"))
-			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
-//			saved_image_path =   "..\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
+			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; 
 		else
 			saved_image_path =   "./imageReasource/TalkBoxData/" + profile + "/"; // mac/ linux/ unix
-//			saved_image_path =   "../TalkBoxData/" + profile + "/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 		if (new File(saved_image_path).exists()) {
@@ -140,7 +140,7 @@ public class SimulationListener implements ActionListener{
 		}// if
 		
 		simFrame = new SimulatorFrame(this, number_of_buttons, profile);
-		
+		audio_array = simFrame.audio_array;
 		logger1.info("Opened 'Simulation app'");
 	}
 	
@@ -206,21 +206,22 @@ public class SimulationListener implements ActionListener{
 	
 		try
 		{
-			//File musicPath = new File(musicLocation);
 			File musicPath = musicLocation;
 			if (musicPath.exists())
 			{
+			
+				thread = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						play.run(musicPath);
+						
+				}});
+				thread.start();
 				
-				AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-				Clip clip = AudioSystem.getClip();
-				clip.open(audioInput);
-				clip.start();
+				played = true;
 				
 				logger1.info("Found the audio files");
-			}
-			else
-			{
-				logger1.info("Didn't find the audio files");
 			}
 		}
 		
@@ -234,33 +235,35 @@ public class SimulationListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		if (e.getSource() == "Hi")
-//
-//		{
-//
-//			// TODO Auto-generated method stub
-//
-//			// open the sound file as a Java input stream
-//
-//		    String file = "Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\hello.mp3";
-//
-//		    String music = "hello.mp3";
-//
-//		    Media hit = new Media(new File(music).toURI().toString());
-//
-//		    MediaPlayer mediaPlayer = new MediaPlayer(hit);
-//
-//		    mediaPlayer.play();
-//
-//		}
-		
+
 		//determines the number of the button by taking the actioncommand which is the image name
 		//Then using regex to take the number out of it, ideally we find a better way to do this
+	
+		if (played) {
+			System.out.println("HERE");
+			play.finish();
+			thread.interrupt();
+			thread.stop();
+			played = false;
+		}
 		String command_num = e.getActionCommand();
-		
 		int numberOnly= Integer.parseInt(command_num);
+		//index = numberOnly;
 		playMusic(audio_array[numberOnly]);		
-		
-		logger1.info("Playes the audio for specific button");
+	
+	//	logger1.info("Playes the audio for specific button");
 	}
+	
+	public void stop() {
+			try {
+				audioInput.close();
+				clip.stop();
+				clip.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			 
+		}
+	
+
 }

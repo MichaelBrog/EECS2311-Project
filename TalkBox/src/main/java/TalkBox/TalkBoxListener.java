@@ -54,7 +54,6 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	
@@ -73,29 +72,24 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 			thread.start();
 			
 			logger.info("Opened new thread of 'Configuration app'");
-			
-			
 		}
 		else if (e.getActionCommand() == "Choose Simulator") {
 			tb.chooseProfile(this);
 			
-		}
+		} // choose simulator
+		
+		else if (e.getActionCommand() == "TBCLog") {
+			
+			logger.info("Pressed: 'TBCLog' in the 'Talk Box App'");
+			LoggingFrame logpop = new LoggingFrame("Configuration App Logs","ConfigurationLog.log");
+			LoggingFrame logpop1 = new LoggingFrame("Simulator Logs","SimulatorLog.log");
+			
+		}// go to log
+		
 		else if (e.getActionCommand() == "Exit") {
-			
-			logger.info("Pressed: 'Exit' in the 'Talk Box App'");
-			logger.info("TalkBox app is terminating");
-			logger.info("TalkBoxApp has terminated");
-			//LoggingFrame logpop = new LoggingFrame("Configuration App Logs","ConfigurationLog.log");
-			//LoggingFrame logpop1 = new LoggingFrame("Simulator Logs","SimulatorLog.log");
-			
 			tb.setVisible(false);
 			tb.dispose();
-			
-			
-			
 			log.stopWriting();
-			
-			
 			System.exit(0);
 		} // exit
 		
@@ -118,10 +112,7 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 					}
 				});
 			thread.start();
-		
-		
 		}
-		
 	}
 
 

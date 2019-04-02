@@ -1,2 +1,12 @@
-Apr 01, 2019 11:44:02 AM main.java.TalkBox.TalkBoxListener <init>
+Apr. 01, 2019 9:54:09 P.M. main.java.TalkBox.TalkBoxListener <init>
 INFO: Opened new TalkBox App
+Apr. 01, 2019 9:54:13 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
+INFO: Pressed: 'Choose Configuration' in the 'Talk Box App'
+Apr. 01, 2019 9:54:13 P.M. main.java.TalkBox.SimulationListener <init>
+INFO: Finds the number of buttons the simulation has
+Apr. 01, 2019 9:54:13 P.M. main.java.TalkBox.SimulationListener <init>
+INFO: Opened 'Simulation app'
+Apr. 01, 2019 9:54:14 P.M. main.java.TalkBox.SimulationListener playMusic
+INFO: Found the audio files
+Apr. 01, 2019 9:54:15 P.M. main.java.TalkBox.SimulationListener playMusic
+INFO: Found the audio files

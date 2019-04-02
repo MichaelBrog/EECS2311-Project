@@ -22,6 +22,7 @@ public class TalkBoxFrame extends JFrame {
 	// ----- Fields -----
 	JButton setConfiguration;
 	JButton chooseConfiguration;
+	JButton openLog; 
 	JButton exit;
 	JLabel title;
 	GroupLayout layout;
@@ -67,6 +68,11 @@ public class TalkBoxFrame extends JFrame {
 		chooseConfiguration.setPreferredSize(new Dimension(400, 100));
 		chooseConfiguration.setFont(new Font("Arial", Font.PLAIN, 18));
 		
+		openLog = new JButton("TBCLog");
+		openLog.addActionListener(l);
+		openLog.setPreferredSize(new Dimension(400, 100));
+		openLog.setFont(new Font("Arial", Font.PLAIN, 18));
+		
 		exit = new JButton("Exit");
 		exit.addActionListener(l);
 		exit.setPreferredSize(new Dimension(400, 100));
@@ -90,10 +96,8 @@ public class TalkBoxFrame extends JFrame {
 		File files;
 		if (System.getProperty("os.name").startsWith("Windows"))
 			files = new File(".\\imageReasource\\TalkBoxData");
-//			files = new File("..\\TalkBoxData");
 		else
 			files = new File("./imageReasource/TalkBoxData");
-//			files = new File("../TalkBoxData");
 		
 		String[] dirs = files.list(new FilenameFilter() {
 			  @Override
@@ -131,10 +135,11 @@ public class TalkBoxFrame extends JFrame {
 						.addComponent(title)
 						.addComponent(setConfiguration)
 						.addComponent(chooseConfiguration)
+						.addComponent(openLog)
 						.addComponent(exit))
 		);
 		
-		layout.linkSize(SwingConstants.HORIZONTAL, setConfiguration, chooseConfiguration, exit);
+		layout.linkSize(SwingConstants.HORIZONTAL, setConfiguration, chooseConfiguration, exit, openLog);
 		 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup()
@@ -143,6 +148,8 @@ public class TalkBoxFrame extends JFrame {
 						.addComponent(setConfiguration))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(chooseConfiguration))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(openLog))
 				.addGroup(layout.createParallelGroup()
 						.addComponent(exit))
 		);
