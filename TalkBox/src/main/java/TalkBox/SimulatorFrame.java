@@ -1,4 +1,5 @@
 package main.java.TalkBox;
+import java.awt.Color;
 import java.awt.Dimension;
 
 import java.awt.GridLayout;
@@ -35,6 +36,7 @@ public class SimulatorFrame extends JFrame {
 	// ------------ Fields ---------------------
 
 	JButton[] pics; // An array of buttons. Size initialized by the desired amount of buttons
+	JButton[] swap;
 	final int MAX_NUM_B = 5;
 	final int MAX_NUM_ROW = 3;
 	int page = 0;
@@ -55,7 +57,7 @@ public class SimulatorFrame extends JFrame {
 		initializePanel(l, n);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setPreferredSize(new Dimension(1100, 500));
+		setPreferredSize(new Dimension(1100, 700));
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -63,6 +65,24 @@ public class SimulatorFrame extends JFrame {
 		number_of_buttons = n;
 		initializing();
 	}
+
+	public SimulatorFrame(ActionListener l, int n, String profile, int pageNumber) throws IOException {
+		super("FrameDemo");
+		this.setVisible(false);
+		this.profile = profile;
+		page = pageNumber;
+		initializePanel(l, n);
+
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setPreferredSize(new Dimension(1100, 700));
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
+
+		number_of_buttons = n;
+		initializing();
+	}	
+	
 	
 	private void initializing () throws IOException {
 		
@@ -131,6 +151,7 @@ public class SimulatorFrame extends JFrame {
 					current_sound_file = file;
 				}
 			}
+			
 			//deserializing the image file and turning the file to an image and sets it in image_file
 			image_file = null;
 			if (current_image_file != null) {
@@ -232,13 +253,20 @@ public class SimulatorFrame extends JFrame {
 		panel = new JPanel(new GridLayout(row_num, n, 5, 5));
 */
 		pics = new JButton[n];
+		swap = new JButton[n];
+		
 		for (int i = 0; i < pics.length; i++) {
 			pics[i] = new JButton("");
 			pics[i].setVerticalTextPosition(SwingConstants.TOP);
 			pics[i].setHorizontalTextPosition(SwingConstants.CENTER);
 			pics[i].setVisible(true);
 			pics[i].addActionListener(l);
-			//panel.add(pics[i]);
+			
+			swap[i] = new JButton("Swap");
+			swap[i].setVerticalTextPosition(SwingConstants.TOP);
+			swap[i].setHorizontalTextPosition(SwingConstants.CENTER);
+			swap[i].setVisible(true);
+			swap[i].addActionListener(l);
 		}
 
 		//this.add(panel);
@@ -253,21 +281,24 @@ public class SimulatorFrame extends JFrame {
 		
 		
 		JPanel helper = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
+		JPanel helper1 = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
 		
-	//	panel = new JPanel (new GridLayout(3, 1, 5, 5));	// 3 rows, 1 column
-		panel = new JPanel (new GridLayout(2, 1, 5, 5));	// 2 rows, 1 column USE THIS UNTIL MICHALS CODE
+		panel = new JPanel (new GridLayout(3, 1, 5, 5));	// 3 rows, 1 column
+	//	panel = new JPanel (new GridLayout(2, 1, 5, 5));	// 2 rows, 1 column USE THIS UNTIL MICHALS CODE
 		
-		for (int i = 0; i <  this.MAX_NUM_B && i < pics.length; i ++) {
-
-			helper.add(pics[i]);
+		
+		int from = page*this.MAX_NUM_B;
+		int to = page*this.MAX_NUM_B+5;
+		
+		for (int counter = from; counter <  to && counter < pics.length; counter ++) {
+			
+			helper.add(pics[counter]);
+			helper1.add(swap[counter]);
 		}
 		
 		panel.add(helper);
+		panel.add(helper1);
 		
-	//	helper = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
-		/*
-		 * Will be done by michael
-		 */
 		
 		boolean addNext = false;
 		if (Math.ceil(this.pics.length/((page+1)*this.MAX_NUM_B)) > 1)
@@ -354,18 +385,21 @@ public class SimulatorFrame extends JFrame {
 		this.setVisible(false);
 		
 		JPanel helper = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
+		JPanel helper1 = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
 		
-		//	panel = new JPanel (new GridLayout(3, 1, 5, 5));	// 3 rows, 1 column
-		panel = new JPanel (new GridLayout(2, 1, 5, 5));	// 2 rows, 1 column USE THIS UNTIL MICHALS CODE
+		panel = new JPanel (new GridLayout(3, 1, 5, 5));	// 3 rows, 1 column
+		//	panel = new JPanel (new GridLayout(2, 1, 5, 5));	// 2 rows, 1 column USE THIS UNTIL MICHALS CODE
 		int from = page*this.MAX_NUM_B;
 		int to = page*this.MAX_NUM_B+5;
 		
 		for (int counter = from; counter <  to && counter < pics.length; counter ++) {
 			
 			helper.add(pics[counter]);
+			helper1.add(swap[counter]);
 		}
 		
 		panel.add(helper);
+		panel.add(helper1);
 		
 	//	helper = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
 		/*
@@ -379,7 +413,6 @@ public class SimulatorFrame extends JFrame {
 		panel.revalidate();
 		if (page == 0) {	// first page
 
-			System.out.println("OPTION 1");
 			helper = new JPanel(new GridLayout(1, 2, 5, 5));	// a helper panel, 1 row, 5 buttons
 			helper.add(exit);
 			
@@ -387,14 +420,11 @@ public class SimulatorFrame extends JFrame {
 				helper.add(next);
 		}
 		else if (page == Math.ceil(pics.length/5)) { // last page
-
-			System.out.println("OPTION 2");
 			helper = new JPanel(new GridLayout(1, 2, 5, 5));	// a helper panel, 1 row, 5 buttons
 			helper.add(previous);
 			helper.add(exit);
 		}
 		else {
-			System.out.println("OPTION 2");
 			helper = new JPanel(new GridLayout(1, 3, 5, 5));	// a helper panel, 1 row, 5 buttons
 			helper.add(previous);
 			helper.add(next);
@@ -422,6 +452,32 @@ public class SimulatorFrame extends JFrame {
 		page --;
 		panelUpdateNext();
 	}
+	
+	public void changeToGreen(JButton b) {
+		b.setBackground(Color.GREEN);
+		b.setOpaque(true);
+		b.setBorderPainted(false);
+	}
+	
+	public void resetToOrigin (JButton b) {
+		b.setOpaque(false);
+		b.setBorderPainted(true);
+	}
+	
+	/**
+	 * 
+	 * @param b an instance of a button
+	 * @return the index in which the button is located
+	 */
+	public int returnPic (JButton b) {
+		
+		for (int i = 0; i < pics.length; i ++) {
+			if (b == swap[i])
+				return i;
+		}
+		return -1;
+	}
+	
 	
 	
 }

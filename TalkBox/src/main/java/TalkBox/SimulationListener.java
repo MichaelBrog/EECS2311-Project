@@ -1,9 +1,24 @@
 package main.java.TalkBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -11,6 +26,7 @@ import java.util.logging.SimpleFormatter;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
+import javax.swing.JButton;
 
 
 /*import javafx.scene.media.Media;
@@ -33,6 +49,16 @@ public class SimulationListener implements ActionListener{
 	PlaySound play = new PlaySound();
 	boolean played = false;
 	AudioInputStream audioInput;
+	boolean swap = false; // when false, no button was picked. When true 1 button is picked
+						  // If true and another button is picked -> swap and set to false
+	JButton pointer1;	  // A reference to the button that needs to be swapped
+	JButton pointer2;	  // A second pointer to the button that needs to be swapped
+	
+	JButton swapee1;		// get from pointer1
+	JButton swapee2;		// get from pointer2
+	
+	int index1;
+	int index2;
 	
 	public static final Logger logger1 = Logger.getLogger("TalkBoxSim");
 	//----------------------------------------------------
@@ -186,7 +212,41 @@ public class SimulationListener implements ActionListener{
 			}
 			simFrame.setVisible(false);
 			simFrame.dispose();
+		}// exit
+		else if (e.getActionCommand() == "Swap") {
+			
+			if (!swap) {
+				pointer1 = (JButton)e.getSource();
+				simFrame.changeToGreen(pointer1);
+				index1 = simFrame.returnPic(pointer1);
+				swap = true;
+			}
+			else if (e.getSource() == pointer1) {
+
+				//pointer2 = (JButton)e.getSource();
+				simFrame.resetToOrigin(pointer1);
+				swap = false;
+			}
+			else {
+				pointer2 = (JButton)e.getSource();
+				simFrame.resetToOrigin(pointer1);
+				swap = false;
+				index2 = simFrame.returnPic(pointer2);
+				try {
+					swapFiles();
+					fixNamesFile();
+					int page = simFrame.page;
+					simFrame.setVisible(false);
+					simFrame.dispose();
+					simFrame = new SimulatorFrame(this, this.number_of_buttons, profile, page);
+					
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			
 		}
+		
 		else {
 			if (played) {
 				play.finish();
@@ -203,6 +263,86 @@ public class SimulationListener implements ActionListener{
 		}
 	}
 	
+	private void swapFiles() throws IOException, ClassNotFoundException {
+		String saved_image_path;
+		
+		if (System.getProperty("os.name").startsWith("Windows"))
+			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; 
+		else
+			saved_image_path =   "./imageReasource/TalkBoxData/" + profile + "/"; // mac/ linux/ unix
+
+		// files already exist
+		File swap_image_one = new File(saved_image_path + "Image_" + (index1+1) + ".ser");
+		File swap_sound_one = new File(saved_image_path + "Audio_" + (index1+1) + ".ser");
+		File swap_image_two = new File(saved_image_path + "Image_" + (index2+1) + ".ser");
+		File swap_sound_two = new File(saved_image_path + "Audio_" + (index2+1) + ".ser");
+
+		// create 2 temp files to save the sound and image of swapee1
+		File temp_audio = new File(saved_image_path + "Audio_" + "temp" + ".ser");
+		File temp_Image = new File(saved_image_path + "Image_" + "temp" + ".ser");
+		Files.copy(Paths.get(swap_sound_one.getAbsolutePath()), Paths.get(saved_image_path + "Audio_" + "temp" + ".ser"), StandardCopyOption.REPLACE_EXISTING);
+		Files.copy(Paths.get(swap_image_one.getAbsolutePath()), Paths.get(saved_image_path + "Image_" + "temp" + ".ser"), StandardCopyOption.REPLACE_EXISTING);
+		
+		swap_image_one.renameTo(temp_Image);
+		swap_sound_one.renameTo(temp_audio);
+		
+		swap_image_two.renameTo(swap_image_one);
+		swap_sound_two.renameTo(swap_sound_one);
+		
+		temp_Image.renameTo(new File (saved_image_path + "Image_" + (index2+1) + ".ser"));
+		temp_audio.renameTo(new File (saved_image_path + "Audio_" + (index2+1) + ".ser"));
+
+	}
+	
+	private void fixNamesFile () throws IOException {
+		int min, max;
+		if (index1 < index2) {
+			min = index1;
+			max = index2;
+		}
+		else {
+			min = index2;
+			max = index1;
+		}
+		
+		String saved_image_path;
+		
+		if (System.getProperty("os.name").startsWith("Windows"))
+			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; 
+		else
+			saved_image_path =   "./imageReasource/TalkBoxData/" + profile + "/"; // mac/ linux/ unix
+		
+		List<String> strs = Files.readAllLines(Paths.get(saved_image_path + "names.txt"));
+		
+		String strMax = strs.get(max);
+		String strMin = strs.get(min);
+		String temp = strMin; // stores the min value
+		
+		strs.set(min, strMax); // put in the min index the max value
+		strs.set(max, temp); // put in the max index the min value
+		
+		File names;
+		if (System.getProperty("os.name").startsWith("Windows"))
+			names = new File (saved_image_path + "names.txt");
+//			names = new File ("..\\TalkBoxData\\" + this.textConfName.getText() + "\\names.txt");
+		else
+			names = new File (saved_image_path + "names.txt");
+//			names = new File ("../TalkBoxData/" + this.textConfName.getText() + "/names.txt");
+		
+		if (!names.exists()) 
+			names.createNewFile();
+		
+	/*	for(File file: names.listFiles()) 
+		    if (!file.isDirectory()) 
+		        file.delete();*/
+		
+		PrintWriter pt = new PrintWriter(names);
+
+		for (int i = 0; i < strs.size(); i ++) 
+			pt.println(strs.get(i));
+		
+		pt.close();
+	}
 	
 
 }
