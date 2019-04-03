@@ -1,11 +1,11 @@
-ONE
-TWO
-THREE
-4
-FIVE
 SIX
-7
 eight
+ONE
+THREE
+FIVE
+TWO
+7
+4
 nine
 ten
 11

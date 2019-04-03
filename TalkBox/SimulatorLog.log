@@ -1,14 +1,10 @@
-Apr. 03, 2019 5:54:41 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
+Apr. 03, 2019 6:41:04 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
 INFO: User is currently choosing which profile to simulate
-Apr. 03, 2019 5:54:43 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
+Apr. 03, 2019 6:41:06 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
 INFO: Pressed: 'Simulate' in the 'Talk Box App'
-Apr. 03, 2019 5:54:43 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
+Apr. 03, 2019 6:41:06 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
 INFO: The Simulation has opened
-Apr. 03, 2019 5:54:43 P.M. main.java.TalkBox.SimulationListener <init>
+Apr. 03, 2019 6:41:06 P.M. main.java.TalkBox.SimulationListener <init>
 INFO: Finds the number of buttons the simulation has
-Apr. 03, 2019 5:54:43 P.M. main.java.TalkBox.SimulationListener <init>
+Apr. 03, 2019 6:41:07 P.M. main.java.TalkBox.SimulationListener <init>
 INFO: Opened 'Simulation app'
-Apr. 03, 2019 5:54:45 P.M. main.java.TalkBox.SimulationListener playMusic
-INFO: Found the audio files
-Apr. 03, 2019 5:54:45 P.M. main.java.TalkBox.SimulationListener actionPerformed
-INFO: Playes the audio for specific button
