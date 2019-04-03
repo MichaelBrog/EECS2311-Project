@@ -94,7 +94,7 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 			tb.chooseProfile(this);
 			cs = true;
 			System.out.println(cs);
-			logger1.info("User is currenrtly choosing which profile to simulate");
+			logger1.info("User is currently choosing which profile to simulate");
 			
 		} // choose simulator
 		

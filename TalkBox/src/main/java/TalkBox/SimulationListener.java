@@ -218,7 +218,6 @@ public class SimulationListener implements ActionListener{
 				played = true;
 				
 				logger1.info("Found the audio files");
-				logger1.info("the audio file '"+musicPath+ "' is now playing");
 			}
 		}
 		
