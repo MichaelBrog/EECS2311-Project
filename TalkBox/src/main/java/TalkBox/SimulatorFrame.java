@@ -35,11 +35,18 @@ public class SimulatorFrame extends JFrame {
 	// ------------ Fields ---------------------
 
 	JButton[] pics; // An array of buttons. Size initialized by the desired amount of buttons
-
+	final int MAX_NUM_B = 5;
+	final int MAX_NUM_ROW = 3;
+	int page = 0;
 	JPanel panel; // The used panel
 	int number_of_buttons = 0;	// the number of buttons the user picked
 	String profile;
 	File[] audio_array;
+	
+	// pagination
+	JButton previous;
+	JButton next;
+	JButton exit;
 	// -----------------------------------------
 
 	public SimulatorFrame(ActionListener l, int n, String profile) throws IOException {
@@ -48,7 +55,7 @@ public class SimulatorFrame extends JFrame {
 		initializePanel(l, n);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setPreferredSize(new Dimension(1100, 300));
+		setPreferredSize(new Dimension(1100, 500));
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -215,7 +222,7 @@ public class SimulatorFrame extends JFrame {
 	 */
 
 	private void initializePanel(ActionListener l, int n) {
-		int row_num = 1;
+/*		int row_num = 1;
 		pics = new JButton[n];
 
 		if(n > 5) {
@@ -224,30 +231,80 @@ public class SimulatorFrame extends JFrame {
 		
 		
 		panel = new JPanel(new GridLayout(row_num, n, 5, 5));
-
+*/
+		pics = new JButton[n];
 		for (int i = 0; i < pics.length; i++) {
 			pics[i] = new JButton("");
 			pics[i].setVerticalTextPosition(SwingConstants.TOP);
 			pics[i].setHorizontalTextPosition(SwingConstants.CENTER);
 			pics[i].setVisible(true);
 			pics[i].addActionListener(l);
-			panel.add(pics[i]);
+			//panel.add(pics[i]);
 		}
 
+		//this.add(panel);
+		
+		// initialize buttons
+		previous = new JButton("Previous");
+		previous.addActionListener(l);
+		next = new JButton("Next");
+		next.addActionListener(l);
+		exit = new JButton ("Exit");
+		exit.addActionListener(l);
+		
+		
+		JPanel helper = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
+		
+	//	panel = new JPanel (new GridLayout(3, 1, 5, 5));	// 3 rows, 1 column
+		panel = new JPanel (new GridLayout(2, 1, 5, 5));	// 2 rows, 1 column USE THIS UNTIL MICHALS CODE
+		
+		for (int i = 0; i <  this.MAX_NUM_B && i < pics.length; i ++) {
+
+			helper.add(pics[i]);
+		}
+		
+		panel.add(helper);
+		
+	//	helper = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
+		/*
+		 * Will be done by michael
+		 */
+		
+		boolean addNext = false;
+		if (Math.ceil(this.pics.length/((page+1)*this.MAX_NUM_B)) > 1)
+			addNext = true;
+		
+		
+		
+		if (page == 0) {	// first page
+			helper = new JPanel(new GridLayout(1, 2, 5, 5));	// a helper panel, 1 row, 5 buttons
+			helper.add(exit);
+			
+			if (addNext)
+				helper.add(next);
+		}
+		else if (page == n-1) { // last page
+			helper = new JPanel(new GridLayout(1, 2, 5, 5));	// a helper panel, 1 row, 5 buttons
+			helper.add(previous);
+			helper.add(exit);
+		}
+		else {
+			helper = new JPanel(new GridLayout(1, 3, 5, 5));	// a helper panel, 1 row, 5 buttons
+			helper.add(previous);
+			helper.add(next);
+			helper.add(exit);
+		}
+		
+		panel.add(helper);
 		this.add(panel);
+		
+		
 	}
 
 	/**
 	 * 
-	 * 
-	 * 
 	 * @param buttonName
-	 * 
-	 * 
-	 * 
 	 *                   the name of the desired button
-	 * 
-	 * 
 	 * 
 	 * @param image    
 	 * 
@@ -260,7 +317,6 @@ public class SimulatorFrame extends JFrame {
 	 * 
 	 * 
 	 * @throws IndexOutOfBoundsException if {@code i < 0 || i >= n }.
-	 * 
 	 * 
 	 * 
 	 *                                   A method that helps the user create desired
@@ -292,75 +348,81 @@ public class SimulatorFrame extends JFrame {
 	 * 
 	 */
 
-	public static void panelUpdate(JButton b, String buttonName) {
-
-	}
-
-	
-	
-	
-/*	/**
-	 * 
-	 * 
-	 * 
-	 * A main method to test the view of the simulator app
-	 * @throws IOException 
-	 * 
-	 * 
-	 * 
-	 */
-/*
-	public static void main(String[] args) throws IOException {
-		int number_of_buttons = 0;
-		String saved_image_path = "";
-		String homeDirectory = System.getProperty("user.dir");
-		File current_file = null;
-		Scanner scan;
-		String protocol = SimulatorFrame.class.getResource("").getProtocol();
+	private void panelUpdateNext() {
+		panel.removeAll();
+		panel.revalidate();
+		panel.repaint();
+		this.setVisible(false);
 		
-		String path = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		String decodedPath = "";
-		try {
-			decodedPath = URLDecoder.decode(path, "UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		JPanel helper = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
+		
+		//	panel = new JPanel (new GridLayout(3, 1, 5, 5));	// 3 rows, 1 column
+		panel = new JPanel (new GridLayout(2, 1, 5, 5));	// 2 rows, 1 column USE THIS UNTIL MICHALS CODE
+		int from = page*this.MAX_NUM_B;
+		int to = page*this.MAX_NUM_B+5;
+		
+		for (int counter = from; counter <  to && counter < pics.length; counter ++) {
+			
+			helper.add(pics[counter]);
 		}
 		
+		panel.add(helper);
 		
+	//	helper = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
+		/*
+		 * Will be done by michael
+		 */
+		boolean addNext = false;
+		if (Math.ceil(this.pics.length/((page+1)*this.MAX_NUM_B)) > 1)
+			addNext = true;
+		
+		
+		panel.revalidate();
+		if (page == 0) {	// first page
+
+			System.out.println("OPTION 1");
+			helper = new JPanel(new GridLayout(1, 2, 5, 5));	// a helper panel, 1 row, 5 buttons
+			helper.add(exit);
+			
+			if (addNext)
+				helper.add(next);
+		}
+		else if (page == Math.ceil(pics.length/5)) { // last page
+
+			System.out.println("OPTION 2");
+			helper = new JPanel(new GridLayout(1, 2, 5, 5));	// a helper panel, 1 row, 5 buttons
+			helper.add(previous);
+			helper.add(exit);
+		}
+		else {
+			System.out.println("OPTION 2");
+			helper = new JPanel(new GridLayout(1, 3, 5, 5));	// a helper panel, 1 row, 5 buttons
+			helper.add(previous);
+			helper.add(next);
+			helper.add(exit);
+		}
+		
+		panel.add(helper);
+		panel.revalidate();
+		this.add(panel);
+		this.setVisible(true);
+	}
+
+	/**
+	 * The method the listener calls when pressed next
+	 */
+	public void pushedNext () {
+		page ++;
+		panelUpdateNext();
+	}
 	
-		if (System.getProperty("os.name").startsWith("Windows"))
-			//saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
-			saved_image_path =   ".\\imageReasource\\TalkBoxData\\"; // mac/ linux/ unix
-		else
-			saved_image_path =   "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
-			//saved_image_path = homeDirectory + "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
-		File[] files = new File(saved_image_path).listFiles();
-		if (new File(saved_image_path).exists()) {
-			current_file = null;
-			//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method
-			for (File file : files) {
-				if (file.getName().endsWith("Buttons" + ".txt")) {
-					current_file = file;
-				}
-			}		
-			//scanner to scan the file and get an int value for the number of buttons
-			//if(current_file != null || !Objects.equals(protocol, "jar")) {
-				scan = null;
-				try {
-					scan = new Scanner(current_file);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-				number_of_buttons = Integer.parseInt(scan.next());
-			}
-	//	}
-		//	1);
-		//s.SetButton("Angry","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Angry.jpg", 2);
-		//s.SetButton("Perplexed","C:\\Users\\ryann\\git\\EECS2311-Project\\EECS2311-Project\\TalkBox\\src\\Perplexed.jpg", 3);
-		if(number_of_buttons != 0)
-			new SimulatorFrame(null, number_of_buttons);
-		else 
-			new SimulatorFrame(null, 0);
-	}*/
+	/**
+	 * The method the listener calls when pressed previous
+	 */
+	public void pushedPrevious () {
+		page --;
+		panelUpdateNext();
+	}
+	
+	
 }
