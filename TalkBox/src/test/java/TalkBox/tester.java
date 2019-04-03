@@ -1,4 +1,4 @@
-/*package test.java.TalkBox;
+package test.java.TalkBox;
 
 
 
@@ -9,6 +9,7 @@ import main.java.TalkBox.ConfigurationAppFrame;
 import main.java.TalkBox.ConfigurationListener;
 import main.java.TalkBox.SimulatorFrame;
 
+import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +23,15 @@ import javax.swing.JFrame;
 	    private ConfigurationAppFrame frame;
 	    private ConfigurationListener config;
 	    
+	    @Test
+	    public void TalkBoxAppTest1Button() throws InterruptedException {
+	    
+	    	String hello = "Hello";
+	    	assertTrue(hello.equals("Hello"));
+	    }
+	}
+
+	    /*
 	    @BeforeEach
 	    public void setUp() throws Exception {
 	        frame = new ConfigurationAppFrame(null, null);
