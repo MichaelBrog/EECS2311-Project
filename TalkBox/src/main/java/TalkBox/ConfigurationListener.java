@@ -40,7 +40,7 @@ import javax.swing.SwingUtilities;
 public class ConfigurationListener implements ActionListener, ItemListener{
 	
 	
-	public static final Logger logger = Logger.getLogger("TalkBox");
+	public static final Logger logger = Logger.getLogger("TalkBoxConfig");
 	
 	
 	/**

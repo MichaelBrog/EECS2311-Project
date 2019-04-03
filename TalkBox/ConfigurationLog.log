@@ -1,76 +1,52 @@
-Apr 03, 2019 3:59:03 AM main.java.TalkBox.TalkBoxListener <init>
+Apr 03, 2019 11:39:48 AM main.java.TalkBox.TalkBoxListener <init>
 INFO: Opened new TalkBox App
-Apr 03, 2019 3:59:05 AM main.java.TalkBox.TalkBoxListener actionPerformed
+Apr 03, 2019 11:39:49 AM main.java.TalkBox.TalkBoxListener actionPerformed
 INFO: Pressed: 'Set Configuration' in the 'Talk Box App'
-Apr 03, 2019 3:59:05 AM main.java.TalkBox.TalkBoxListener actionPerformed
+Apr 03, 2019 11:39:49 AM main.java.TalkBox.TalkBoxListener actionPerformed
 INFO: Opened new thread of 'Configuration app'
-Apr 03, 2019 3:59:06 AM main.java.TalkBox.ConfigurationListener <init>
+Apr 03, 2019 11:39:50 AM main.java.TalkBox.ConfigurationListener <init>
 INFO: Opened 'Configuration app'
-Apr 03, 2019 3:59:11 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:39:53 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Pressed: 'Next' in the 'Configuration App'
-Apr 03, 2019 3:59:11 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:39:53 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: It is the first time next is pressed
-Apr 03, 2019 3:59:11 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:39:53 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Record the number of buttons the user wants
-Apr 03, 2019 3:59:11 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:39:53 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Gets the name of the profile
-Apr 03, 2019 3:59:11 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:39:53 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Goes to the next page in the configuration app
-Apr 03, 2019 3:59:13 AM main.java.TalkBox.ConfigurationListener itemStateChanged
-INFO: Chose: 'Pick Image' in the 'Configuration App' -> set button to 'Pick Image'
-Apr 03, 2019 3:59:13 AM main.java.TalkBox.ConfigurationListener itemStateChanged
-INFO: Chose: 'Pick Image' in the 'Configuration App' -> set button to 'Pick Image'
-Apr 03, 2019 3:59:14 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:39:54 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Pressed: 'Pick Image' in the 'Configuration App'
-Apr 03, 2019 3:59:17 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:39:56 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: It serializes the selected image file and saves it in TalkBoxData
-Apr 03, 2019 3:59:19 AM main.java.TalkBox.ConfigurationListener itemStateChanged
-INFO: Chose: 'Pick Sound' in the 'Configuration App' -> set button to 'Pick Sound'
-Apr 03, 2019 3:59:19 AM main.java.TalkBox.ConfigurationListener itemStateChanged
-INFO: Chose: 'Pick Sound' in the 'Configuration App' -> set button to 'Pick Sound'
-Apr 03, 2019 3:59:19 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:39:56 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Pressed: 'Pick Sound' in the 'Configuration App'
-Apr 03, 2019 3:59:21 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:39:58 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: It serializes the selected audio file and saves it in TalkBoxData
-Apr 03, 2019 3:59:23 AM main.java.TalkBox.ConfigurationListener actionPerformed
-INFO: Pressed: 'Preview Image' in the 'Configuration App'
-Apr 03, 2019 3:59:23 AM main.java.TalkBox.ConfigurationListener actionPerformed
-INFO: Opens the selected image in a new window
-Apr 03, 2019 3:59:26 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:39:59 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Pressed: 'Preview Sound' in the 'Configuration App'
-Apr 03, 2019 3:59:30 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:40:03 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Play the selected sound
-Apr 03, 2019 3:59:34 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:40:03 AM main.java.TalkBox.ConfigurationListener actionPerformed
+INFO: Pressed: 'Preview Image' in the 'Configuration App'
+Apr 03, 2019 11:40:03 AM main.java.TalkBox.ConfigurationListener actionPerformed
+INFO: Opens the selected image in a new window
+Apr 03, 2019 11:40:11 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Pressed: 'Next' in the 'Configuration App'
-Apr 03, 2019 3:59:34 AM main.java.TalkBox.ConfigurationListener itemStateChanged
-INFO: Reset the drop down menu in the 'Configuration App'
-Apr 03, 2019 3:59:34 AM main.java.TalkBox.ConfigurationListener itemStateChanged
-INFO: Reset the drop down menu in the 'Configuration App'
-Apr 03, 2019 3:59:34 AM main.java.TalkBox.ConfigurationListener itemStateChanged
-INFO: Reset the drop down menu in the 'Configuration App'
-Apr 03, 2019 3:59:34 AM main.java.TalkBox.ConfigurationListener itemStateChanged
-INFO: Reset the drop down menu in the 'Configuration App'
-Apr 03, 2019 3:59:34 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:40:11 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Goes to the next page in the configuration app
-Apr 03, 2019 3:59:36 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:40:14 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Pressed: 'Demo' in the 'Configuration App'
-Apr 03, 2019 3:59:36 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:40:14 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Opens a demo of the selected configuration in a new thread
-Apr 03, 2019 3:59:37 AM main.java.TalkBox.SimulationListener playMusic
-INFO: Found the audio files
-Apr 03, 2019 3:59:43 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:40:17 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Pressed: 'Exit' in the 'Configuration App'
-Apr 03, 2019 3:59:43 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:40:17 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Write the number of buttons 1 to numberOfButtons.txt
-Apr 03, 2019 3:59:43 AM main.java.TalkBox.ConfigurationListener actionPerformed
+Apr 03, 2019 11:40:17 AM main.java.TalkBox.ConfigurationListener actionPerformed
 INFO: Close 'Configuration app'
-Apr 03, 2019 3:59:47 AM main.java.TalkBox.TalkBoxListener actionPerformed
-INFO: Pressed: 'Choose Configuration' in the 'Talk Box App'
-Apr 03, 2019 3:59:47 AM main.java.TalkBox.SimulationListener <init>
-INFO: Finds the number of buttons the simulation has
-Apr 03, 2019 3:59:47 AM main.java.TalkBox.SimulationListener <init>
-INFO: Opened 'Simulation app'
-Apr 03, 2019 3:59:48 AM main.java.TalkBox.SimulationListener playMusic
-INFO: Found the audio files
-Apr 03, 2019 3:59:57 AM main.java.TalkBox.TalkBoxListener actionPerformed
+Apr 03, 2019 11:40:29 AM main.java.TalkBox.TalkBoxListener actionPerformed
+INFO: Pressed: 'Previous' in the 'Talk Box App'
+Apr 03, 2019 11:40:30 AM main.java.TalkBox.TalkBoxListener actionPerformed
 INFO: Pressed: 'TBCLog' in the 'Talk Box App'

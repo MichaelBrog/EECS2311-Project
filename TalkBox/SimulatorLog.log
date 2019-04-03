@@ -1,28 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE log SYSTEM "logger.dtd">
-<log>
-<record>
-  <date>2019-04-02T13:54:12.626590Z</date>
-  <millis>1554213252626</millis>
-  <nanos>590000</nanos>
-  <sequence>0</sequence>
-  <logger>TalkBox</logger>
-  <level>INFO</level>
-  <class>main.java.TalkBox.TalkBoxListener</class>
-  <method>&lt;init&gt;</method>
-  <thread>1</thread>
-  <message>Opened new TalkBox App</message>
-</record>
-<record>
-  <date>2019-04-02T13:54:15.623183Z</date>
-  <millis>1554213255623</millis>
-  <nanos>183000</nanos>
-  <sequence>1</sequence>
-  <logger>TalkBox</logger>
-  <level>INFO</level>
-  <class>main.java.TalkBox.TalkBoxListener</class>
-  <method>actionPerformed</method>
-  <thread>17</thread>
-  <message>Pressed: 'TBCLog' in the 'Talk Box App'</message>
-</record>
-</log>
+Apr 03, 2019 11:40:20 AM main.java.TalkBox.TalkBoxListener actionPerformed
+INFO: User is currenrtly choosing which profile to simulate
+Apr 03, 2019 11:40:22 AM main.java.TalkBox.TalkBoxListener actionPerformed
+INFO: Pressed: 'Simulate' in the 'Talk Box App'
+Apr 03, 2019 11:40:22 AM main.java.TalkBox.TalkBoxListener actionPerformed
+INFO: The Simulation has opened
+Apr 03, 2019 11:40:22 AM main.java.TalkBox.SimulationListener <init>
+INFO: Finds the number of buttons the simulation has
+Apr 03, 2019 11:40:23 AM main.java.TalkBox.SimulationListener <init>
+INFO: Opened 'Simulation app'
+Apr 03, 2019 11:40:23 AM main.java.TalkBox.SimulationListener playMusic
+INFO: Found the audio files
+Apr 03, 2019 11:40:23 AM main.java.TalkBox.SimulationListener playMusic
+INFO: the audio file 'C:\Users\mostafa\git\EECS2311-Project\TalkBox\imageReasource\soundRepository\bye.wav' is now playing

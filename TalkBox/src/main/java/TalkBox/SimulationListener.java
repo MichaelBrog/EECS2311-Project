@@ -19,7 +19,7 @@ import javafx.scene.media.MediaPlayer;*/
 public class SimulationListener implements ActionListener{
 	
 	
-	public static final Logger logger1 = Logger.getLogger("TalkBox");
+	public static final Logger logger1 = Logger.getLogger("TalkBoxSim");
 	/**
 	 * Implement the Action listener of the pressed buttons/ check box in the configuration app
 	 * */
@@ -47,15 +47,15 @@ public class SimulationListener implements ActionListener{
 	public SimulationListener (File[] audio) throws IOException {
 		try {
 			
-			FileHandler fileh = new FileHandler("SimulatorLog.log");
-			logger1.addHandler(fileh);
-			SimpleFormatter formatter = new SimpleFormatter();
-			fileh.setFormatter(formatter);
+			FileHandler fileh1 = new FileHandler("SimulatorLog.log");
+			logger1.addHandler(fileh1);
+			SimpleFormatter formatter1 = new SimpleFormatter();
+			fileh1.setFormatter(formatter1);
 			
 		} catch (IOException e) {
 			// TODO: handle exception
 		}
-		
+		logger1.info("hello");
 		log = new LogFile();
 		audio_array = audio;
 	}
@@ -218,6 +218,7 @@ public class SimulationListener implements ActionListener{
 				played = true;
 				
 				logger1.info("Found the audio files");
+				logger1.info("the audio file '"+musicPath+ "' is now playing");
 			}
 		}
 		

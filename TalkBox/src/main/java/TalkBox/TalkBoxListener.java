@@ -14,8 +14,8 @@ import javax.swing.JComboBox;
 
 public class TalkBoxListener implements ActionListener, ItemListener {
 
-	public static final Logger logger = Logger.getLogger("TalkBox");
-	
+	public static final Logger logger = Logger.getLogger("TalkBoxConfig");
+	public static final Logger logger1 = Logger.getLogger("TalkBoxSim");
 	
 	// --- Fields ---
 	public TalkBoxFrame tb;
@@ -52,9 +52,12 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 			if (!file2.exists())
 				file2.createNewFile();
 			
+			FileHandler fileh1 = new FileHandler("SimulatorLog.log");
+			logger1.addHandler(fileh1);
+			SimpleFormatter formatter1 = new SimpleFormatter();
+			fileh1.setFormatter(formatter1);
 			
 			FileHandler fileh = new FileHandler("ConfigurationLog.log");
-
 			logger.addHandler(fileh);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fileh.setFormatter(formatter);
@@ -91,6 +94,7 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 			tb.chooseProfile(this);
 			cs = true;
 			System.out.println(cs);
+			logger1.info("User is currenrtly choosing which profile to simulate");
 			
 		} // choose simulator
 		
@@ -113,11 +117,12 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		} // exit
 		
 		else if (e.getActionCommand() == "Previous") {
-			tb.setPanel();	// Go to the menu	
+			tb.setPanel();	// Go to the menu
+			logger.info("Pressed: 'Previous' in the 'Talk Box App'");
 		} // previous
 		
 		else if (e.getActionCommand() == "Simulate") {
-			logger.info("Pressed: 'Choose Configuration' in the 'Talk Box App'");
+			logger1.info("Pressed: 'Simulate' in the 'Talk Box App'");
 			simulationWorking = true;
 			System.out.println(simulationWorking);
 
@@ -133,6 +138,7 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 					}
 				});
 			thread.start();
+			logger1.info("The Simulation has opened");
 		}
 	}
 
