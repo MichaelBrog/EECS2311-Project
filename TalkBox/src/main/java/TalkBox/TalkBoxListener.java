@@ -18,12 +18,17 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 	
 	
 	// --- Fields ---
-	TalkBoxFrame tb;
-	SimulationListener sim;
+	public TalkBoxFrame tb;
+	public SimulationListener sim;
 	Thread thread;
-	ConfigurationListener conf;
-	LogFile log;
+	public ConfigurationListener conf;
+	public LogFile log;
 	String profile;	// the profile the user chooses 
+	public boolean sc = false; //set configuration
+	public boolean cs = false; //choose simulation
+	public boolean logBoolean = false;
+	public boolean exitBoolean = false;
+	public boolean simulationWorking = false;
 	
 	/**
 	 * Constructor. 
@@ -36,12 +41,20 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		tb.pack();
 		log = new LogFile();
 		
-		File file1 = new File("SimulatorLog.log");
+		
 		
 		try {
+			File file1 = new File("SimulatorLog.log");
+			if (!file1.exists())
+				file1.createNewFile();
 			
 			File file2 = new File("ConfigurationLog.log");
+			if (!file2.exists())
+				file2.createNewFile();
+			
+			
 			FileHandler fileh = new FileHandler("ConfigurationLog.log");
+
 			logger.addHandler(fileh);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fileh.setFormatter(formatter);
@@ -60,7 +73,8 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		if (e.getActionCommand() == "Set Configuration") {
 			
 				logger.info("Pressed: 'Set Configuration' in the 'Talk Box App'");
-			
+				sc = true;
+				System.out.println(sc);
 			
 			thread = new Thread(new Runnable() {
 
@@ -75,11 +89,15 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		}
 		else if (e.getActionCommand() == "Choose Simulator") {
 			tb.chooseProfile(this);
+			cs = true;
+			System.out.println(cs);
 			
 		} // choose simulator
 		
 		else if (e.getActionCommand() == "TBCLog") {
 			
+			logBoolean = true;
+			System.out.println(logBoolean);
 			logger.info("Pressed: 'TBCLog' in the 'Talk Box App'");
 			LoggingFrame logpop = new LoggingFrame("Configuration App Logs","ConfigurationLog.log");
 			LoggingFrame logpop1 = new LoggingFrame("Simulator Logs","SimulatorLog.log");
@@ -87,6 +105,7 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		}// go to log
 		
 		else if (e.getActionCommand() == "Exit") {
+			exitBoolean = true;
 			tb.setVisible(false);
 			tb.dispose();
 			log.stopWriting();
@@ -99,6 +118,8 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 		
 		else if (e.getActionCommand() == "Simulate") {
 			logger.info("Pressed: 'Choose Configuration' in the 'Talk Box App'");
+			simulationWorking = true;
+			System.out.println(simulationWorking);
 
 			thread = new Thread(new Runnable() {
 					

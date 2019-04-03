@@ -1,8 +1,28 @@
-Apr. 01, 2019 9:43:55 P.M. main.java.TalkBox.SimulationListener <init>
-INFO: Opened 'Simulation app'
-Apr. 01, 2019 9:43:58 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
-INFO: Pressed: 'Choose Configuration' in the 'Talk Box App'
-Apr. 01, 2019 9:43:58 P.M. main.java.TalkBox.SimulationListener <init>
-INFO: Finds the number of buttons the simulation has
-Apr. 01, 2019 9:43:58 P.M. main.java.TalkBox.SimulationListener <init>
-INFO: Opened 'Simulation app'
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-04-02T13:54:12.626590Z</date>
+  <millis>1554213252626</millis>
+  <nanos>590000</nanos>
+  <sequence>0</sequence>
+  <logger>TalkBox</logger>
+  <level>INFO</level>
+  <class>main.java.TalkBox.TalkBoxListener</class>
+  <method>&lt;init&gt;</method>
+  <thread>1</thread>
+  <message>Opened new TalkBox App</message>
+</record>
+<record>
+  <date>2019-04-02T13:54:15.623183Z</date>
+  <millis>1554213255623</millis>
+  <nanos>183000</nanos>
+  <sequence>1</sequence>
+  <logger>TalkBox</logger>
+  <level>INFO</level>
+  <class>main.java.TalkBox.TalkBoxListener</class>
+  <method>actionPerformed</method>
+  <thread>17</thread>
+  <message>Pressed: 'TBCLog' in the 'Talk Box App'</message>
+</record>
+</log>

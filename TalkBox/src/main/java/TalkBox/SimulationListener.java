@@ -106,14 +106,12 @@ public class SimulationListener implements ActionListener{
 		String homeDirectory = System.getProperty("user.dir");
 		File current_file = null;
 		Scanner scan;
-		String protocol = SimulatorFrame.class.getResource("").getProtocol();
 	
 		if (System.getProperty("os.name").startsWith("Windows"))
 			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; 
 		else
 			saved_image_path =   "./imageReasource/TalkBoxData/" + profile + "/"; // mac/ linux/ unix
 
-		File[] files = new File(saved_image_path).listFiles();
 		if (new File(saved_image_path).exists()) {
 
 			current_file = null;
@@ -160,10 +158,8 @@ public class SimulationListener implements ActionListener{
 			saved_image_path =   ".\\imageReasource\\TalkBoxData\\"; // mac/ linux/ unix
 		else
 			saved_image_path =   "./imageReasource/TalkBoxData/"; // mac/ linux/ unix
-
 		File[] files = new File(saved_image_path).listFiles();
 		if (new File(saved_image_path).exists()) {
-
 			current_file = null;
 			
 			//Finding a file with the number of buttons, ideally we don't need a for loop to find it, check for other method

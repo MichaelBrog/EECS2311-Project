@@ -34,6 +34,7 @@ public class FileLoader {
 		}
 		String jarDir = jarFile.getParentFile().getPath();
 	
+		System.out.println(jarDir);
 		try {
 			if (System.getProperty("os.name").startsWith("Windows")) {
 				Files.createDirectories(Paths.get(jarDir + saved_image_path_W));
