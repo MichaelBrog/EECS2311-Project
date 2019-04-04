@@ -283,14 +283,24 @@ public class SimulationListener implements ActionListener{
 		Files.copy(Paths.get(swap_sound_one.getAbsolutePath()), Paths.get(saved_image_path + "Audio_" + "temp" + ".ser"), StandardCopyOption.REPLACE_EXISTING);
 		Files.copy(Paths.get(swap_image_one.getAbsolutePath()), Paths.get(saved_image_path + "Image_" + "temp" + ".ser"), StandardCopyOption.REPLACE_EXISTING);
 		
-		swap_image_one.renameTo(temp_Image);
+	/*	swap_image_one.renameTo(temp_Image);
 		swap_sound_one.renameTo(temp_audio);
 		
 		swap_image_two.renameTo(swap_image_one);
 		swap_sound_two.renameTo(swap_sound_one);
 		
 		temp_Image.renameTo(new File (saved_image_path + "Image_" + (index2+1) + ".ser"));
-		temp_audio.renameTo(new File (saved_image_path + "Audio_" + (index2+1) + ".ser"));
+		temp_audio.renameTo(new File (saved_image_path + "Audio_" + (index2+1) + ".ser"));*/
+		
+		Files.move(Paths.get(swap_image_one.toURI()), Paths.get(temp_Image.toURI()), StandardCopyOption.REPLACE_EXISTING);
+		Files.move(Paths.get(swap_sound_one.toURI()), Paths.get(temp_audio.toURI()), StandardCopyOption.REPLACE_EXISTING);
+		
+		Files.move(Paths.get(swap_image_two.toURI()), Paths.get(swap_image_one.toURI()), StandardCopyOption.REPLACE_EXISTING);
+		Files.move(Paths.get(swap_sound_two.toURI()), Paths.get(swap_sound_one.toURI()), StandardCopyOption.REPLACE_EXISTING);
+		
+		Files.move(Paths.get(temp_Image.toURI()), Paths.get(saved_image_path + "Image_" + (index2+1) + ".ser"), StandardCopyOption.REPLACE_EXISTING);
+		Files.move(Paths.get(temp_audio.toURI()), Paths.get(saved_image_path + "Audio_" + (index2+1) + ".ser"), StandardCopyOption.REPLACE_EXISTING);
+		
 
 	}
 	
@@ -324,10 +334,8 @@ public class SimulationListener implements ActionListener{
 		File names;
 		if (System.getProperty("os.name").startsWith("Windows"))
 			names = new File (saved_image_path + "names.txt");
-//			names = new File ("..\\TalkBoxData\\" + this.textConfName.getText() + "\\names.txt");
 		else
 			names = new File (saved_image_path + "names.txt");
-//			names = new File ("../TalkBoxData/" + this.textConfName.getText() + "/names.txt");
 		
 		if (!names.exists()) 
 			names.createNewFile();

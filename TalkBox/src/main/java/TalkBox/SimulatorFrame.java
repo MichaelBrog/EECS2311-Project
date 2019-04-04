@@ -301,7 +301,7 @@ public class SimulatorFrame extends JFrame {
 		
 		
 		boolean addNext = false;
-		if (Math.ceil(this.pics.length/((page+1)*this.MAX_NUM_B)) > 1)
+		if (Math.ceil(this.pics.length/((page+1)*this.MAX_NUM_B)) >= (page+1))
 			addNext = true;
 		
 		
@@ -406,7 +406,7 @@ public class SimulatorFrame extends JFrame {
 		 * Will be done by michael
 		 */
 		boolean addNext = false;
-		if (Math.ceil(this.pics.length/((page+1)*this.MAX_NUM_B)) > 1)
+		if (Math.ceil(this.pics.length/((page+1)*this.MAX_NUM_B)) >= (page+1))
 			addNext = true;
 		
 		
