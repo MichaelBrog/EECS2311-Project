@@ -6,30 +6,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.CodeSource;
 
-
-
-
 public class FileLoader {
 	
-	
-
 	public static void loadfiles() {
 
 		String saved_image_path_W = "\\imageReasource\\imageRepository"; // windows
 		String saved_image_path_M = "/imageReasource/imageRepository";	// mac/ linux/ unix
 		String saved_audio_path_W = "\\imageReasource\\soundRepository"; // windows
 		String saved_audio_path_M = "/imageReasource/soundRepository";	// mac/ linux/ unix
-		CodeSource codeSource = MainConfiguration.class.getProtectionDomain().getCodeSource();
+		CodeSource codeSource = FileLoader.class.getProtectionDomain().getCodeSource();
 		File jarFile = null;
 		
 		try {
 			jarFile = new File(codeSource.getLocation().toURI().getPath());
 		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		String jarDir = jarFile.getParentFile().getPath();

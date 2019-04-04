@@ -1,28 +1,18 @@
 package main.java.TalkBox;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
 
 public class LoggingFrame extends JFrame {
 
@@ -144,12 +134,6 @@ public class LoggingFrame extends JFrame {
 		}
 			
 			logs.append(System.lineSeparator());
-
-		//while (file.hasNextLine()) {
-	//		String currentlog = file.nextLine();
-		//	logs.append(currentlog);
-		//	logs.append(System.lineSeparator());
-		//}
 
 		logs.setEditable(false);
 		this.pack();

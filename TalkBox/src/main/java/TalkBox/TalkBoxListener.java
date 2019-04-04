@@ -62,9 +62,7 @@ public class TalkBoxListener implements ActionListener, ItemListener {
 			SimpleFormatter formatter = new SimpleFormatter();
 			fileh.setFormatter(formatter);
 			
-		} catch (IOException e) {
-			// TODO: handle exception
-		}
+		} catch (IOException e) {}
 		
 		logger.info("Opened new TalkBox App");
 		

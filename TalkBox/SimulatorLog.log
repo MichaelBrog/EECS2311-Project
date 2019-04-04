@@ -1,10 +1,10 @@
-Apr. 03, 2019 9:49:24 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
+Apr. 03, 2019 11:16:46 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
 INFO: User is currently choosing which profile to simulate
-Apr. 03, 2019 9:49:26 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
+Apr. 03, 2019 11:16:50 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
 INFO: Pressed: 'Simulate' in the 'Talk Box App'
-Apr. 03, 2019 9:49:26 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
+Apr. 03, 2019 11:16:50 P.M. main.java.TalkBox.TalkBoxListener actionPerformed
 INFO: The Simulation has opened
-Apr. 03, 2019 9:49:26 P.M. main.java.TalkBox.SimulationListener <init>
+Apr. 03, 2019 11:16:50 P.M. main.java.TalkBox.SimulationListener <init>
 INFO: Finds the number of buttons the simulation has
-Apr. 03, 2019 9:49:26 P.M. main.java.TalkBox.SimulationListener <init>
+Apr. 03, 2019 11:16:50 P.M. main.java.TalkBox.SimulationListener <init>
 INFO: Opened 'Simulation app'

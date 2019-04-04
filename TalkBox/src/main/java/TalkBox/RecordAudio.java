@@ -12,10 +12,6 @@ public class RecordAudio implements Runnable{
     String homeDirectory = System.getProperty("user.dir" );
     String wavStrM = "./imageReasource/TalkBoxData/RecordAudio_";
     String wavStrW = ".\\imageReasource\\TalkBoxData\\RecordAudio_";
-//    String wavStrM = "../TalkBoxData/RecordAudio_";
-//    String wavStrW = "..\\TalkBoxData\\RecordAudio_";
-   // File wavFileM = new File( "./imageReasource/TalkBoxData/RecordAudio_");	// mac / linux
-    //File wavFileW = new File( ".\\imageReasource\\TalkBoxData\\RecordAudio.wav");	// windows
  
     // format of audio file
     AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
@@ -58,11 +54,11 @@ public class RecordAudio implements Runnable{
 	@Override
 	public void run() {
 		
-		// TODO Auto-generated method stub
 		try {
             AudioFormat format = getAudioFormat();
             DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
             info.getFormats();
+            
             // checks if system supports the data line
             if (!AudioSystem.isLineSupported(info)) {
                 System.out.println("Line not supported");
@@ -78,7 +74,6 @@ public class RecordAudio implements Runnable{
  
             System.out.println("Start recording...");
            
-            //File wavFileM = new File(wavStrM + place + ".wav");
             // start recording
      	      if (System.getProperty("os.name").startsWith("Windows")) {
      	    	 File wavFileW = new File(wavStrW + place + ".wav");

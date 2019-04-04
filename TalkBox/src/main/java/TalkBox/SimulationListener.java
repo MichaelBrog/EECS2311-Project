@@ -1,20 +1,10 @@
 package main.java.TalkBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.io.Reader;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -28,9 +18,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 
-
-/*import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;*/
 
 public class SimulationListener implements ActionListener{
 	
@@ -77,26 +64,11 @@ public class SimulationListener implements ActionListener{
 			SimpleFormatter formatter1 = new SimpleFormatter();
 			fileh1.setFormatter(formatter1);
 			
-		} catch (IOException e) {
-			// TODO: handle exception
-		}
+		} catch (IOException e) {}
 
 		log = new LogFile();
 		audio_array = audio;
 	}
-	
-	/**
-	 * 
-	 * @param numButtons 
-	 * 				the number of buttons in the simulation app
-	 * 
-	 * @throws IOException
-	 *//*
-	public SimulationListener (int num, LogFile log, String profile) throws IOException {
-		
-		simFrame = new SimulatorFrame(this, num);
-		this.log = log;
-	}*/
 	
 	/**
 	 * 
@@ -128,7 +100,6 @@ public class SimulationListener implements ActionListener{
 		this.profile = profile;
 		this.log = log;
 		String saved_image_path = "";
-		String homeDirectory = System.getProperty("user.dir");
 		File current_file = null;
 		Scanner scan;
 	
@@ -223,7 +194,6 @@ public class SimulationListener implements ActionListener{
 			}
 			else if (e.getSource() == pointer1) {
 
-				//pointer2 = (JButton)e.getSource();
 				simFrame.resetToOrigin(pointer1);
 				swap = false;
 			}
@@ -283,15 +253,6 @@ public class SimulationListener implements ActionListener{
 		Files.copy(Paths.get(swap_sound_one.getAbsolutePath()), Paths.get(saved_image_path + "Audio_" + "temp" + ".ser"), StandardCopyOption.REPLACE_EXISTING);
 		Files.copy(Paths.get(swap_image_one.getAbsolutePath()), Paths.get(saved_image_path + "Image_" + "temp" + ".ser"), StandardCopyOption.REPLACE_EXISTING);
 		
-	/*	swap_image_one.renameTo(temp_Image);
-		swap_sound_one.renameTo(temp_audio);
-		
-		swap_image_two.renameTo(swap_image_one);
-		swap_sound_two.renameTo(swap_sound_one);
-		
-		temp_Image.renameTo(new File (saved_image_path + "Image_" + (index2+1) + ".ser"));
-		temp_audio.renameTo(new File (saved_image_path + "Audio_" + (index2+1) + ".ser"));*/
-		
 		Files.move(Paths.get(swap_image_one.toURI()), Paths.get(temp_Image.toURI()), StandardCopyOption.REPLACE_EXISTING);
 		Files.move(Paths.get(swap_sound_one.toURI()), Paths.get(temp_audio.toURI()), StandardCopyOption.REPLACE_EXISTING);
 		
@@ -339,10 +300,6 @@ public class SimulationListener implements ActionListener{
 		
 		if (!names.exists()) 
 			names.createNewFile();
-		
-	/*	for(File file: names.listFiles()) 
-		    if (!file.isDirectory()) 
-		        file.delete();*/
 		
 		PrintWriter pt = new PrintWriter(names);
 

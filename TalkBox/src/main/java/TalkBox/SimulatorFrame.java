@@ -11,8 +11,6 @@ import javax.imageio.ImageIO;
 
 import java.io.BufferedReader;
 
-//import junit.framework.Test;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -91,8 +89,6 @@ public class SimulatorFrame extends JFrame {
 		String saved_image_path = "";
 		File current_image_file;
 		File current_sound_file;
-		//ImageIcon[] image_array = new ImageIcon[n];
-	//	File[] audio_array = new File[number_of_buttons];
 		audio_array = new File[number_of_buttons];
 		ImageIcon image_file;
 		File audio_file = null;
@@ -100,10 +96,8 @@ public class SimulatorFrame extends JFrame {
 		//changes the location depending on the operating system
 		if (System.getProperty("os.name").startsWith("Windows"))
 			saved_image_path =   ".\\imageReasource\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
-//			saved_image_path =   "..\\TalkBoxData\\" + profile + "\\"; // mac/ linux/ unix
 		else
 			saved_image_path = "./imageReasource/TalkBoxData/" + profile + "/"; // mac/ linux/ unix
-//			saved_image_path = "../TalkBoxData/" + profile + "/"; // mac/ linux/ unix
 
 		File[] files = new File(saved_image_path).listFiles();
 		
@@ -117,10 +111,8 @@ public class SimulatorFrame extends JFrame {
 		
 		if (System.getProperty("os.name").startsWith("Windows"))
 			namesReader = new File (".\\imageReasource\\TalkBoxData\\" + profile + "\\names.txt");
-//			namesReader = new File ("..\\TalkBoxData\\" + profile + "\\names.txt");
 		else
 			namesReader = new File ("./imageReasource/TalkBoxData/" + profile + "/names.txt");
-//			namesReader = new File ("../TalkBoxData/" + profile + "/names.txt");
 		
 		
 		if (!namesReader.exists()) {
@@ -191,12 +183,9 @@ public class SimulatorFrame extends JFrame {
 				//adding both the image and audio files to an array
 				//The image array might not be needed 
 				audio_array[k] = audio_file;
-				//image_array[k] = image_file;
 				
 				name[k] = br.readLine();
 
-				//this.SetButton(name, image_array[k], audio_array, k);
-				//this.SetButton(name[k], image_file, audio_array, k);
 				this.SetButton(name[k], image_file, k);
 			}	
 		}
@@ -243,15 +232,7 @@ public class SimulatorFrame extends JFrame {
 	 */
 
 	private void initializePanel(ActionListener l, int n) {
-/*		int row_num = 1;
-		pics = new JButton[n];
-		if(n > 5) {
-			row_num = (int) ( Math.floor(n / 5));
-		}
-		
-		
-		panel = new JPanel(new GridLayout(row_num, n, 5, 5));
-*/
+
 		pics = new JButton[n];
 		swap = new JButton[n];
 		
@@ -269,7 +250,6 @@ public class SimulatorFrame extends JFrame {
 			swap[i].addActionListener(l);
 		}
 
-		//this.add(panel);
 		
 		// initialize buttons
 		previous = new JButton("Previous");
@@ -284,7 +264,6 @@ public class SimulatorFrame extends JFrame {
 		JPanel helper1 = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
 		
 		panel = new JPanel (new GridLayout(3, 1, 5, 5));	// 3 rows, 1 column
-	//	panel = new JPanel (new GridLayout(2, 1, 5, 5));	// 2 rows, 1 column USE THIS UNTIL MICHALS CODE
 		
 		
 		int from = page*this.MAX_NUM_B;
@@ -363,7 +342,6 @@ public class SimulatorFrame extends JFrame {
 	//public void SetButton(String buttonName, String image, int indexOfButton) throws IndexOutOfBoundsException {
 	public void SetButton(String buttonName, ImageIcon icon, int indexOfButton) throws IndexOutOfBoundsException, IOException {
 		try {
-			//ImageIcon icon = new ImageIcon(image);
 			pics[indexOfButton].setText(buttonName);
 			pics[indexOfButton].setIcon(icon);
 			pics[indexOfButton].setActionCommand(indexOfButton + "");
@@ -388,7 +366,6 @@ public class SimulatorFrame extends JFrame {
 		JPanel helper1 = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
 		
 		panel = new JPanel (new GridLayout(3, 1, 5, 5));	// 3 rows, 1 column
-		//	panel = new JPanel (new GridLayout(2, 1, 5, 5));	// 2 rows, 1 column USE THIS UNTIL MICHALS CODE
 		int from = page*this.MAX_NUM_B;
 		int to = page*this.MAX_NUM_B+5;
 		
@@ -401,10 +378,6 @@ public class SimulatorFrame extends JFrame {
 		panel.add(helper);
 		panel.add(helper1);
 		
-	//	helper = new JPanel(new GridLayout(1, 5, 5, 5));	// a helper panel, 1 row, 5 buttons
-		/*
-		 * Will be done by michael
-		 */
 		boolean addNext = false;
 		if (Math.ceil(this.pics.length/((page+1)*this.MAX_NUM_B)) >= (page+1))
 			addNext = true;

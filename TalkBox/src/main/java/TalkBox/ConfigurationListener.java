@@ -1,10 +1,6 @@
 package main.java.TalkBox;
-/*
- * write object/ read object
- * */
- 
+
 import java.awt.BorderLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -12,15 +8,11 @@ import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.io.Serializable;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -28,10 +20,7 @@ import java.util.logging.SimpleFormatter;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -62,21 +51,9 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	String new_audio_path_W =   ".\\imageReasource\\TalkBoxData\\"; // windows
 	String new_image_path_M =   "./imageReasource/TalkBoxData/";	// mac/ linux/ unix
 	String new_image_path_W =   ".\\imageReasource\\TalkBoxData\\"; // windows
-//	String new_audio_path_M =  "../TalkBoxData/";	// mac/ linux/ unix
-//	String new_audio_path_W =   "..\\TalkBoxData\\"; // windows
-//	String new_image_path_M =   "../TalkBoxData/";	// mac/ linux/ unix
-//	String new_image_path_W =   "..\\TalkBoxData\\"; // windows
 	String profileName;
 	LogFile log;
 	//----------------------------------------------------
-	
-	
-	/*
-	 * files should be accessible, not a hardcoded path 
-	 * getresourcesstream
-	 */
-	
-	
 	
 	
 	/**
@@ -113,9 +90,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			SimpleFormatter formatter = new SimpleFormatter();
 			fileh.setFormatter(formatter);
 			
-		} catch (IOException e) {
-			// TODO: handle exception
-		}
+		} catch (IOException e) {}
 		
 		logger.info("the App Frame is being initialized ");
 	}
@@ -126,7 +101,6 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	 * */
 
 	@SuppressWarnings("deprecation")
-	//@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -138,11 +112,8 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				File file;
 				if (System.getProperty("os.name").startsWith("Windows"))
 					file = new File(".\\imageReasource\\TalkBoxData\\" + profileName + "\\numberOfButtons.txt");
-//					file = new File(".\\TalkBoxData\\" + profileName + "\\numberOfButtons.txt");
 				else
 					file = new File("./imageReasource/TalkBoxData/" + profileName + "/numberOfButtons.txt");
-//					file = new File("./TalkBoxData/" + profileName + "/numberOfButtons.txt");
-				
 				
 				try {
 					
@@ -160,7 +131,6 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 					confFrame.printNamesToFile();
 					
 				}  catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -170,7 +140,6 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			confFrame.setVisible(false);
 			confFrame.dispose();
 		
-			
 		}
 
 		else if (e.getActionCommand() == "Next") {
@@ -185,25 +154,12 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				File dir;
 				if (System.getProperty("os.name").startsWith("Windows"))
 					dir = new File (".\\imageReasource\\TalkBoxData");
-//					dir = new File ("..\\TalkBoxData");
 				else
 					dir = new File ("./imageReasource/TalkBoxData");
-//					dir = new File ("../TalkBoxData");
-//				
-//				if (dir != null)
-//				{
-//					for(File file: dir.listFiles()) 
-//					    if (!file.isDirectory()) 
-//					        file.delete();
-//				}
-				
-				
-				
 				
 				size = confFrame.getSizeButtons();
 				profileName = confFrame.getProfileName();
 				makeDir(profileName);	// creates a directory for this profile
-				
 				
 				this.complete = new boolean[size+1];
 				this.complete[0] = false;
@@ -289,7 +245,6 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 				objOutput.close();
 				pickedImage = true;
 				logger.info("It serializes the selected image file and saves it in TalkBoxData");
-				
 				
 			} catch (IOException e1) {
 				
@@ -385,7 +340,6 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 		else if (e.getActionCommand() == "Start Recording") {
 			logger.info("Pressed: 'Start Recording' in the 'Configuration App'");
 			
-			
 			thread = new Thread(new Runnable() {
             public void run() {
               record.run(page_counter);
@@ -409,10 +363,8 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			
 			if (System.getProperty("os.name").startsWith("Windows"))
 				audio_path = ".\\imageReasource\\TalkBoxData\\RecordAudio" + page_counter + ".wav";
-//				audio_path = "..\\TalkBoxData\\RecordAudio" + page_counter + ".wav";
 			else
 				audio_path = "./imageReasource/TalkBoxData/RecordAudio_"+ page_counter + ".wav";
-//				audio_path = "../TalkBoxData/RecordAudio_"+ page_counter + ".wav";
 			
 			File soundFile = new File (audio_path);			
 			FileOutputStream output;
@@ -532,10 +484,8 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 			File file;
 			if (System.getProperty("os.name").startsWith("Windows"))
 				file = new File(".\\imageReasource\\TalkBoxData\\" + profileName + "\\numberOfButtons.txt");
-//				file = new File("..\\TalkBoxData\\" + profileName + "\\numberOfButtons.txt");
 			else
 				file = new File("./imageReasource/TalkBoxData/" + profileName + "/numberOfButtons.txt");
-//				file = new File("../TalkBoxData/" + profileName + "/numberOfButtons.txt");
 			
 			try {
 				
@@ -614,9 +564,7 @@ public class ConfigurationListener implements ActionListener, ItemListener{
 	public void makeDir (String profile) {
 		if (System.getProperty("os.name").startsWith("Windows")) 
 			new File(".\\imageReasource\\TalkBoxData\\" + profile).mkdir();
-//			new File("..\\TalkBoxData\\" + profile).mkdir();
 		else
 			new File("./imageReasource/TalkBoxData/" + profile).mkdir();
-//			new File("../TalkBoxData/" + profile).mkdir();
 	}
 }

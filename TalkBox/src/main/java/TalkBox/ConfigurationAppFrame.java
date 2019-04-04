@@ -7,29 +7,20 @@ package main.java.TalkBox;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.util.Scanner;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -38,7 +29,7 @@ import javax.swing.filechooser.FileSystemView;
 //import junit.framework.Test;
 
 
-public class ConfigurationAppFrame extends JFrame implements Runnable{
+public class ConfigurationAppFrame extends JFrame {
 	/**
 	 * A visual representation of the ConfigurationApp
 	 * */
@@ -59,10 +50,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	JButton startRecord;					// A button to start recording
 	JButton stopRecord;					    // A button to stop recording
 	boolean recordSelected = false;			// set to true if recording was selected. Adjust panel view accordingly
-	
-//	JCheckBox checkToSelfUploadSound;		// A check box for the user to check if wants to upload his own sound
-//	JCheckBox checkToSelfUploadImage;		// A check box for the user to check if wants to upload his own image
-	
+
 	String[] dropDownImageStrings = {"", "Pick Image", "Upload Image"};
 	public JComboBox<String> dropDownImage = new JComboBox<String>(dropDownImageStrings);
 	String[] dropDownSoundStrings = {"", "Pick Sound", "Upload Sound" , "Record Sound"};
@@ -75,9 +63,6 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	JButton previous;						// A button to go to the previous page
 	JButton exit;							// A button to exit
 	
-	/*String[] numbers = {"1", "2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"}; // numbers used in combo box
-	JComboBox<String> comboBox = new JComboBox<String>(numbers);  // The user puts the number of buttons he wants. Must be a natural number
-	*/
 	GroupLayout layout;
 	public JTextField text;						// A text field for the user to input number of buttons
 	
@@ -92,14 +77,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	String saved_audio_path_W = ".\\imageReasource\\soundRepository"; // windows
 	String saved_image_path_M = "./imageReasource/imageRepository";	// mac/ linux/ unix
 	String saved_image_path_W = ".\\imageReasource\\imageRepository"; // windows
-//	String saved_audio_path_M = "/soundRepository";	// mac/ linux/ unix
-//	String saved_audio_path_W = "\\soundRepository"; // windows
-//	String saved_image_path_M = "/imageRepository";	// mac/ linux/ unix
-//	String saved_image_path_W = "\\imageRepository"; // windows
 
-
-	
-	
 	JTextField buttonName;		// The text field the user will use to write the name of the button
 	String[] buttonNames;
 	JLabel labelForButtonName;	// the label for the button
@@ -171,10 +149,6 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		pickImage.addActionListener(l);
 		pickSound = new JButton("Pick Sound");
 		pickSound.addActionListener(l);
-/*		checkToSelfUploadSound = new JCheckBox("Upload sound yourself");
-		checkToSelfUploadSound.addItemListener(i);*/
-	/*	checkToSelfUploadImage = new JCheckBox("Upload image yourself");
-		checkToSelfUploadImage.addItemListener(i);*/
 		previewImage = new JButton("Preview Image");
 		previewImage.addActionListener(l);
 		previewSound = new JButton("Preview Sound");
@@ -260,7 +234,6 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		}
 		this.popupError("Invalid input. The input for number of buttons should be a natural number and you need to name your profile");
 		return 0;
-		//return Integer.parseInt((String) this.comboBox.getSelectedItem()); if combo box
 	}
 	
 	public String getProfileName() {
@@ -335,11 +308,9 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		else if (page == 1) {
 			refresh();
 			initializePanel();
-		//	uncheck();
 		}
 		// Middle setting
 		else {
-		//	uncheck();
 			int helper = page - 1;
 			if (this.recordSelected) {
 				recordSelected = false;
@@ -491,18 +462,11 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		File names;
 		if (System.getProperty("os.name").startsWith("Windows"))
 			names = new File (".\\imageReasource\\TalkBoxData\\" + this.textConfName.getText() + "\\names.txt");
-//			names = new File ("..\\TalkBoxData\\" + this.textConfName.getText() + "\\names.txt");
 		else
 			names = new File ("./imageReasource/TalkBoxData/" + this.textConfName.getText() + "/names.txt");
-//			names = new File ("../TalkBoxData/" + this.textConfName.getText() + "/names.txt");
 		
 		if (!names.exists()) 
 			names.createNewFile();
-		
-	/*	for(File file: names.listFiles()) 
-		    if (!file.isDirectory()) 
-		        file.delete();*/
-		
 		PrintWriter pt = new PrintWriter(names);
 
 		for (int i = 0; i < this.buttonNames.length; i ++) 
@@ -584,7 +548,6 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 			);
 			
 			layout.linkSize(SwingConstants.HORIZONTAL, stopRecord, next, previous, startRecord, exit, previewImage , pickImage, dropDownImage, dropDownSound, previewSound);
-			//layout.linkSize(SwingConstants.HORIZONTAL, previewImage , pickImage, dropDownImage, dropDownSound);
 			 
 			layout.setVerticalGroup(layout.createSequentialGroup()
 					.addGroup(layout.createParallelGroup()
@@ -643,7 +606,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	public String pressedUploadSound () {
 		
 		this.file_Audio.setDialogTitle("Choose a sound");
-		file_Audio.setAcceptAllFileFilterUsed(false); // ?
+		file_Audio.setAcceptAllFileFilterUsed(false); 
 		
 		file_Audio.setCurrentDirectory(FileSystemView.getFileSystemView().getHomeDirectory());
 
@@ -660,7 +623,7 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	public String pressedPickSound () {
 
 		file_Audio.setDialogTitle("Choose a sound");
-		file_Audio.setAcceptAllFileFilterUsed(false); // ?
+		file_Audio.setAcceptAllFileFilterUsed(false); 
 	
 		file_Audio.addChoosableFileFilter(filterSound);
 		
@@ -669,12 +632,6 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		else
 			file_Audio.setCurrentDirectory(new File (this.saved_audio_path_M));
 		
-		//This should return the correct file from the input stream
-		//File temp_image = getResourceAsFile(this.saved_audio_path_W);
-		
-		//file_Audio.setCurrentDirectory(temp_image);
-		
-		//InputStream inputStream = MainConfiguration.class.getResourceAsStream(this.saved_audio_path_M);
 
 		int retV = file_Audio.showOpenDialog(null);
 		if (retV == JFileChooser.APPROVE_OPTION) {
@@ -694,10 +651,6 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 			file_Image.setCurrentDirectory(new File (this.saved_image_path_W));
 		else
 			file_Image.setCurrentDirectory(new File (this.saved_image_path_M));
-		
-	//	File temp_image = getResourceAsFile(this.saved_image_path_M);
-		
-	//	file_Image.setCurrentDirectory(temp_image);
 
 		int retV = file_Image.showOpenDialog(null);
 		if (retV == JFileChooser.APPROVE_OPTION) {
@@ -705,12 +658,6 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 		}
 		
 		return "";
-	}
-	
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public static File getResourceAsFile(String resourcePath) {
@@ -737,45 +684,5 @@ public class ConfigurationAppFrame extends JFrame implements Runnable{
 	        return null;
 	    }
 	}
-	
-/*	*//**
-	 * A main method to test the view of the configuration app
-	 * *//*
-	public static void main (String[] args) {
 		
-		Scanner scan = new Scanner(System.in);
-		ConfigurationAppFrame conf = new ConfigurationAppFrame(null, null);
-		conf.setVisible(true);
-		conf.pack();
-		int i = scan.nextInt();
-		conf.pressedNext(4);
-		i = scan.nextInt();
-	//	conf.uploadImageCheckBox();
-		i = scan.nextInt();
-	//	conf.uploadSoundCheckBox();
-		System.out.println(ConfigurationAppFrame.page);
-		conf.pressedNext(4);
-		i = scan.nextInt();
-		System.out.println(ConfigurationAppFrame.page);
-		conf.pressedNext(ConfigurationAppFrame.page);
-		
-		ConfigurationAppFrame.page = 3;
-		
-		System.out.println("page " + ConfigurationAppFrame.page);
-		i = scan.nextInt();
-		conf.pressedPrevious(2);
-		
-		ConfigurationAppFrame.page = 1;
-		
-		System.out.println("page " + ConfigurationAppFrame.page);
-		i = scan.nextInt();
-		conf.pressedPrevious(2);
-		
-		System.out.println("page " + ConfigurationAppFrame.page);
-		i = scan.nextInt();
-		//conf.pressedPrevious(2);
-		
-		scan.close();
-	}*/
-	
 }

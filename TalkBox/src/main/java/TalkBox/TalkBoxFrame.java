@@ -165,10 +165,8 @@ public class TalkBoxFrame extends JFrame {
 		File files;
 		if (System.getProperty("os.name").startsWith("Windows"))
 			files = new File(".\\imageReasource\\TalkBoxData");
-//			files = new File("..\\TalkBoxData");
 		else
 			files = new File("./imageReasource/TalkBoxData");
-//			files = new File("../TalkBoxData");
 		
 		String[] dirs = files.list(new FilenameFilter() {
 			  @Override
@@ -213,7 +211,6 @@ public class TalkBoxFrame extends JFrame {
 				.addGroup(layout.createParallelGroup()
 						.addComponent(combo))
 				.addGroup(layout.createParallelGroup()
-					//	.addGroup(layout.createParallelGroup()
 						.addComponent(previous)
 						.addComponent(simulate))
 		);

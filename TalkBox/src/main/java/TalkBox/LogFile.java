@@ -1,7 +1,6 @@
 package main.java.TalkBox;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -31,15 +30,10 @@ public class LogFile {
 			dirData.mkdir();
 		}
 			
-		
-		
 		if (System.getProperty("os.name").startsWith("Windows"))
 			log =  new File (".\\imageReasource\\log.txt"); // mac/ linux/ unix
-			//log =  new File (".\\log.txt"); // mac/ linux/ unix
-			//saved_image_path = "C:\\Users\\Michael\\Desktop\\talk box data\\"; // mac/ linux/ unix
 		else
 			log = new File ("./imageReasource/log.txt"); // mac/ linux/ unix
-			//log = new File ("./log.txt"); // mac/ linux/ unix
 		
 		if (!log.exists())
 			log.createNewFile();
